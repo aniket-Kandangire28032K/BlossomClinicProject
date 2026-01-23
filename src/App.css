@@ -1,0 +1,1367 @@
+/* Login Page */
+.login {
+  position: absolute;
+  display: grid;
+  height: 100dvh;
+  width: 100dvw;
+  top: 0;
+  left: 0;
+  background-image:url("/public/login_background.jpg");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}
+.login form {
+  /* margin: 1rem 20%; */
+  margin-left: auto;
+  padding: 2rem 1rem;
+  height: 100dvh;
+  width: 30dvw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  /* border-radius: 0.75rem; */
+  background-color: rgb(255, 255, 255);
+  /* box-shadow: 0 0 25px #00000080; */
+}
+.login form h1 {
+  text-align: center;
+  color: teal;
+  font-size: 3rem;
+}
+form h1 {
+  text-align: center;
+}
+form .inputfield {
+  position: relative;
+  padding: 0.3rem;
+  margin: 0.2rem auto;
+  width: 80%;
+}
+form .inputfield input {
+  padding: 0.8rem;
+  font-size: 1.5rem;
+  display: block;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  border: transparent;
+  border-bottom: 2px solid black;
+  border-radius: 0.6rem 0.6rem 0 0;
+  overflow: hidden;
+}
+form .inputfield input:focus {
+  background-color: transparent;
+}
+form .inputfield label {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: rgb(120, 120, 120);
+  transition: 0.5s all ease-in-out;
+  background-color: transparent !important;
+}
+form .inputfield input:focus + label,
+form .inputfield input:not(:placeholder-shown) + label {
+  top: 0%;
+  font-size: 1rem;
+  color: rgb(0, 0, 0);
+  background-color: #fff;
+}
+
+.login form button {
+  display: block;
+  width: 70%;
+  margin: 0.5rem auto;
+  color: white;
+  padding: 0.5rem;
+  background-color: var(--bluegreenDark);
+  border: 2px solid var(--bluegreenDark);
+  font-weight: 600;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  /* box-shadow: 0px 0px 7px #00000080; */
+  transition: all ease-in-out 0.2s;
+}
+.login form button:hover{
+  background-color: #008080;
+  border-color: #008080;
+  transform: scale(1.1);
+
+}
+.login form a {
+  text-decoration: none;
+  color: var(--bluegreenDark);
+  font-weight: 600;
+  align-self: flex-end;
+  margin-right: 3.5rem;
+}
+/* Error Page */
+.errorpage {
+  width: 100%;
+  min-height: 100dvh;
+  background-color: white;
+}
+.errorpage .errorimg {
+  display: block;
+  aspect-ratio: fixed;
+  height: 65dvh;
+  margin: 0 auto;
+}
+.errorpage h2 {
+  color: var(--bluegreenDark);
+  text-align: center;
+  font-weight: 400;
+}
+.errorpage .btbgrp {
+  margin: 0 auto;
+  width: 30%;
+  padding: 0.3rem 2rem;
+  padding-top: 1.7rem;
+  display: block;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+.errorpage .btbgrp button {
+  padding: 0.8rem 2rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  box-shadow: 0 0 12px #00000040;
+  transition: all ease-in-out 0.3s;
+  border: 1px solid transparent;
+}
+.errorpage .btbgrp button:nth-of-type(1) {
+  border-radius: 18px;
+  background-color: crimson;
+  color: white;
+  
+}
+.errorpage .btbgrp button:nth-of-type(1):hover {
+  background-color: rgb(159, 15, 44);
+  box-shadow: none;
+}
+.errorpage .btbgrp button:nth-of-type(2) {
+  border-radius: 18px;
+    
+}
+.errorpage .btbgrp button:hover {
+  box-shadow:none;
+  border: 1px solid #ccc;
+}
+
+/* dashboard Page*/
+@page{
+  margin: 0;
+}
+
+.print-area {
+  background-color: white;
+  position: absolute;
+  min-height: 100dvh;
+  width: 100%;
+  left: 0;
+  top: -1000vh;
+  visibility: hidden;
+  
+}
+.print-area .header{
+  background: gray !important;
+  color: white;
+  width: 100%;
+  height: 13rem;
+  padding: .7rem 2rem;
+  border: 2px solid grey;
+  border-radius:0 0 4rem 4rem ;
+}
+.print-area .header p{
+  text-align: end;
+}
+.print-area .header .symbol{
+  aspect-ratio: 1/1;
+  width: 25%;
+  float: left;
+  filter: brightness(0) invert(1);
+}
+.print-area .main-section{
+  min-height:45dvh ;
+  position: relative;
+  max-width: 100dvh;
+  background-color: white;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+.print-area .main-section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url(/Blossom-2.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: opacity(0.1);
+  background-size:  cover;
+  
+  /* transform: translateX(-50%); */
+  z-index: 0;
+  pointer-events: none;
+}
+.print-area .main-section > div > h3{
+  padding-bottom: 1rem;
+}
+.print-area .main-section > div span{
+  margin-left: 2rem;
+  color: rgb(60, 60, 60);
+}
+.details{
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+}
+.print-area .sub-footer{
+  width: 70%;
+  line-height: 300%;
+  margin: 0 auto;
+}
+
+.print-area .footer{
+  width: 100%;
+  height: 8rem;
+  background: #808080;
+  color: white;
+  padding: .7rem 2rem;
+  border-radius: 4rem 4rem 0 0 ;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.print-area .footer .footer-container{
+  width: 70%;
+  margin: 0 auto;
+  /* outline: 1px solid; */
+  vertical-align: center;
+}
+.print-area .footer .footer-container > p{
+  text-align: center;
+  line-height: 150%;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  float: left;
+}
+.print-area .footer .footer-container > p span{
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+.print-area .footer .footer-container img{
+  aspect-ratio: 1/1;
+  width: 10%;
+  margin-left: 20%;
+}
+.print-area .footer > p{
+  text-align: center;
+  padding-top: 1rem;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    background-color: white;
+    min-height: 100dvh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .print-area > .main-section {
+    font-size: 1.2rem;
+    background-color: white;
+    /* background-image: ; */
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .dashboard form .product-table,
+.dashboard form .treatment-table{
+  display: none;
+}
+.print-area .header,
+.print-area .footer{
+  background-color: #a9a9a9;
+}
+  /* @media Print end */
+}
+.dashboard {
+  background: white;
+  min-height: 100dvh;
+  padding-bottom: 1rem;
+  
+}
+
+.dashboard > h1 {
+  text-align: center;
+  padding-top: 1rem;
+  text-transform: capitalize;
+}
+.dashboard form > h3 {
+  text-align: end;
+}
+.dashboard form {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  gap: 0.8rem;
+  flex-direction: column;
+}
+.dashboard form > input {
+  padding: 0.7rem 1rem;
+  width: 100%;
+  margin: .5rem 0;
+}
+.dashboard form > input[type=number]::-webkit-inner-spin-button,
+.dashboard form > input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.dashboard form div > input[type="date"] {
+  padding: 0.5rem 2rem;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+/* Product form */
+.dashboard form .product-form {
+  width: 100%;
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+}
+.dashboard form .product-form > input {
+  padding: 0.7rem 1rem;
+}
+.dashboard form .product-form > input:nth-of-type(1) {
+  width: 40%;
+}
+.dashboard form .product-form > input:nth-of-type(2) {
+  width: 40%;
+}
+.dashboard form .product-form > input:nth-of-type(3) {
+  width: 12%;
+}
+.dashboard form .product-form > button {
+  padding: 0.3rem 1.2rem;
+  border: none;
+  background-color: rgb(0 126 0);
+  color: #fff;
+}
+.dashboard form .product-table,
+.dashboard form .treatment-table {
+  width: 100%;
+  visibility: visible;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+.table-head {
+  background-color: royalblue;
+  color: white;
+  font-weight: bold;
+}
+.dashboard tr td:nth-of-type(2) {
+  width: 60%;
+}
+.dashboard tr td:nth-of-type(3) {
+  width: 10%;
+}
+.product-table tr td,
+.treatment-table tr td {
+  padding: 0.3rem 1rem;
+  text-wrap: nowrap;
+}
+.treatment-Form {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.treatment-Form > input{
+  padding: .7rem 1rem;
+}
+.treatment-Form > input:nth-of-type(1) {
+  width: 70%;
+}
+.treatment-Form > input:nth-of-type(2) {
+  width: 20%;
+}
+.treatment-Form > button {
+  background-color: rgb(0, 126, 0);
+  border: none;
+  padding: 0.3rem 1.2rem;
+  color: white;
+}
+
+.del-btn {
+  background-color: transparent;
+  border: none;
+  color: crimson;
+  vertical-align: middle;
+  visibility: hidden;
+  margin-left: 2rem;
+  filter: drop-shadow(0 0 10px crimson);
+}
+tr td:hover .del-btn {
+  visibility: visible;
+}
+.btn-group{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.btn-group button{
+  padding: .3rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 1px solid;
+  transition: all .2s ease-in-out;
+}
+.btn-group button:hover{
+  box-shadow:0 10px 10px rgb(0 0 0 / 0.3) ;
+}
+.btn-group button:nth-of-type(1){
+  background-color: var(--bluegreenDark);
+  color: white;
+}
+.btn-group button:nth-of-type(2){
+  color: var(--bluegreenDark);
+  background-color: white;
+  border-color: var(--bluegreenDark);
+}
+.btn-group button:nth-of-type(3){
+  color: #fff;
+  background-color: #010B13;
+}
+
+.dashboard input{
+  outline: none;
+}
+/* patient form */
+.patientform {
+  background: url("/background_1.jpg") bottom / cover fixed;
+  min-height: 100dvh;
+}
+.patientform h2 {
+  margin-left: 3rem;
+  padding: 1rem;
+}
+.patientform form {
+  width: 70%;
+  margin-left: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem 0;
+  justify-content: center;
+}
+.patientform h3 {
+  padding: .5rem 2rem;
+
+}
+.patientform form > input,
+.patientform form div > input,
+.patientform form select {
+  border: none;
+  border-bottom: 2px solid navy;
+  width: 80%;
+  grid-column: span 5;
+  padding: 0.5rem;
+  gap: 0.5rem 0;
+  font-size: 1.2rem;
+}
+.patientform form > input:focus,
+.patientform form div > input:focus {
+  outline: none;
+}
+.patientform form div:nth-of-type(1) label {
+  display: block;
+}
+.patientform form div label {
+  font-size: 1.2rem;
+}
+.patientform form .btngrp {
+  margin: 0 auto;
+  width: 50%;
+  grid-column: span 8;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+.patientform form button {
+  width: 40%;
+  padding: 0.7rem;
+  color: white;
+  font-weight: 700;
+  margin: 0.5rem 0;
+  border: transparent;
+  border-radius: 0.6rem;
+  font-size: 1.1em;
+}
+.patientform form button[type="submit"] {
+  background-color: var(--bluegreenDark);
+}
+.patientform form button[type="reset"] {
+  background-color: white;
+  border: 2px solid var(--bluegreenDark);
+  color: var(--bluegreenDark);
+}
+/* Inventory page */
+.invnetorypage form {
+  width: 60%;
+  margin: 0 auto;
+  padding: 0.5rem;
+  padding-top: 2rem;
+  text-align: center;
+}
+.invnetorypage form h1 {
+  text-align: center;
+  color: var(--bluegreenDark);
+}
+.invnetorypage form input {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+.invnetorypage form button {
+  display: inline-block;
+  padding: 0.5rem 2.5rem;
+  font-size: 1.1rem;
+  margin: 0 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+}
+.invnetorypage form button:nth-of-type(1) {
+  color: white;
+  border: none;
+  background-color: var(--bluegreenDark);
+  border: 3px solid var(--bluegreenDark);
+}
+.invnetorypage form button:nth-of-type(2) {
+  color: var(--bluegreenDark);
+  border: 3px solid var(--bluegreenDark);
+}
+
+/* Account Page */
+.account-page {
+  background-image: linear-gradient(rgb(0 0 0 /0.5));
+  min-height: 100dvh;
+}
+.account-page .btn-group {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  text-align: end;
+  display: block;
+  flex-direction: column;
+}
+
+.account-page .btn-group button {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  background-color: royalblue;
+  border: none;
+  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.account-page .btn-group button .icon {
+  padding-top: 0.2rem;
+}
+.account-page h3 {
+  text-align: center;
+  padding-top: 3rem;
+  text-transform: uppercase;
+  color: white;
+}
+.account-page .user-list {
+  padding: 1.2rem 5rem;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.account-page .user-list div {
+  width: 32%;
+  background-color:#f0f0f0;
+  border: 2px solid var(--bluegreenDark);
+  border-radius: 7px;
+  padding: 0.7rem;
+  padding-top: 0;
+  position: relative;
+  overflow: hidden;
+}
+.account-page .user-list div p {
+  margin: 0.7rem 0;
+}
+.account-page .user-list div p:nth-of-type(1) {
+  position: absolute;
+  background-color: royalblue;
+  color: white;
+  padding: 0.7rem;
+  bottom: -12px;
+  right: 0;
+}
+
+/* patient-list page*/
+.patient-list h1 {
+  text-align: center;
+  padding-top: 0.7rem;
+}
+.patient-list .patient-card {
+  width: 35%;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 0 auto;
+  border: 2px solid #ccc;
+  box-shadow: 0 10px 15px rgb(0 0 0 /0.5);
+  padding: 0.2rem 2.3rem;
+  padding-bottom: 1rem;
+  border-radius: 8px;
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+}
+.patient-list .patient-card h3 {
+  text-align: center;
+  grid-column: span 2;
+}
+.patient-list .patient-card .icondiv .icon {
+  font-size: 6rem;
+  padding-top: 0.5rem;
+  color: rgb(0 0 0 / 0.7);
+}
+.patient-list .patient-card .card-data {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+.patient-list .patient-card .card-data p:last-of-type {
+  color: rgb(126, 126, 126);
+}
+.patient-list form {
+  width: 80%;
+  padding: 1rem;
+  margin: 0 auto;
+  /* border: 2px solid; */
+  display: flex;
+  gap: 1.3rem;
+  justify-content: center;
+}
+.patient-list form input {
+  border: none;
+  outline: none;
+  border-bottom: 4px solid var(--bluegreenDark);
+  width: 40%;
+  padding: 0.3rem;
+  font-size: 1.2rem;
+  background: transparent;
+  padding-left: 0.5rem;
+}
+.patient-list form button {
+  font-size: 1.1rem;
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  background: center;
+  transition: all ease-in-out 0.2s;
+  border: 3px solid var(--bluegreenDark);
+}
+.patient-list form button:hover {
+  box-shadow: 0 5px 12px rgb(0 0 0/0.2);
+}
+.patient-list form button:nth-of-type(1) {
+  color: white;
+  background: var(--bluegreenDark);
+}
+.patient-list form button:nth-of-type(2) {
+  color: var(--bluegreenDark);
+  border: 2px solid #ccc;
+}
+
+.patient-list table {
+  border: 1px solid;
+  min-width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 1.7rem;
+}
+.patient-list table thead {
+  background-color: var(--bluegreenDark);
+}
+.patient-list table thead tr td:nth-of-type(1),
+.patient-list table tbody tr td:nth-of-type(1){
+  width: 5%;
+}
+.patient-list table thead tr td:nth-of-type(2),
+.patient-list table tbody tr td:nth-of-type(2){
+  width: 15%;
+}
+.patient-list .patient-table thead tr th {
+  padding: 0.8rem;
+  text-transform: uppercase;
+  border: 1px solid #000;
+  color: white;
+}
+.patient-list .patient-table tbody tr td {
+  padding: 0.5rem;
+  border: 1px solid #111;
+}
+.patient-list .patient-table tbody tr:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.61);
+}
+
+/* Mr List */
+.mr-list h1 {
+  text-align: center;
+  padding-top: 0.7rem;
+}
+.mr-list form {
+  width: 50%;
+  padding-top: 0.7rem;
+  margin: 0 auto;
+  display: flex;
+  gap: 1.1rem;
+  justify-content: center;
+}
+.mr-list form input {
+  padding: 0.3rem;
+  font-size: 1.1rem;
+  width: 50%;
+  border: none;
+  border-bottom: 3px solid var(--bluegreenDark);
+  padding-left: 0.5rem;
+  background: transparent;
+  outline: none;
+}
+.mr-list form button {
+  padding: 0.7rem 1rem;
+  border: none;
+  background: var(--bluegreenDark);
+  font-weight: 600;
+  color: white;
+  border-radius: 8px;
+  width: 20%;
+}
+.mr-list form button:nth-of-type(2) {
+  background-color: white;
+  border: 2px solid var(--bluegreenDark);
+  color: var(--bluegreenDark);
+  font-weight: 600;
+}
+.mr-list .mr-card {
+  margin: 0 auto;
+  width: 50%;
+}
+.mr-list table {
+  border: 2px solid;
+  max-width: 80%;
+  margin: 0 auto;
+  
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 1rem;
+}
+.mr-list table thead {
+  background-color: var(--bluegreenDark);
+  color: white;
+}
+.mr-list .mr-table thead tr th {
+  padding: 0.8rem;
+  border: 1px solid black;
+}
+.mr-list .mr-table tbody tr td {
+  padding: 0.5rem;
+  border: 1px solid #000;
+}
+.mr-list .mr-table tbody tr:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.71);
+}
+
+/* Medicine List page */
+.meds-list h1 {
+  text-align: center;
+  padding-top: 1rem;
+}
+.meds-list form {
+  width: 50%;
+  padding: 0.2rem;
+  padding-top: 1.7rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.meds-list form input {
+  font-size: 1.2rem;
+  width: 50%;
+  padding-left: 0.3rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-bottom: 3px solid var(--bluegreenDark);
+}
+.meds-list form button {
+  width: 15%;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  border-color: var(--bluegreenDark);
+  color: white;
+  background-color: var(--bluegreenDark);
+}
+.meds-list form button:nth-of-type(2) {
+  background-color: white;
+  color: var(--bluegreenDark);
+  font-weight: 600;
+}
+.meds-list table {
+  border: 2px solid;
+  max-width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 1rem;
+}
+.meds-list table thead {
+  background-color: var(--bluegreenDark);
+  color: white;
+}
+.meds-list table thead tr th {
+  padding: 0.8rem;
+  border: 1px solid #000;
+}
+.meds-list table tbody tr td {
+  padding: 0.5rem;
+  border: 1px solid #000;
+}
+.meds-list table tbody tr:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.71);
+}
+
+/* mr form Page */
+.mr-form {
+  background: white;
+  min-height: 100dvh;
+}
+.mr-form h1 {
+  padding-top: 1rem;
+}
+.mr-form form {
+  padding-bottom: 2rem;
+}
+.mr-form form .inputfield {
+  width: 60%;
+  margin: 1rem auto;
+}
+.mr-form form .btn-grp {
+  width: 100%;
+  display: inline-flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 0.7rem;
+}
+.mr-form form .btn-grp button {
+  border: 2px solid #ccc;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.3rem 2rem;
+  border-radius: 7px;
+  transition: all 0.2s ease-in-out;
+}
+.mr-form form .btn-grp button:hover {
+  box-shadow: 0 7px 12px rgb(0 0 0 / 0.5);
+}
+.mr-form form .btn-grp button:nth-of-type(1) {
+  background: var(--bluegreenDark);
+  color: white;
+  border-color: var(--bluegreenDark);
+}
+.mr-form form .btn-grp button:nth-of-type(2) {
+  background: white;
+  /* border-color: var(--bluegreenDark); */
+}
+
+.stock {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+.stock form {
+  width: 60%;
+  height: 50dvh;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 1rem;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 0 500px 5000px rgba(0, 0, 0, 0.422);
+}
+.stock form div {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+.stock form div:last-of-type {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.stock form div:last-of-type button {
+  padding: 0.3rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  transition: all ease-in-out 0.2s;
+}
+.stock form div:last-of-type button:hover {
+  box-shadow: 0 5px 15px rgb(0 0 0 / 0.2);
+}
+.stock form div:last-of-type button:nth-of-type(1) {
+  background-color: var(--bluegreenDark);
+  color: white;
+}
+.stock form div:last-of-type button:nth-of-type(2) {
+  color: var(--bluegreenDark);
+  border-color: #ccc;
+}
+
+.sales{
+  width: 100%;
+  min-height: 100dvh;
+  background: #fff;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1rem;
+  padding: 2rem 3rem;
+  padding-top: 2rem;
+}
+
+.sales .medicine-chart{
+  /* width: 40%; */
+  /* margin: 0 auto; */
+  /* height: 50dvh; */
+  grid-column: span 2;
+}
+.sales .mr-chart{
+  /* width: 40%; */
+  /* margin: 0 auto; */
+  grid-column: span 2;
+}
+
+/* reminders Page */
+.reminders{
+  padding: 2rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1rem;
+}
+.reminders h1{
+  grid-column: span 4;
+}
+.reminders .container-1,
+.reminders .container-2{
+  grid-column: span 2;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+}
+.reminders .card{
+  border: 2px solid #ccc;
+  background: white;
+  width: 50%;
+  min-height: 70px;
+  text-align: start;
+  margin: 0 auto;
+  padding: .5rem;
+}
+
+.download-btn{
+  background-color: var(--bluegreenDark);
+  color: white;
+  font-weight: 600;
+  padding: .7rem 1rem;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 2rem;
+  right: 1rem;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  gap: .2rem;
+}
+.download-btn .icon{
+  font-size: 1.3rem;
+  margin-top: .3rem;
+}
+
+/* MR reminders Page */
+.mr-reminders {
+  padding: 1rem 2rem ;
+  background-color: white;
+  height: min(100dvh);
+}
+.mr-reminders > h1{
+  margin-bottom: 2rem;
+}
+.mr-reminders .card-grid{
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill,400px);
+  gap: 1rem 2rem;
+  justify-content: center;
+}
+.mr-reminders .card-grid .reminder-card{
+  border: 1px solid #ddd;
+  position: relative;
+  border-radius: 8px;
+  width: 400px;
+  padding:1rem .5rem  ;
+  background-color: white;
+  transition: all ease-in-out 0.2s;
+}
+.mr-reminders .card-grid .reminder-card:hover{
+  box-shadow: 0 10px 10px #ccc;
+  cursor:pointer;
+}
+.mr-reminders .card-grid .reminder-card > p:nth-of-type(1){
+  text-transform: capitalize;
+  margin-bottom: .5rem;
+}
+.mr-reminders .card-grid .reminder-card > p:nth-of-type(2){
+  text-transform: capitalize;
+  margin-bottom: .7rem;
+}
+.mr-reminders .card-grid .reminder-card span{
+  padding: .5rem;
+  font-weight: 500;
+  
+}
+.mr-reminders .card-grid .reminder-card span:nth-of-type(1){
+  color: tomato;
+}
+.mr-reminders .card-grid .reminder-card span:nth-of-type(2){
+  color: green;
+}
+.mr-reminders .card-grid .reminder-card p:nth-of-type(3){
+  margin: 0 auto;
+  width: 70%;
+  margin-top: 1rem;
+  padding: .5rem;
+  text-align: center;
+  border: 1px solid green;
+  border-radius:8px;
+  background-color: green;
+  color: white;
+  font-weight: 600;
+}
+.mr-reminders .card-grid .reminder-card p:nth-of-type(4){
+  position: absolute;
+  top: .5rem;
+  right: .7rem;
+}
+
+/* sales Pages */
+.sales-report{
+  width: 100%;
+  min-height: 100dvh;
+  background-color: #fff;
+  padding-top: 1.2rem;
+}
+.sales-report h1{
+  text-align: center;
+}
+.sales-report form{
+  width: 50%;
+  margin: .7rem auto;
+  padding: 1rem 2rem;
+  border: 1px solid #eee;
+  border-radius: .75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.sales-report form > button {
+  color: #fff;
+  background: royalblue;
+  padding: .5rem 2rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: transparent;
+}
+.sales-report form > button:nth-of-type(2){
+  background-color: darkgray;
+}
+.sales-report form label{
+  white-space: nowrap;
+}
+.sales-report form  input{
+  padding: .5rem;
+  border: 1px solid #aaa;
+}
+
+.sales-report table{
+  width: 67%;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: 5rem;
+  margin-top: 1rem;
+
+}
+
+.sales-report table thead tr:nth-of-type(1) th{
+  background-color: var(--bluegreenDark);
+  color: #fff;
+  padding: 0.7rem;
+}
+.sales-report table tbody tr td{
+  padding: .7rem;
+  width: min-content;
+  text-transform: capitalize;
+}
+.sales-report table tbody tr td ol{
+  width: 70%;
+  margin: 0 auto;
+}
+.sales-report table tfoot tr td{
+  padding: .7rem;
+  background-color: lightgray;
+  font-weight: bold;
+}
+.sales-report .download-button{
+  color: white;
+  background-color: #008080;
+  border: none;
+  border-radius: .5rem;
+  font-weight: 600;
+  position: sticky;
+  bottom: .7rem;
+  right: .7rem;
+  padding:.7rem  1.2rem;
+  display: block;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+.sales-report .download-button .icon{
+  font-size: 1.6rem;
+}
+/* MR Payment Update Page */
+.mr-payment h1{
+  text-align: center;
+  padding-top: 1rem;
+  color: var(--bluegreenDark);
+}
+.mr-payment form{
+    width: 50%;
+    margin: 1rem auto;
+    padding: 1rem .1rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+}
+.mr-payment form input{
+  font-size: 1.5rem;
+}
+.mr-payment form .btn-group{
+  padding-top: 2rem;
+}
+.mr-payment .mr-list{
+  width: 90%;
+  padding: .7rem;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill,1fr);
+  justify-content: center;
+  gap: 0.5rem;
+}
+.mr-payment .mr-list .card{
+  font-size: 1.2rem;
+  width: max-content;
+  min-width: 300px;
+  padding: 1rem 2rem;
+  background-color: white;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 0 15px #00000081 inset;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: .7rem;
+}
+.mr-payment .mr-list .card .red{
+  color: red;
+  font-weight: 500;
+}
+.mr-payment .mr-list .card .green{
+  color: green;
+  font-weight: 500;
+}
+.mr-payment .mr-list input{
+  width: 100%;
+}
+.mr-payment .mr-list button{
+  width: 100%;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+/* prescriptions Page */
+.prescriptions{
+  background-color: #f0f8ff;
+  min-height: 100dvh;
+}
+.prescriptions h1{
+  text-align: center;
+  padding-top: 0.5rem;
+  color: rgb(0, 82, 82);
+}
+.prescriptions form{
+  width: 80%;
+  padding-top: 1rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.prescriptions form input{
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+.prescriptions form button{
+padding: 0.3rem 1rem ;
+font-weight: 500;
+color: white;
+border: none;
+}
+.prescriptions form button:nth-of-type(1){
+  background-color: rgb(0 85 85);
+}
+.prescriptions form button:nth-of-type(2){
+  background-color: #555;
+}
+.prescription-list{
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  gap: 1rem 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+.prescription-list .card{
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+}
+.prescription-list .card p{
+  text-transform: capitalize;
+}
+.prescription-list .card table{
+  margin-top: 0.5rem;
+  border-collapse: collapse;
+}
+.prescription-list .card table thead{
+  background-color: #3d3d3d;
+  color: white;
+}
+.prescription-list .card table thead tr th,.prescription-list .card table tbody tr td{
+  text-align: center;
+  padding: 0.2rem;
+}
+
+.lock{
+  display: grid;
+  max-width:100% ;
+  min-height: 100dvh;
+  gap: 0;
+  background-color: #f6f6f6;
+  background: #00000020;
+  place-items: center;
+}
+.lock-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 3rem 2rem;
+  box-shadow: 0 0 18px rgba(0,0,0,0);
+  border-radius: 8px;
+  transition: all ease-in-out 0.3s;
+}
+.lock-container:hover{
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  transform: scale(1.1);
+}
+.lock-container span{
+  font-size: 4rem;
+  color: #008f6f;
+  transition: all ease-in-out 0.7s;
+}
+.lock-container:hover span{
+  filter: drop-shadow(0 0 15px #008f8f50);
+}
+.lock-container span .icon{
+  transform: translateX(-30px);
+}
+.lock-container h1{
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+.lock-container a{
+  text-decoration: none;
+  color: #006f6f;
+}
