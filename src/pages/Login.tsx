@@ -18,7 +18,6 @@ const Login = () => {
       [name]:value
   })
   }
-  console.log(URL)
   const handleLogin= async(e:any)=>{
     e.preventDefault();
     try {
