@@ -338,7 +338,7 @@ const Dashboard = () => {
           )}
         </div>
         <div className="sub-footer">
-          <h3>Consult Fee: Rs.{cost.consultFee || 0}/-</h3>
+          {/* <h3>Consult Fee: Rs.{cost.consultFee || 0}/-</h3> */}
           {/* <h3>Total Fee: Rs. {cost.totalCost || 0}/-</h3> */}
 
           {formData.nextAppointmentDate && (
