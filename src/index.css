@@ -185,3 +185,21 @@
   display: inline;
   position: absolute;
 }
+
+button:hover{
+  /* animation: btnhover 1.2s ease-in-out; */
+  transform: scale(1.1);
+  transition: all ease-in-out 0.2s;
+}
+
+@keyframes btnhover {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
