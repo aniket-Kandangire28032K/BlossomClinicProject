@@ -17,16 +17,16 @@ const NameChecker = () => {
       date: string;
       opdno: string;
       nextAppointmentDate: string;
-      products:[ {
+      products: {
         name: string;
         price: number;
         remark:string;
         qty:number;
-      }];
-      treatments: [{
+      }[];
+      treatments: {
         name: string;
         price: number;
-      }];
+      }[];
       productCost: number;
       treatmentCost: number;
       consultFee: number;
@@ -90,7 +90,6 @@ const NameChecker = () => {
     });
   }
 
-  
   return (
     <div className="checker">
       <h1>Check Patient Details</h1>
@@ -124,7 +123,7 @@ const NameChecker = () => {
             {presDetails && <p><u>Products</u></p>}
             <div className="product-list">
             {
-                presDetails?.products.map((item,index)=>(
+                presDetails?.products?.map((item,index)=>(
                     <div key={index} className="product">
                         <p>{index+1}. {item.name}</p>
                         <span><u>Remark:</u> {item.remark} </span>
@@ -135,7 +134,7 @@ const NameChecker = () => {
             </div>
             {presDetails && <p><u>Treatments</u></p>}
             {
-                presDetails?.treatments.map((item,index)=>(
+                presDetails?.treatments?.map((item,index)=>(
                     <div key={index}>
                         <p>{index+1}. {item.name}</p>
                     </div>

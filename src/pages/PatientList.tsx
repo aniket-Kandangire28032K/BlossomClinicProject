@@ -14,6 +14,8 @@ const PatientList = () => {
     address: number;
     symptoms: string;
     email:String;
+    history:String;
+    opdno:String;
   }
   const [list, setList] = useState<Patient[]>([]);
   const [singlename, setName] = useState("");
@@ -45,7 +47,7 @@ const PatientList = () => {
       const res = await axios.get(
         `${URL}/singlepatient?name=${singlename}`
       );
-      console.log(res.data.card);
+      // console.log(res.data.card);
       setPatient(res.data.card);
       toast.success("Patient Found");
     } catch (error) {
@@ -88,13 +90,12 @@ const PatientList = () => {
         <thead>
           <tr>
             <th>No.</th>
-            {/* <th>OPD No.</th> */}
             <th>Date</th>
+            <th>OPD No.</th>
             <th>Patient Name</th>
             <th>Age</th>
             <th>Contact</th>
-            <th>Email</th>
-            <th>Address</th>
+            <th>History</th>
             
           </tr>
         </thead>
@@ -105,12 +106,11 @@ const PatientList = () => {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{p.date}</td>
+                <td>{p.opdno}</td>
                 <td>{p.name}</td>
                 <td>{p.age}</td>
                 <td>{p.contact}</td>
-                <td>{p.email}</td>
-                <td>{p.address}</td>
-                
+                <td>{p.history}</td>
               </tr>
             ))
           ) : (

@@ -34,6 +34,20 @@
 form h1 {
   text-align: center;
 }
+.login form p{
+  width: max-content;
+  margin: 0 auto;
+  color: #008f0f;
+  background-color: rgba(0, 0, 0, 0.21);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all ease-in-out 0.2s;
+}
+.login form p:hover{
+  background-color: rgba(0, 0, 0, 0.51);
+  color: #fff;
+
+}
 form .inputfield {
   position: relative;
   padding: 0.3rem;
@@ -75,22 +89,24 @@ form .inputfield input:not(:placeholder-shown) + label {
 
 .login form button {
   display: block;
-  width: 70%;
+  width: 80%;
   margin: 0.5rem auto;
   color: white;
   padding: 0.5rem;
   background-color: var(--bluegreenDark);
-  border: 2px solid var(--bluegreenDark);
+  /* border: 2px solid var(--bluegreenDark); */
+  border: none;
   font-weight: 600;
   font-size: 1.6rem;
-  border-radius: 0.5rem;
-  /* box-shadow: 0px 0px 7px #00000080; */
+  corner-shape:squircle;
+  border-radius: 90px;
+  
   transition: all ease-in-out 0.2s;
 }
 .login form button:hover{
   background-color: #008080;
   border-color: #008080;
-  transform: scale(1.1);
+  transform: scale(1);
 
 }
 .login form a {
@@ -99,6 +115,12 @@ form .inputfield input:not(:placeholder-shown) + label {
   font-weight: 600;
   align-self: flex-end;
   margin-right: 3.5rem;
+  transition: all ease-in-out 0.2s;
+  border-bottom: 2px solid transparent;
+}
+.login form a:hover{
+  border-bottom: 2px solid tomato;
+  
 }
 /* Error Page */
 .errorpage {
@@ -192,6 +214,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   min-height:45dvh ;
   position: relative;
   max-width: 100dvh;
+  text-transform: capitalize;
   background-color: white;
   text-align: left;
   display: flex;
@@ -226,7 +249,9 @@ form .inputfield input:not(:placeholder-shown) + label {
   display: flex;
   font-size: 1rem;
   justify-content: space-between;
+  text-transform: capitalize;
 }
+
 .print-area .sub-footer{
   width: 70%;
   line-height: 300%;
@@ -328,7 +353,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   text-align: end;
 }
 .dashboard form {
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
   display: flex;
   gap: 0.8rem;
@@ -338,6 +363,9 @@ form .inputfield input:not(:placeholder-shown) + label {
   padding: 0.7rem 1rem;
   width: 100%;
   margin: .5rem 0;
+}
+.dashboard form > input:nth-of-type(2){
+  text-transform: capitalize;
 }
 .dashboard form > input[type=number]::-webkit-inner-spin-button,
 .dashboard form > input[type=number]::-webkit-outer-spin-button {
@@ -356,20 +384,26 @@ form .inputfield input:not(:placeholder-shown) + label {
   width: 100%;
   margin: 1rem 0;
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .dashboard form .product-form > input {
-  padding: 0.7rem 1rem;
+  padding: 0.5rem 0.7rem;
+}
+.dashboard form .product-form > select{
+  width: 30%;
 }
 .dashboard form .product-form > input:nth-of-type(1) {
   width: 40%;
 }
 .dashboard form .product-form > input:nth-of-type(2) {
-  width: 40%;
+  width: 15%;
 }
 .dashboard form .product-form > input:nth-of-type(3) {
-  width: 12%;
+  width: 15%;
 }
+/* .dashboard form .product-form > input:nth-of-type(4) {
+  width: 10%;
+} */
 .dashboard form .product-form > button {
   padding: 0.3rem 1.2rem;
   border: none;
@@ -378,8 +412,10 @@ form .inputfield input:not(:placeholder-shown) + label {
 }
 .dashboard form .product-table,
 .dashboard form .treatment-table {
-  width: 100%;
   visibility: visible;
+  width: min-content;
+  min-width: 50%;
+  margin: 0 auto;
   border-collapse: collapse;
   border: 1px solid black;
 }
@@ -387,17 +423,24 @@ form .inputfield input:not(:placeholder-shown) + label {
   background-color: royalblue;
   color: white;
   font-weight: bold;
+  
 }
-.dashboard tr td:nth-of-type(2) {
-  width: 60%;
+.dashboard tr td:last-of-type {
+  width: 20%;
 }
-.dashboard tr td:nth-of-type(3) {
-  width: 10%;
-}
+/* .dashboard form .product-table tr td:first-of-type{} */
 .product-table tr td,
 .treatment-table tr td {
-  padding: 0.3rem 1rem;
+  padding: 0.3rem 0.5rem;
+  /* text-align: center; */
   text-wrap: nowrap;
+}
+.dashboard form .treatment-table tr td:nth-of-type(1){
+  width: 50%;
+}
+.dashboard form .treatment-table tr td:nth-of-type(2){
+  width: 15%;
+  /* border: 2px solid red; */
 }
 .treatment-Form {
   width: 100%;
@@ -470,34 +513,51 @@ tr td:hover .del-btn {
 /* patient form */
 .patientform {
   background: url("/background_1.jpg") bottom / cover fixed;
+  
   min-height: 100dvh;
 }
-.patientform h2 {
-  margin-left: 3rem;
-  padding: 1rem;
+.patientform > p {
+  margin-right: 1.3rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-align: end;
+  
 }
-.patientform form {
-  width: 70%;
-  margin-left: 3rem;
+.patientform form{
+  width: 40%;
+  margin-left: 5rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem 0;
-  justify-content: center;
+  grid-template-columns: repeat(4,1fr);
+  gap: 2rem ;
 }
 .patientform h3 {
   padding: .5rem 2rem;
 
 }
+.patientform form h3{
+  grid-column: span 4;
+}
 .patientform form > input,
 .patientform form div > input,
-.patientform form select {
+.patientform form select {  
   border: none;
   border-bottom: 2px solid navy;
-  width: 80%;
-  grid-column: span 5;
+  /* width: 80%; */
+  grid-column: span 2;
   padding: 0.5rem;
   gap: 0.5rem 0;
   font-size: 1.2rem;
+  background-color: transparent;
+}
+.patientform form .DOB{
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.patientform form > input:first-of-type{
+  text-transform: capitalize;
 }
 .patientform form > input:focus,
 .patientform form div > input:focus {
@@ -512,7 +572,7 @@ tr td:hover .del-btn {
 .patientform form .btngrp {
   margin: 0 auto;
   width: 50%;
-  grid-column: span 8;
+  grid-column: span 2;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -636,9 +696,14 @@ tr td:hover .del-btn {
 }
 
 /* patient-list page*/
+.patient-list{
+  background-color: #efefef;
+  min-height: 100dvh;
+}
 .patient-list h1 {
   text-align: center;
   padding-top: 0.7rem;
+  color: #1A6B5E;
 }
 .patient-list .patient-card {
   width: 35%;
@@ -656,6 +721,10 @@ tr td:hover .del-btn {
 .patient-list .patient-card h3 {
   text-align: center;
   grid-column: span 2;
+  text-transform: capitalize;
+}
+.patient-list .patient-card p{
+  text-transform: capitalize;
 }
 .patient-list .patient-card .icondiv .icon {
   font-size: 6rem;
@@ -674,6 +743,7 @@ tr td:hover .del-btn {
   width: 80%;
   padding: 1rem;
   margin: 0 auto;
+  margin-left: auto;
   /* border: 2px solid; */
   display: flex;
   gap: 1.3rem;
@@ -682,7 +752,7 @@ tr td:hover .del-btn {
 .patient-list form input {
   border: none;
   outline: none;
-  border-bottom: 4px solid var(--bluegreenDark);
+  border-bottom: 2px solid var(--bluegreenDark);
   width: 40%;
   padding: 0.3rem;
   font-size: 1.2rem;
@@ -712,11 +782,13 @@ tr td:hover .del-btn {
 
 .patient-list table {
   border: 1px solid;
-  min-width: 80%;
+  background-color: #ecececec;
+  min-width: 90%;
   margin: 0 auto;
   border-collapse: collapse;
   text-align: center;
   margin-top: 1.7rem;
+  
 }
 .patient-list table thead {
   background-color: var(--bluegreenDark);
@@ -738,27 +810,28 @@ tr td:hover .del-btn {
 .patient-list .patient-table tbody tr td {
   padding: 0.5rem;
   border: 1px solid #111;
+  text-transform: capitalize;
 }
 .patient-list .patient-table tbody tr:nth-of-type(even) {
-  background-color: rgba(255, 255, 255, 0.61);
+  background-color: #fff;
 }
-
-.patient-list
 
 /* Mr List */
 .mr-list h1 {
-  text-align: center;
+  text-align: center ;
   padding-top: 0.7rem;
+  color: teal;
 }
-.mr-list form {
+.mr-list > form {
   width: 50%;
-  padding-top: 0.7rem;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 1rem;
+  padding-top: 0.7rem; 
   display: flex;
   gap: 1.1rem;
   justify-content: center;
 }
-.mr-list form input {
+.mr-list > form input {
   padding: 0.3rem;
   font-size: 1.1rem;
   width: 50%;
@@ -789,12 +862,16 @@ tr td:hover .del-btn {
 }
 .mr-list table {
   border: 2px solid;
-  max-width: 80%;
+  min-width: 90%;
   margin: 0 auto;
-  
   border-collapse: collapse;
   text-align: center;
   margin-top: 1rem;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.mr-list th,.mr-list td{
+  border:2px solid #3498db;
 }
 .mr-list table thead {
   background-color: var(--bluegreenDark);
@@ -807,9 +884,16 @@ tr td:hover .del-btn {
 .mr-list .mr-table tbody tr td {
   padding: 0.5rem;
   border: 1px solid #000;
+  text-transform: capitalize;
+}
+.mr-list .mr-table tbody tr td:nth-of-type(3){
+  text-transform: none;
+}
+.mr-list .mr-table tbody tr td ul{
+  list-style-type: none;
 }
 .mr-list .mr-table tbody tr:nth-of-type(even) {
-  background-color: rgba(255, 255, 255, 0.71);
+  background-color: rgb(238, 241, 255);
 }
 
 /* Medicine List page */
@@ -851,46 +935,163 @@ tr td:hover .del-btn {
   font-weight: 600;
 }
 .meds-list table {
-  border: 2px solid;
-  max-width: 80%;
+  border: 2px solid transparent;
+  background-color: #fff;
+  width: 90%;
   margin: 0 auto;
   border-collapse: collapse;
   text-align: center;
   margin-top: 1rem;
+
 }
 .meds-list table thead {
-  background-color: var(--bluegreenDark);
-  color: white;
+  /* background-color: var(--bluegreenDark); */
+
+  color: #008080;
 }
 .meds-list table thead tr th {
   padding: 0.8rem;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
 }
 .meds-list table tbody tr td {
   padding: 0.5rem;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
+}
+.meds-list table tbody tr td:nth-of-type(2){
+  text-transform: capitalize;
 }
 .meds-list table tbody tr:nth-of-type(even) {
-  background-color: rgba(255, 255, 255, 0.71);
+  background-color:rgb(197, 234, 255);
+}
+@scope (.meds-list){
+  thead tr th{
+    /* border: 2px solid #1e1e1e; */
+    background-color: royalblue;
+    color: #fff;
+
+  }
+  tbody tr td{
+    border: 2px solid #21212111;
+  }
 }
 
 /* mr form Page */
 .mr-form {
   background: white;
   min-height: 100dvh;
-}
-.mr-form h1 {
-  padding-top: 1rem;
-}
-.mr-form form {
   padding-bottom: 2rem;
 }
-.mr-form form .inputfield {
+.mr-form h1 {
+  text-align: center;
+  padding-top: 0.7rem;
+}
+.mr-form h3{
+  text-align: end;
+  margin-right: .7rem;
+}
+.mr-form form {
+  display: grid;
+  width: 70%;
+  margin: 0 auto;
+  gap: 0;
+  grid-template-columns: repeat(4,1fr);
+}
+.mr-form form .products{
+  grid-column: span 4;
+}
+.mr-form form .products p{
+  font-weight: 500;
+  padding-left: 0.3rem;
+  font-size: 1.5rem;
+}
+.mr-form form .products label{
+  font-size: 1.2rem;
+  
+}
+.mr-form form .products input{
+  padding: 0.54rem;
+  font-size: 1.2rem;
+  display: inline;
+  margin: 0.5rem;
+  width: 50%;
+  outline-color:teal ;
+  outline-width: 5px;
+  border: none;
+  border-radius: 8px;
+  outline: 1px solid #ccc;
+}
+.mr-form form .products input:nth-of-type(1){
   width: 60%;
-  margin: 1rem auto;
+}
+.mr-form form .products input:nth-of-type(2){
+  width: 7%;
+}
+.mr-form form .products input:nth-of-type(3){
+  width: 7%;
+}
+.mr-form form .products > button{
+  padding: 0.7rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+  color: #fff;
+  border: none;
+}
+.mr-form form .products .product-list{
+  width: 70%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  border-radius:8px ;
+  background-color: #f0f8ff;
+}
+.mr-form form .products .product-list thead tr th{
+  background-color: royalblue;
+  text-align: center;
+  color: #fff;
+  padding: 0.3rem;
+}
+.mr-form form .products .product-list thead tr th:nth-of-type(2){
+  width: 20%;
+}
+.mr-form form .products .product-list thead tr th:nth-of-type(3){
+  width: 30%;
+}
+.mr-form form .products .product-list tbody tr td{
+  color: black;
+  padding: 0.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+.mr-form form .products .product-list td{
+  border: 1px solid #ccc;
+}
+.mr-form form .products .product-list tbody tr td:nth-of-type(4){
+  text-align: center;
+  width: 7%;
+}
+
+.mr-form form .products .product-list tbody tr td  button{
+  /* background-color: transparent; */
+  color: crimson;
+  border: none;
+  transition: all ease-in-out 0.2s;
+}
+.mr-form form .products .product-list tbody tr td  button:hover{
+  transform: scale(1.3);
+}
+.mr-form form .inputfield {
+  width: 90%;
+  grid-column: span 2;
+  margin: 1rem 0;
+}
+.mr-form form .inputfield:nth-of-type(2) input{
+  text-transform: capitalize;
+}
+.mr-form form .inputfield:nth-of-type(10){
+  grid-column: 2/4;
 }
 .mr-form form .btn-grp {
-  width: 100%;
+  grid-column: span 4;
   display: inline-flex;
   gap: 1rem;
   justify-content: center;
@@ -906,6 +1107,7 @@ tr td:hover .del-btn {
 }
 .mr-form form .btn-grp button:hover {
   box-shadow: 0 7px 12px rgb(0 0 0 / 0.5);
+  border-color: transparent;
 }
 .mr-form form .btn-grp button:nth-of-type(1) {
   background: var(--bluegreenDark);
@@ -919,15 +1121,17 @@ tr td:hover .del-btn {
 
 .stock {
   min-height: 100dvh;
-  display: grid;
-  place-items: center;
+  padding-top: 2rem;
+  /* display: grid; */
+  /* place-items: center; */
 }
 .stock form {
   width: 60%;
-  height: 50dvh;
+  padding: 1.5rem 0;
+  height: max-content;
   background-color: white;
   margin: 0 auto;
-  border-radius: 1rem;
+  border-radius: 12px;
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
@@ -1118,6 +1322,7 @@ tr td:hover .del-btn {
 .sales-report h1{
   text-align: center;
 }
+
 .sales-report form{
   width: 50%;
   margin: .7rem auto;
@@ -1147,16 +1352,29 @@ tr td:hover .del-btn {
   padding: .5rem;
   border: 1px solid #aaa;
 }
-
-.sales-report table{
-  width: 67%;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: 5rem;
-  margin-top: 1rem;
-
+.sales-report .table-wrapper{
+  width: 80%;
+  height: 50dvh;
+  margin: 0 auto;
+  margin-top: 2rem;
+  overflow: auto;
+  border-bottom: 2px solid #ccc;
+  
+  scrollbar-width: none;
+  
+  
+  
 }
-
+.sales-report table{
+  width: 100%;  
+  border-collapse: collapse;
+  border: 1px solid #Ccc;
+}
+.sales-report table thead tr{
+  position: sticky;
+  top: -3px;
+  border: none;
+}
 .sales-report table thead tr:nth-of-type(1) th{
   background-color: var(--bluegreenDark);
   color: #fff;
@@ -1170,6 +1388,10 @@ tr td:hover .del-btn {
 .sales-report table tbody tr td ol{
   width: 70%;
   margin: 0 auto;
+}
+.sales-report table tfoot{
+  position: sticky;
+  bottom: -2px;
 }
 .sales-report table tfoot tr td{
   padding: .7rem;
@@ -1202,59 +1424,78 @@ tr td:hover .del-btn {
   padding-top: 1rem;
   color: var(--bluegreenDark);
 }
-.mr-payment form{
-    width: 50%;
+.mr-payment > form{
+    width: 70%;
     margin: 1rem auto;
     padding: 1rem .1rem;
     display: flex;
-    align-items: center;
+    gap: 0.2rem;
     font-size: 1.1rem;
 }
-.mr-payment form input{
+.mr-payment > form div:nth-of-type(2){
+  width: 30%;
+}
+.mr-payment  form  input{
   font-size: 1.5rem;
 }
+.mr-payment > form > div > input:nth-of-type(2){
+  background-color: red;
+}
 .mr-payment form .btn-group{
-  padding-top: 2rem;
+  width: 40%;
+  padding-top: 0.7rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
 }
-.mr-payment .mr-list{
-  width: 90%;
+.mr-payment form .btn-group button{
+  padding:0.7rem 1.2rem;
+}
+.mr-payment > .mrlist{
+  width: 100%;
   padding: .7rem;
-  margin: 1rem auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill,1fr);
+  display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
-.mr-payment .mr-list .card{
-  font-size: 1.2rem;
-  width: max-content;
-  min-width: 300px;
-  padding: 1rem 2rem;
+.mr-payment > .mrlist .card{
+  font-size: 1.1rem;
+  user-select: none;
+  width:23% ;
+  padding: 1rem;
   background-color: white;
   border: none;
-  border-radius: 18px;
-  box-shadow: 0 0 15px #00000081 inset;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #00000081;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
   gap: .7rem;
 }
-.mr-payment .mr-list .card .red{
+.mr-payment .mrlist .card .red{
   color: red;
   font-weight: 500;
 }
-.mr-payment .mr-list .card .green{
+.mr-payment .mrlist .card .green{
   color: green;
   font-weight: 500;
 }
-.mr-payment .mr-list input{
+.mr-payment .mrlist input{
   width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 2px solid #000;
+  
 }
-.mr-payment .mr-list button{
-  width: 100%;
+.mr-payment .mrlist button{
+  width: 90%;
+  margin: 0 auto;
   font-weight: 500;
   font-size: 1.2rem;
+  background-color: var(--bluegreenDark);
+  color: #fff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
 }
 
 /* prescriptions Page */
@@ -1373,4 +1614,148 @@ border-radius: 8px;
 .lock-container a{
   text-decoration: none;
   color: #006f6f;
+}
+.expenses{
+  min-height:100dvh ;
+}
+.expenses h1{
+  text-align: center;
+  padding: 1.2rem;
+  color: #fff;
+}
+.expenses form{
+  margin: 0 auto;
+  padding:2rem ;
+  
+  border-radius: 18px;
+  display: flex;
+  gap: 0.7rem;
+  background-color: white;
+  flex-direction: column;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+}
+.expenses form > h3{
+  text-transform: uppercase;
+}
+.expenses form > p {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.expenses form > input{
+  padding: 0.5rem;
+}
+.expenses form div > input{
+  padding: 0.2rem 0.7rem;
+  margin:0.1rem 0.7rem;
+}
+.expenses form div > button{
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+}
+.expenses form >button{
+  padding: 0.5rem;
+  width: max-content;
+  color: royalblue;
+  background-color: transparent;
+  
+  border: none;
+  font-weight: 500;
+}
+.expenses form >button:last-of-type{
+  background-color: teal;
+  width: 90%;
+  margin: 0 auto;
+  color: #fff;
+  padding: .71rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+}
+.new-password-page{
+  /* background-color: white; */
+  /* background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%); */
+  background-color: #f8fafb;
+  min-height: 100dvh;
+  width: 100dvw;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+}
+.new-password-page > h1{
+  text-align: center;
+  margin-top: 2rem;
+  text-transform: uppercase;
+  color: #212121;
+  /* text-shadow: 0 0 15px   #000000; */
+}
+.new-password-page > form{
+  display: flex;
+  background-color: #fff;
+  /* background-color: #212121; */
+  margin: 0 auto;
+  margin-top: 1rem;
+  border: none;
+  outline: 2px solid white;
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  gap: .51rem;
+  flex-direction: column;
+  width: 30%;
+  box-shadow: -10px -10px 20px #ffffff80,10px 10px 20px #00000080;
+}
+.new-password-page > form span{
+  margin: 0 auto;
+  color: #ccc;
+}
+.new-password-page > form  label{
+  color: #666;
+  font-size: 1.1rem;
+}
+.new-password-page > form  input{
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid lightgray;
+  color: #000;
+  font-size: 1.2rem;
+}
+.new-password-page > form  input:last-of-type{
+  anchor-name: --lastinput;
+}
+.new-password-page > form > .eye-btn{
+  width: 2rem;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  aspect-ratio: 1;
+  font-size: 1.2rem;
+  color: #444;
+  transition: ease-in-out all 0.2s;
+  position: absolute;
+  position-anchor: --lastinput;
+  top: anchor( top);
+  left: calc(anchor(right) - 3rem);
+}
+.new-password-page > form > .eye-btn:hover{
+box-shadow: none;
+/* color: #111; */
+}
+.new-password-page > form > button[type='submit']{
+  padding: 1rem 0;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 8px;
+  background:royalblue;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.2rem; 
+  transition: all ease-in-out 0.3s;
+  text-transform: uppercase;
+}
+.new-password-page > form > button:hover{
+  transform: scale(1);
+}
+.new-password-page > form > button[type="submit"]:hover{
+  background-color: rgb(0, 0, 96);
 }

@@ -19,6 +19,8 @@ const Mrreminders = lazy(()=> import('../pages/MRreminders.tsx'))
 const MrPayment = lazy(()=> import('../pages/MRPayment.tsx'))
 const Prescription = lazy(()=> import('../pages/PrescriptionPage.tsx'))
 const Disabled = lazy(()=>import('../pages/LockFeatures.tsx'))
+const Expense = lazy(()=> import('../pages/Expenses.tsx'))
+const Password = lazy(()=>import("../pages/NewPassword.tsx"))
 import Loader from "./Loader";
 
 const Main = () => {
@@ -52,11 +54,13 @@ const Main = () => {
             <Route path='/sales' element={ jobRole == 'doctor' ? <Sales/> : <Navigate to='/patientform'/>}/>
             <Route path='/prescriptions' element={ jobRole == 'doctor' ? <Prescription/> : <Navigate to='/patientform'/>}/>
             <Route path='/sms' element={ jobRole == 'doctor' ? <Disabled/> : <Navigate to='/patientform'/>}/>
+            <Route path='/other_expenses' element={ jobRole == 'doctor' ? <Expense/> : <Navigate to='/patientform'/>}/>
             <Route path='/whatsapp' element={ jobRole == 'doctor' ? <Disabled/> : <Navigate to='/patientform'/>}/>
             <Route path='/reminders' element={<Reminders/>}/>
             <Route path='/mr-reminders' element={<Mrreminders/>}/>
             <Route path='/patientform' element={<Patientform/>}/>
             <Route path='/patientlist' element={<PatientList/>}/>
+            <Route path="/new-password" element={<Password/>}/>
             
             <Route path='*' element={<ErrorPage/>} />
             <Route path='/load' element={<Loader/>} />

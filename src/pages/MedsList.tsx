@@ -40,7 +40,7 @@ const MedsList = () => {
   }
   return (
     <div className="meds-list">
-      <h1>Medicine list</h1>
+      <h1>Inventory</h1>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <input type="text" placeholder="Enter Medicine Name" onChange={e=> setMedName(e.target.value)}/>
         <button type="submit">Search</button>
@@ -50,9 +50,10 @@ const MedsList = () => {
         <thead>
           <tr>
             <th>Medincine Name</th>
+            <th>Company</th>
             <th>MR</th>
-            <th>batch No.</th>
-            <th>expire Date</th>
+            {/* <th>batch No.</th> */}
+            {/* <th>expire Date</th> */}
             <th>stock</th>
             <th>Unit Price</th>
             <th>Total Price</th>
@@ -63,9 +64,10 @@ const MedsList = () => {
             medName && 
             <tr>
               <td>{singleMed.medicinename}</td>
+              <td>{singleMed.companyname}</td>
               <td>{singleMed.mrname}</td>
-              <td>{singleMed.batchno}</td>
-              <td>{singleMed.expiredate}</td>
+              {/* <td>{singleMed.batchno}</td> */}
+              {/* <td>{singleMed.expiredate}</td> */}
               <td>{singleMed.stock}</td>
               <td>{singleMed.unitprice}</td>
               <td>{singleMed.totalprice}</td>
@@ -74,9 +76,10 @@ const MedsList = () => {
           { medsList.map((e:any,i:number)=>(
             <tr key={i}>
               <td>{e.medicinename}</td>
+              <td>{e.companyname}</td>
               <td>{e.mrname}</td>
-              <td>{e.batchno}</td>
-              <td>{e.expiredate}</td>
+              {/* <td>{e.batchno}</td> */}
+              {/* <td>{e.expiredate}</td> */}
               <td>{e.stock}</td>
               <td>{e.unitprice}</td>
               <td>{e.totalprice}</td>

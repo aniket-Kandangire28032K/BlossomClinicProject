@@ -27,7 +27,7 @@ const Dashboard = () => {
   // product States
   const [productName, setProductName] = useState("");
   const [productRemark, setProductRemark] = useState("");
-  const [productPrice, setProductPrice] = useState("");
+  const [productPrice, setProductPrice] = useState<Number>(0);
   const [productList, setProductList] = useState<any>([]);
   const [productQty, setProductQty] = useState<any>(0);
 
@@ -36,10 +36,21 @@ const Dashboard = () => {
   const [treatmentPrice, setTreatmentPrice] = useState("");
   const [treatmentList, setTreatmentList] = useState<any>([]);
 
+
+  // Mr states
+  const [meds,setMeds] = useState<any>([])
+  const getMRList = async()=>{
+    try {
+      const res = await axios.get(`${URL}/medicine`);
+      setMeds(res.data)
+      console.log(res.data)
+    } catch (error) { 
+      console.log(error)
+    }
+  }
   const addProducts = () => {
     // add Product to List
-
-    if (productName.length == 0 || productPrice.length == 0)
+    if (productName.length == 0 || productPrice == 0)
       return alert("Please Enter Value in All fields");
     const object = {
       name: productName,
@@ -49,7 +60,7 @@ const Dashboard = () => {
     };
     setProductList([...productList, object]);
     setProductName("");
-    setProductPrice("");
+    setProductPrice(0);
     setProductRemark("");
     setProductQty("");
   };
@@ -60,7 +71,7 @@ const Dashboard = () => {
   };
   const addTreatment = () => {
     // add Treatment to List
-    if (treatmentName.length == 0 && treatmentPrice.length == 0)
+    if (treatmentName.length == 0 || treatmentPrice.length == 0)
       return alert("Please Enter Value in All fields");
     const object = {
       name: treatmentName,
@@ -74,6 +85,7 @@ const Dashboard = () => {
     setTreatmentList(treatmentList.filter((_: any, i: number) => i !== index));
   };
 
+
   useEffect(() => {
     // Default Date Save
     const d = new Date();
@@ -86,6 +98,7 @@ const Dashboard = () => {
       ...formData,
       date: today,
     });
+    getMRList();
   }, []);
 
   useEffect(() => {
@@ -113,7 +126,10 @@ const Dashboard = () => {
       [name]: value,
     });
   };
-
+  const calTotal=(rate:String)=>{
+    let total = Number(rate) * productQty;
+    setProductPrice(total)
+  }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const nextDate = formData.nextAppointmentDate
@@ -170,12 +186,14 @@ const Dashboard = () => {
         />
 
         <div className="product-form">
-          <input
-            type="text"
-            placeholder="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-          />
+          <select value={productName} onChange={e=> setProductName(e.target.value)}>
+            <option value="">Products</option>
+            {
+              meds.map((item:any)=>(
+                <option key={item._id} value={item.medicinename}>{item.medicinename}</option>
+              ))
+            }
+          </select>
           <input
             type="text"
             placeholder="Remark"
@@ -185,15 +203,17 @@ const Dashboard = () => {
           <input
             type="number"
             placeholder="Qty:"
+            min={1}
             value={productQty}
             onChange={(e) => setProductQty(e.target.value)}
             
           />
           <input
-            type="text"
+            type="number"
             placeholder="Price"
-            value={productPrice}
-            onChange={(e) => setProductPrice(e.target.value)}
+            onChange={(e) => {
+              calTotal(e.target.value)
+            }}
           />
           <button type="button" onClick={addProducts}>
             Add
@@ -216,7 +236,7 @@ const Dashboard = () => {
                   <td>{e.remark}</td>
                   <td>{e.qty}</td>
                   <td>
-                    Rs.{e.price}{" "}
+                    Rs.{e.price}
                     <button
                       type="button"
                       className="del-btn"
@@ -286,7 +306,10 @@ const Dashboard = () => {
         <div className="btn-group">
           <button type="submit">Submit</button>
           <button type="reset">Reset</button>
-          <button type="button" onClick={() => window.print()}>
+          <button type="button" 
+          onClick={() => window.print()}
+          
+          >
             Print
           </button>
         </div>

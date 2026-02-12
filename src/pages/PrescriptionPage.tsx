@@ -8,7 +8,7 @@ const PrescriptionPage = () => {
   const getAllPrescriptions = async () => {
     try {
       const res = await axios.get(`${URL}/prescription`);
-      console.log(res.data);
+      // console.log(res.data);
 
       setList(res.data);
     } catch (error) {

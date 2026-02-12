@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const MRreport = () => {
+const MRreport = ({month}:any) => {
   const URL = import.meta.env.VITE_Backend_URL;
   type MR = {
     companyname: string;
@@ -34,42 +34,43 @@ const MRreport = () => {
     totalamount: number;
     date: string;
   };
-  const [dataMonth, setDataMonth] = useState("");
+  // const [dataMonth, setDataMonth] = useState(month);
+  const dataMonth = month;
   const [mrList, setMrList] = useState<MR[]>([]);
-  const [filtered, setFiltered] = useState<MR[]>([]);
   const [totals, setTotals] = useState({
     paid: 0,
     due: 0,
     total: 0,
   });
-
+  const getMR = async () => {
+    try {
+      const res = await axios.get(`${URL}/mrlist`);
+      setMrList(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // useEffect(()=>{
+  //   setDataMonth(month.split("-").reverse().join("/"))
+  //   console.log(month)
+  // },[month])
+  
   // ---- GET DATA ----
   useEffect(() => {
-    const getMR = async () => {
-      try {
-        const res = await axios.get(`${URL}/mrlist`);
-        setMrList(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     getMR();
-  }, []);
+    handleSubmit();
+  }, [month]);
 
   // ---- FILTER WHEN SUBMIT ----
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
+    // e.preventDefault();
     if (!dataMonth) return;
-
     // input: 2026-01
-    const [year, month] = dataMonth.split("-");
-    const monthString = `${month}/${year}`; // 01/2026
+    // const [month, year] = dataMonth.split("-");
+    // const monthString = `${month}/${year}`; // 01/2026
+    const result = mrList.filter((item) => item?.date?.includes(dataMonth));
 
-    const result = mrList.filter((item) => item?.date?.includes(monthString));
-
-    setFiltered(result);
+    // setFiltered(result);
 
     // totals
     const sums = result.reduce(
@@ -85,7 +86,7 @@ const MRreport = () => {
     setTotals(sums);
   };
 
-  // ---- CHART DATA ----
+  //   ---- CHART DATA ----
   const chartData = {
     labels: ["Paid", "Due", "Total"],
     datasets: [
@@ -96,45 +97,13 @@ const MRreport = () => {
       },
     ],
   };
-  console.log(filtered)
   return (
     <div className="mr-report">
-      <h2 style={{ textAlign: "center" }}>MR Report</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="month"
-          value={dataMonth}
-          onChange={(e) => setDataMonth(e.target.value)}
-        />
-        <button type="submit" style={{ marginLeft: "10px" }}>
-          Submit
-        </button>
-        <button
-          type="reset"
-          style={{ marginLeft: "10px" }}
-          onClick={() => {
-            setDataMonth("");
-            setFiltered([]);
-            setTotals({ paid: 0, due: 0, total: 0 });
-          }}
-        >
-          Clear
-        </button>
-      </form>
-
-      {/* Chart */}
+      {dataMonth  &&
       <div className="chart">
-        {dataMonth && <Bar data={chartData} />}
-      </div>
-
-      {/* Totals
-      <div style={{ marginTop: "20px" }}>
-        <h4>Summary</h4>
-        <span>Paid: {totals.paid}</span>
-        <span>Due: {totals.due}</span>
-        <span>Total: {totals.total}</span>
-      </div> */}
+          <h3 style={{ textAlign: "center"}}>MR Report</h3>
+         <Bar data={chartData} />
+      </div>}
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { MdFormatListBulleted  } from "react-icons/md";
 import { GoHomeFill } from "react-icons/go";
-import { IoPersonAdd } from "react-icons/io5";
+import { IoPersonAdd,IoPersonCircleSharp } from "react-icons/io5";
 import { HiUsers } from "react-icons/hi";
-import { FaClipboardList,FaChartLine,FaWhatsapp,FaSms} from "react-icons/fa";
+import { FaClipboardList,FaChartLine,FaWhatsapp,FaSms,FaFileMedicalAlt} from "react-icons/fa";
 import { FaBoxOpen,FaFile } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import { FcLock } from "react-icons/fc";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { CiInboxIn } from "react-icons/ci";
 
 const Nav = () => {
   const [open,setOpen]= useState<string | null>(null);
@@ -35,8 +37,7 @@ const toggle=(name:string)=>{
         <Link to='/home'><GoHomeFill className="icon"/>Home</Link>
         <div className="dropdown">
           <div className="dropdown-title" onClick={()=>toggle("patient")}>
-            <span>Patient</span>
-            {open==="patient"? <FaChevronUp className="icon"/> : <FaChevronDown className="icon"/>}
+            <span><FaFileMedicalAlt className="icon"/>Patient{open==="patient"? <FaChevronUp className="icon arrow"/> : <FaChevronDown className="icon arrow"/>} </span>
           </div>
             {
               open === 'patient' && (
@@ -50,8 +51,8 @@ const toggle=(name:string)=>{
         </div>
         <div className="dropdown">
           <div className="dropdown-title" onClick={()=>toggle("MR")}>
-            <span>MR</span>
-            {open==="MR" ? <FaChevronUp className="icon"/> :<FaChevronDown className="icon"/>}
+            <span><IoPersonCircleSharp className="icon"/>MR{open==="MR" ? <FaChevronUp className="icon arrow"/> :<FaChevronDown className="icon arrow"/>} </span>
+            
           </div>
             {
               open === 'MR' && (
@@ -65,23 +66,23 @@ const toggle=(name:string)=>{
         </div>
         <div className="dropdown">
           <div className="dropdown-title" onClick={()=>toggle("medicine")}>
-            <span>Medicine</span>
-            {open==="medicine"? <FaChevronUp className="icon"/> :<FaChevronDown className="icon"/>}
+            <span><CiInboxIn className="icon"/>Inventory{open==="medicine"? <FaChevronUp className="icon arrow"/> :<FaChevronDown className="icon arrow"/>}</span>
+            
           </div>
             {
               open === 'medicine' && (
                 <div className="dropdown-menu">
-                  <Link to='/inventory'>< FaFile className="icon"/>Medicine Form</Link>
-                  <Link to='/medicine'><MdFormatListBulleted className="icon"/>Medicine List</Link>
-                  <Link to='/stock'><FaBoxOpen className="icon"/>Stock</Link>
+                  {/* <Link to='/inventory'>< FaFile className="icon"/>Medicine Form</Link> */}
+                  <Link to='/medicine'><MdFormatListBulleted className="icon"/>Products</Link>
+                  <Link to='/stock'><FaBoxOpen className="icon"/>Stock Update</Link>
                 </div>
               )
             }
         </div>
         <div className="dropdown">
           <div className="dropdown-title" onClick={()=>toggle("reminder")}>
-            <span>Reminders</span>
-            {open==="reminder"? <FaChevronUp className="icon"/> :<FaChevronDown className="icon"/>}
+            <span><IoIosNotifications className="icon"/>Reminders{open==="reminder"? <FaChevronUp className="icon arrow"/> :<FaChevronDown className="icon arrow"/>}</span>
+            
             </div>
             {
               open === 'reminder' && (
@@ -94,8 +95,7 @@ const toggle=(name:string)=>{
         </div>
         <div className="dropdown">
           <div className="dropdown-title" onClick={()=>toggle("marketing")}>
-            <span>Marketing <FcLock className="icon"/></span>
-            {open==="marketing"? <FaChevronUp className="icon"/> :<FaChevronDown className="icon"/>}
+            <span><FcLock className="icon"/>Marketing{open==="marketing"? <FaChevronUp className="icon arrow"/> :<FaChevronDown className="icon arrow"/>}</span>
             </div>
             {
               open === 'marketing' && (
@@ -106,6 +106,7 @@ const toggle=(name:string)=>{
               )
             }
         </div>
+        <Link to="/other_expenses"><FaMoneyBillTrendUp className="icon"/>Other Expenses</Link>
         <Link to='/sales'><FaChartLine className="icon"/>Sales Report</Link>
         <Link to='/users'><HiUsers  className="icon"/>Accounts</Link>
         <button onClick={logout} >Logout</button>

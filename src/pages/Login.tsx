@@ -1,6 +1,6 @@
 import axios from "axios";
 import {  useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate,Link } from "react-router-dom"
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -22,14 +22,14 @@ const Login = () => {
     e.preventDefault();
     try {
       const res=await axios.post(`${URL}/user`,formData)
-      toast.success(res.data.message)
-      
+      // toast.success(res.data.message)
       if(res.data.success){
         sessionStorage.setItem('token',res.data.token);
         sessionStorage.setItem('role',res.data.role);
         navigate('/home');
         
-      }else{
+      }
+      else{
         toast.info(res.data.message);
       }
     } catch (error) {
@@ -49,8 +49,9 @@ const Login = () => {
                 <input type="password" autoComplete="off" placeholder=" " id="password" name="password" onChange={handleChange} required/>
                 <label htmlFor="password">Password</label>
             </div>
-            {/* <Link to=''>Forgot Password ?</Link> */}
+            <Link to='/new-password'>Forgot Password?</Link>
             <button type="submit">Login</button>
+            {/* <p><strong>Create an Account</strong></p> */}
         </form>
     </div>
   )

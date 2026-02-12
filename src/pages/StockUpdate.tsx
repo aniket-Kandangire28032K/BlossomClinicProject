@@ -6,6 +6,7 @@ const StockUpdate = () => {
   const URL = import.meta.env.VITE_Backend_URL;
     const [medName,setMedName]=useState('');
     const [stock,setStock]=useState('');
+    const [companyname,setCompanyName]=useState("")
 
     const hnadleSubmit= async (e:any) => {
         e.preventDefault();
@@ -21,15 +22,19 @@ const StockUpdate = () => {
     }
   return (
     <div className="stock">
-      <form onSubmit={hnadleSubmit}>
+      <form onSubmit={hnadleSubmit} autoComplete="off"> 
       <h1>Update Stock</h1>
         <div className="inputfield">
+          <input type="text" id="name" placeholder=" " value={companyname} onChange={e=> setCompanyName(e.target.value)}/>
+          <label htmlFor="name">Enter Comapny name</label>
+        </div>
+        <div className="inputfield">
           <input type="text" id="name" placeholder=" " onChange={e=> setMedName(e.target.value)}/>
-          <label htmlFor="name">Enter Medicine name</label>
+          <label htmlFor="name">Enter Product Name</label>
         </div>
         <div className="inputfield">
           <input type="text" id="stock" placeholder=" " onChange={e=> setStock(e.target.value)}/>
-          <label htmlFor="stock">stock</label>
+          <label htmlFor="stock">Stock</label>
         </div>
         <div className="btg-grp">
           <button type="submit">Update</button>

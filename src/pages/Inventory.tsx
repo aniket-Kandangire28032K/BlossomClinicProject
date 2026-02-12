@@ -16,6 +16,14 @@ const Inventory = () => {
 
     const handleChange=(e:any)=>{
         const {id,value}=e.target;
+        if(id === "expiredate" ){
+            const [year, month,day] = value.split("-")
+            setFormData({
+                ...formData,
+                expiredate:`${day}/${month}/${year}`
+            })
+            return
+        }
         setFormData({
             ...formData,
             [id]:value

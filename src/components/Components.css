@@ -36,6 +36,7 @@
     padding: 0.5rem;
     font-size: 1.2rem;
     border: none;
+    text-transform: capitalize;
     border-bottom: 2px solid black;
     background-color: transparent;
 
@@ -139,7 +140,9 @@
 .del-acc-form div button:nth-of-type(2):hover{
     background-color: white;
 }
-
+.checker{
+    text-align: start;
+}
 .checker h1{
     text-align: center;
     padding: 1rem;
@@ -161,6 +164,7 @@
     border: none;
     border-bottom: 2px solid;
     font-size: 1.1rem;
+    text-transform: capitalize;
 }
 .checker form button{
     font-size: 1.1rem;
@@ -226,6 +230,7 @@
 }
 .checker > .patient-details .popup-body p{
     font-family: serif;
+    text-transform: capitalize;
 }
 .checker > .patient-details .popup-body p > .copy-btn{
     background-color: none;
@@ -273,13 +278,25 @@
     color: #3d3d3d;
 }
 
-.mr-report form{
-    width: 100%;
-    justify-content: end;
-    border: none;
+
+.mr-report{
+    width: 45%;
+    height: max-content;
+    display: inline-block;
+    vertical-align: middle;
 }
-.mr-report .chart{
-    width: 70%;
-    border: none;
-    margin: 0 auto;
+.mr-report > .chart{
+    height: 50dvh;
+    /* border: 2px solid; */
+    width: 100%;
+    
+}
+.expenses-chart{
+    height: 50dvh;
+    width: 45%;
+    vertical-align: middle;
+    display: inline-block;
+}
+.expenses-chart h3{
+    text-align: center;
 }

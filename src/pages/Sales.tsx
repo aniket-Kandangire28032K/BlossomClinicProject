@@ -5,13 +5,14 @@ import { MdFileDownload } from "react-icons/md";
 import * as xlsx from "xlsx";
 import PieChart from "../assets/charts/PieChart";
 import MRreport from "../components/MRreport";
+import ExpensesChart from "../components/ExpensesChart";
 
 const Sales = () => {
   const URL = import.meta.env.VITE_Backend_URL;
   const [presData, setPresData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [day, setDay] = useState<number>(0);
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState<any>("");
   const [totals, setTotals] = useState({
     tretmentTotal: 0,
     productTotal: 0,
@@ -28,23 +29,20 @@ const Sales = () => {
     }
   };
 
-  const filterMointh = (e: any) => {
+  const filterMonth = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // let month = e.target.value;
-    // console.log(month)
     let date = month.split("-").reverse().join("/");
     if (day) {
       let newDate = `${String(day).padStart(2,"0")}/${date}`;
       date = newDate;
     }
-    console.log(date)
     setMonth(date);
     let filteredData = presData.filter((item: any) => item.date.includes(date));
     setFilteredData(filteredData);
   };
+
   useEffect(() => {
     getData();
-    // getMRData();
   }, []);
 
   const DownloadFile = () => {
@@ -82,22 +80,20 @@ const Sales = () => {
   return (
     <div className="sales-report">
       <h1>Sales Report</h1>
-      
-      <form onSubmit={filterMointh}>
+      <form onSubmit={filterMonth}>
         <label>Day:</label>
         <input type="number" max={31} min={0} placeholder="Select Day" value={day} onChange={(e) =>{setDay(Number(e.target.value))} }/>
         <label>Select Month: </label>
         <input type="month" value={month} onChange={(e:any)=> setMonth(e.target.value)}/>
         <button type="submit">Filter</button>
-        <button type="reset" onClick={() => {setFilteredData([]); setDay(0)}}>
-          Clear
-        </button>
+        <button type="reset" onClick={() => {setFilteredData([]); setDay(0)}}>Clear</button>
       </form>
       {filteredData.length > 0 && <BarChart data={filteredData} />}
       {totals.GrandTotal > 0 && <PieChart chartdata={totals} />}
-
+      
       {filteredData.length > 0 && (
-        <table border={1} id="sales-table">
+      <div className="table-wrapper">
+      <table border={1} id="sales-table">
           <thead>
             <tr>
               <th>No.</th>
@@ -150,6 +146,7 @@ const Sales = () => {
             </tr>
           </tfoot>
         </table>
+      </div>
       )}
       {filteredData.length > 0 && (
         <button className="download-button" onClick={DownloadFile}>
@@ -157,7 +154,8 @@ const Sales = () => {
           Download
         </button>
       )}
-      <MRreport/>
+      <MRreport month={month}/>
+      <ExpensesChart month={month}/>
     </div>
   );
 };
