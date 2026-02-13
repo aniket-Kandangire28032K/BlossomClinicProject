@@ -115,7 +115,7 @@ const PatientList = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={5} style={{ textAlign: "center" }}>
+              <td rowSpan={5} style={{ textAlign: "center" }}>
                 No patients found
               </td>
             </tr>

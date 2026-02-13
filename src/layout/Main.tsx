@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { lazy, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
-const Login = lazy(()=>import("../pages/Login"))
+import Login from "../pages/Login.tsx";
 const Dashboard = lazy(()=> import('../pages/Dashboard.tsx'))
 const Patientform = lazy(()=> import('../pages/Patientform.tsx'))
 const ErrorPage = lazy(()=> import('../pages/ErrorPage'))
