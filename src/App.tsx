@@ -1,8 +1,10 @@
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import "./App.css";
 
-import Main from "./layout/Main";
-import Nav from "./layout/Nav";
+// import Main from "./layout/Main";
+const Main = lazy(()=> import('./layout/Main'));
+const Nav = lazy(()=> import('./layout/Nav'));
+// import Nav from "./layout/Nav";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./layout/Loader";
@@ -24,9 +26,9 @@ function App() {
         transition={Bounce}
       />
       <Suspense fallback={<Loader/>}>
-      <nav className="Navbar">
-        <Nav />
-      </nav>
+        <nav className="Navbar">
+          <Nav />
+        </nav>
         <main className="Main">
           <Main />
         </main>
