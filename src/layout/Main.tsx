@@ -61,7 +61,6 @@ const Main = () => {
             <Route path='/patientform' element={<Patientform/>}/>
             <Route path='/patientlist' element={<PatientList/>}/>
             <Route path="/new-password" element={<Password/>}/>
-            
             <Route path='*' element={<ErrorPage/>} />
             <Route path='/load' element={<Loader/>} />
         </Routes>

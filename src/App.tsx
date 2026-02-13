@@ -23,10 +23,10 @@ function App() {
         theme="colored"
         transition={Bounce}
       />
+      <Suspense fallback={<Loader/>}>
       <nav className="Navbar">
         <Nav />
       </nav>
-      <Suspense fallback={<Loader/>}>
         <main className="Main">
           <Main />
         </main>
