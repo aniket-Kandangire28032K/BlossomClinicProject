@@ -190,7 +190,7 @@ const Dashboard = () => {
             <option value="">Products</option>
             {
               meds.map((item:any)=>(
-                <option key={item._id} value={item.medicinename}>{item.medicinename}</option>
+                <option key={item._id} value={item.medicinename}>{item.medicinename} - {item.companyname}</option>
               ))
             }
           </select>

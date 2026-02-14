@@ -353,7 +353,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   text-align: end;
 }
 .dashboard form {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   display: flex;
   gap: 0.8rem;
@@ -1195,34 +1195,87 @@ tr td:hover .del-btn {
 
 /* reminders Page */
 .reminders{
-  padding: 2rem;
-  display: grid;
   width: 100%;
-  grid-template-columns: repeat(4,1fr);
-  gap: 1rem;
+  min-height: 100dvh;
+  background-color: #fff;
 }
 .reminders h1{
-  grid-column: span 4;
-}
-.reminders .container-1,
-.reminders .container-2{
-  grid-column: span 2;
-  width: 100%;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  
+  padding-top: 1.2rem;
+  margin-bottom: 1.5rem;
+  /* background-color: rgb(0 0 0 / 0.2); */
 }
-.reminders .card{
-  border: 2px solid #ccc;
-  background: white;
-  width: 50%;
-  min-height: 70px;
-  text-align: start;
-  margin: 0 auto;
-  padding: .5rem;
+
+@scope (.reminders){
+  .btn-grp{
+    text-align: end;
+    padding-right: 2rem;
+    /* border: 1px solid; */
+  }
+  .btn-grp > *:focus{
+    outline: none;
+  }
+  .btn-grp > button{
+    padding: 0.7rem 2rem;
+    corner-shape:squircle;
+    border-radius: 90px;
+    border: 2px solid royalblue;
+    font-size: 1.2rem;
+    color: royalblue;
+    font-weight: 600;
+    /* vertical-align: top; */
+  }
+  input {
+    vertical-align: top;
+    margin-left: auto;
+    margin-right: 1rem;
+    border: 2px solid royalblue;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    outline: none;
+    corner-shape:squircle;
+    border-radius: 90px;
+    background-color: royalblue;
+    color: #fff;
+  }
+  .table-wrapper{
+    width: 80%;
+    margin: 1rem auto;
+    margin-top: 2rem;
+    height: 60dvh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    border-radius: 8px;
+    
+  }
+  table{
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid transparent !important;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.04),
+                0 8px 12px rgb(0 0 0 / 0.06);
+  }
+  table thead > tr{
+    position: sticky;
+    
+    top: -1px;
+    z-index: 99;
+  }
+  table thead > tr > th {
+    border: 2px solid royalblue;
+    background-color: royalblue;
+    color: #fff;
+    padding: 0.5rem ;
+  }
+  table tbody tr td{
+    z-index: 90;
+    padding: 0.5rem 1.5rem;
+    text-align: center;
+    border: 2px solid #f1f1f1;
+  }
 }
+
 
 .download-btn{
   background-color: var(--bluegreenDark);
@@ -1248,8 +1301,8 @@ tr td:hover .del-btn {
 /* MR reminders Page */
 .mr-reminders {
   padding: 1rem 2rem ;
-  background-color: white;
-  height: min(100dvh);
+  background-color: #f0f9f9;
+  min-height: 100dvh;
 }
 .mr-reminders > h1{
   margin-bottom: 2rem;
@@ -1269,6 +1322,7 @@ tr td:hover .del-btn {
   width: 400px;
   padding:1rem .5rem  ;
   background-color: white;
+  box-shadow: 0px 5px 7px rgb(0 0 0 / 0.3);
   transition: all ease-in-out 0.2s;
 }
 .mr-reminders .card-grid .reminder-card:hover{
