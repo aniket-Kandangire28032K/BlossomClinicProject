@@ -12,7 +12,6 @@ const MRlist = () => {
     try {
       const res = await axios.get(`${URL}/mrlist`);
       setListMr(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
