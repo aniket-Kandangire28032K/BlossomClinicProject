@@ -11,6 +11,9 @@ type OtherExpense = {
   title: string;
   amount: Number;
 };
+type staff = {
+  fullname:string
+}
 
 function Expense() {
   const URL = import.meta.env.VITE_Backend_URL;
@@ -24,7 +27,7 @@ function Expense() {
   const [otherExpenses, setOtherExpenses] = useState<OtherExpense[]>([
     // { title: "", amount: "" }
   ]);
-  const [staffList,setStaffList] = useState([])
+  const [staffList,setStaffList] = useState<staff[]>([])
 
   const getStaff = async () => {
     try {
