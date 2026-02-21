@@ -338,7 +338,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   /* @media Print end */
 }
 .dashboard {
-  background: white;
+  background: #f5f5f5;
   min-height: 100dvh;
   padding-bottom: 1rem;
   
@@ -363,6 +363,8 @@ form .inputfield input:not(:placeholder-shown) + label {
   padding: 0.7rem 1rem;
   width: 100%;
   margin: .5rem 0;
+  border: 1px solid #ccc;
+  box-shadow: 4px 4px 6px rgb(0 0 0 / 0.04);
 }
 .dashboard form > input:nth-of-type(2){
   text-transform: capitalize;
@@ -376,7 +378,9 @@ form .inputfield input:not(:placeholder-shown) + label {
   padding: 0.5rem 2rem;
   text-align: left;
   border: none;
-  border-bottom: 1px solid black;
+  border: 1px solid #ccc;
+  margin-left: 1.2rem;
+  text-transform: uppercase;
 }
 
 /* Product form */
@@ -388,9 +392,13 @@ form .inputfield input:not(:placeholder-shown) + label {
 }
 .dashboard form .product-form > input {
   padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  box-shadow: 4px 4px 6px rgb(0 0 0 / 0.04);
 }
 .dashboard form .product-form > select{
   width: 30%;
+  border: 1px solid #ccc;
+  box-shadow: 4px 4px 6px rgb(0 0 0 / 0.04);
 }
 .dashboard form .product-form > input:nth-of-type(1) {
   width: 40%;
@@ -418,6 +426,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   margin: 0 auto;
   border-collapse: collapse;
   border: 1px solid black;
+  
 }
 .table-head {
   background-color: royalblue;
@@ -450,6 +459,8 @@ form .inputfield input:not(:placeholder-shown) + label {
 }
 .treatment-Form > input{
   padding: .7rem 1rem;
+  border: 1px solid #ccc;
+  box-shadow: 4px 4px 6px rgb(0 0 0 / 0.04);
 }
 .treatment-Form > input:nth-of-type(1) {
   width: 70%;
@@ -507,8 +518,9 @@ tr td:hover .del-btn {
   background-color: #010B13;
 }
 
-.dashboard input{
+.dashboard form input,.dashboard form select{
   outline: none;
+  border-radius: 8px;
 }
 /* patient form */
 .patientform {
@@ -697,7 +709,7 @@ tr td:hover .del-btn {
 
 /* patient-list page*/
 .patient-list{
-  background-color: #efefef;
+  background-color: #f5f5f5;
   min-height: 100dvh;
 }
 .patient-list h1 {
@@ -709,8 +721,8 @@ tr td:hover .del-btn {
   width: 35%;
   background-color: rgba(255, 255, 255, 1);
   margin: 0 auto;
-  border: 2px solid #ccc;
-  box-shadow: 0 10px 15px rgb(0 0 0 /0.5);
+  /* border: 2px solid #ccc; */
+  box-shadow: 0 10px 25px rgb(0 0 0 /0.1);
   padding: 0.2rem 2.3rem;
   padding-bottom: 1rem;
   border-radius: 8px;
@@ -782,7 +794,7 @@ tr td:hover .del-btn {
 
 .patient-list table {
   border: 1px solid;
-  background-color: #ecececec;
+  background-color: #f8f8ff;
   min-width: 90%;
   margin: 0 auto;
   border-collapse: collapse;
@@ -804,13 +816,14 @@ tr td:hover .del-btn {
 .patient-list .patient-table thead tr th {
   padding: 0.8rem;
   text-transform: uppercase;
-  border: 1px solid #000;
+  border: 1px solid whitesmoke;
   color: white;
 }
 .patient-list .patient-table tbody tr td {
   padding: 0.5rem;
   border: 1px solid #111;
   text-transform: capitalize;
+  border: 2px solid #ddd;
 }
 .patient-list .patient-table tbody tr:nth-of-type(even) {
   background-color: #fff;
@@ -977,7 +990,7 @@ tr td:hover .del-btn {
 
 /* mr form Page */
 .mr-form {
-  background: white;
+  background: #f4f4f5;
   min-height: 100dvh;
   padding-bottom: 2rem;
 }
@@ -995,6 +1008,20 @@ tr td:hover .del-btn {
   margin: 0 auto;
   gap: 0;
   grid-template-columns: repeat(4,1fr);
+}
+.mr-form form select{
+ width: 100%; 
+ padding: 0.7rem;
+ border: 1px solid #ccc;
+ box-shadow: 2px 2px 4px rgb(0 0 0 / 0.15);
+ font-weight: 500;
+ outline: none;
+}
+.mr-form form select option{
+  border-radius: 12px;
+}
+.mr-form form select option:hover{
+  background-color: teal;
 }
 .mr-form form .products{
   grid-column: span 4;
@@ -1087,9 +1114,7 @@ tr td:hover .del-btn {
 .mr-form form .inputfield:nth-of-type(2) input{
   text-transform: capitalize;
 }
-.mr-form form .inputfield:nth-of-type(10){
-  grid-column: 2/4;
-}
+
 .mr-form form .btn-grp {
   grid-column: span 4;
   display: inline-flex;
@@ -1198,6 +1223,7 @@ tr td:hover .del-btn {
   width: 100%;
   min-height: 100dvh;
   background-color: #fff;
+  background-color: #f3f5f9;
 }
 .reminders h1{
   text-align: center;
@@ -1218,6 +1244,7 @@ tr td:hover .del-btn {
   .btn-grp > button{
     padding: 0.7rem 2rem;
     corner-shape:squircle;
+    background-color: #f3f5f9;
     border-radius: 90px;
     border: 2px solid royalblue;
     font-size: 1.2rem;
@@ -1250,6 +1277,7 @@ tr td:hover .del-btn {
   }
   table{
     border-collapse: collapse;
+    background-color: #fff;
     width: 100%;
     margin: 0 auto;
     border: 1px solid transparent !important;
@@ -1301,7 +1329,7 @@ tr td:hover .del-btn {
 /* MR reminders Page */
 .mr-reminders {
   padding: 1rem 2rem ;
-  background-color: #f0f9f9;
+  background-color: #f5f5f5;
   min-height: 100dvh;
 }
 .mr-reminders > h1{
@@ -1405,6 +1433,7 @@ tr td:hover .del-btn {
 .sales-report form  input{
   padding: .5rem;
   border: 1px solid #aaa;
+  text-transform: uppercase;
 }
 .sales-report .table-wrapper{
   width: 80%;
@@ -1412,11 +1441,7 @@ tr td:hover .del-btn {
   margin: 0 auto;
   margin-top: 2rem;
   overflow: auto;
-  border-bottom: 2px solid #ccc;
-  
   scrollbar-width: none;
-  
-  
   
 }
 .sales-report table{
@@ -1680,13 +1705,12 @@ border-radius: 8px;
 .expenses form{
   margin: 0 auto;
   padding:2rem ;
-  
-  border-radius: 18px;
+  border-radius: 8px;
   display: flex;
   gap: 0.7rem;
   background-color: white;
   flex-direction: column;
-  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.7);
 }
 .expenses form > h3{
   text-transform: uppercase;
@@ -1724,6 +1748,29 @@ border-radius: 8px;
   padding: .71rem;
   font-size: 1.2rem;
   border-radius: 8px;
+}
+@scope (.expenses){
+  table{
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 1rem;
+    background-color: #fff;
+  }
+  th{
+    padding: 0.5rem;
+    text-transform: uppercase;
+  }
+  td{
+    padding-left: 1.5rem;
+    padding: 0.5rem;
+  }
+  th,td{
+    border: 1px solid #ccc;
+  }
+  td ul{
+    list-style-type: none;
+  }
 }
 .new-password-page{
   /* background-color: white; */
@@ -1812,4 +1859,120 @@ box-shadow: none;
 }
 .new-password-page > form > button[type="submit"]:hover{
   background-color: rgb(0, 0, 96);
+}
+.staff{
+  background-color: #f5f5f5;
+  min-height: 100dvh;
+}
+@scope (.staff){
+  h1{
+    text-align: center;
+    padding-top: 1rem;
+  }
+  form{
+    border: 1px solid transparent;
+    border-radius: 8px;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    box-shadow: 4px 4px 12px rgb(0 0 0 / 0.2);
+    display: grid;
+    gap: 1rem 0;
+    grid-template-columns: repeat(4,1fr);
+  }
+  input:first-of-type{
+    text-transform: capitalize;
+  }
+  form > input,form > select{
+    padding: 0.5rem;
+    padding-left: 0.5rem;
+    grid-column: span 4;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  input:focus,select:focus,textarea:focus{
+    outline: 1px solid royalblue;
+  }
+  form > textarea{
+  max-width: inherit;
+  resize: vertical;
+  padding-left: 0.5rem;
+  padding-top: 0.4rem;
+  border-radius: 8px;
+    border: 1px solid #ccc;
+  grid-column: span 4;
+  }
+  form > div{
+    padding-left: 0.5rem;
+  }
+  label{
+    grid-column: span 0.5;
+  }
+  input[type=date]{
+    padding: 0.4rem;
+    text-transform: uppercase;
+    margin-left: 0.7rem;
+     border-radius: 8px;
+    border: 1px solid #ccc;
+
+  }
+  button{
+    grid-column: 1/2;
+    width: 50%;
+    padding: 0.5rem;
+    corner-shape:squircle;
+    border-radius: 90px;
+    border: 1px solid;
+    background-color: royalblue;
+    color: #fff;
+    font-weight: 500;
+    font-size: large;
+  }
+  table{
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    border: none;
+    box-shadow: 4px 4px 8px rgb(0 0 0 / 0.2);
+    
+  }
+  thead tr,tbody tr {
+    border: 1px solid #ccc;
+  }
+  thead tr th{
+    padding: 0.5rem;
+  }
+  thead tr:nth-of-type(1){
+    font-size: 1.2rem;
+  }
+  thead tr:nth-of-type(2){
+    color: #3d3d3d;
+  }
+  tbody tr td{
+    padding: 0.5rem;
+    padding-left: 1rem;
+    color: #555;
+  }
+  tbody tr td:nth-of-type(2){
+    text-transform: capitalize;
+  }
+  tbody tr td:nth-of-type(5){
+    border-right: none;
+  }
+  tbody tr td:last-of-type{
+    padding: 0;
+    border: none;
+  }
+  tbody tr td button{
+    width: max-content;
+   padding: 0;
+   border: none;
+   font-size: 1.5rem;
+    background-color: transparent;
+    color: crimson;
+    text-align: end;
+    display: inline-block;
+  }
 }

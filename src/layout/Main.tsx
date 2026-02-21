@@ -21,6 +21,7 @@ const Prescription = lazy(()=> import('../pages/PrescriptionPage.tsx'))
 const Disabled = lazy(()=>import('../pages/LockFeatures.tsx'))
 const Expense = lazy(()=> import('../pages/Expenses.tsx'))
 const Password = lazy(()=>import("../pages/NewPassword.tsx"))
+const Staff = lazy(()=> import('../pages/staff.tsx'))
 import Loader from "./Loader";
 
 const Main = () => {
@@ -56,6 +57,7 @@ const Main = () => {
             <Route path='/sms' element={ jobRole == 'doctor' ? <Disabled/> : <Navigate to='/patientform'/>}/>
             <Route path='/other_expenses' element={ jobRole == 'doctor' ? <Expense/> : <Navigate to='/patientform'/>}/>
             <Route path='/whatsapp' element={ jobRole == 'doctor' ? <Disabled/> : <Navigate to='/patientform'/>}/>
+            <Route path='/staff' element={ jobRole == 'doctor' ? <Staff/> : <Navigate to='/patientform'/>}/>
             <Route path='/reminders' element={<Reminders/>}/>
             <Route path='/mr-reminders' element={<Mrreminders/>}/>
             <Route path='/patientform' element={<Patientform/>}/>

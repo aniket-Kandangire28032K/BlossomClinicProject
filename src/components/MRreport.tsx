@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const MRreport = ({month}:any) => {
+const MRreport = ({dates}:any) => {
   const URL = import.meta.env.VITE_Backend_URL;
   type MR = {
     companyname: string;
@@ -34,8 +34,7 @@ const MRreport = ({month}:any) => {
     totalamount: number;
     date: string;
   };
-  // const [dataMonth, setDataMonth] = useState(month);
-  const dataMonth = month;
+  // const datadates = dates;
   const [mrList, setMrList] = useState<MR[]>([]);
   const [totals, setTotals] = useState({
     paid: 0,
@@ -49,42 +48,54 @@ const MRreport = ({month}:any) => {
     } catch (err) {
       console.log(err);
     }
-  };
-  // useEffect(()=>{
-  //   setDataMonth(month.split("-").reverse().join("/"))
-  //   console.log(month)
-  // },[month])
-  
+  };  
   // ---- GET DATA ----
   useEffect(() => {
     getMR();
-    handleSubmit();
-  }, [month]);
+    // handleSubmit();
+  }, [dates]);
+
+  useEffect(() => {
+  if (!dates || mrList.length === 0) return;
+
+  const result = mrList.filter((item) =>
+    dates.includes(item.date)
+  );
+
+  const sums = result.reduce(
+    (acc, item) => {
+      acc.paid += Number(item?.paidamount || 0);
+      acc.due += Number(item?.dueamount || 0);
+      acc.total += Number(item?.totalamount || 0);
+      return acc;
+    },
+    { paid: 0, due: 0, total: 0 }
+  );
+
+  setTotals(sums);
+}, [dates, mrList]);
 
   // ---- FILTER WHEN SUBMIT ----
-  const handleSubmit = () => {
-    // e.preventDefault();
-    if (!dataMonth) return;
-    // input: 2026-01
-    // const [month, year] = dataMonth.split("-");
-    // const monthString = `${month}/${year}`; // 01/2026
-    const result = mrList.filter((item) => item?.date?.includes(dataMonth));
+  // const handleSubmit = () => {
+  //   // e.preventDefault();
+  //   if (!datadates) return;
+  //   const result = mrList.filter((item) => dates.includes(item.date));
 
-    // setFiltered(result);
+  //   // setFiltered(result);
 
-    // totals
-    const sums = result.reduce(
-      (acc, item) => {
-        acc.paid += Number(item?.paidamount || 0);
-        acc.due += Number(item?.dueamount || 0);
-        acc.total += Number(item?.totalamount || 0);
-        return acc;
-      },
-      { paid: 0, due: 0, total: 0 }
-    );
+  //   // totals
+  //   const sums = result.reduce(
+  //     (acc, item) => {
+  //       acc.paid += Number(item?.paidamount || 0);
+  //       acc.due += Number(item?.dueamount || 0);
+  //       acc.total += Number(item?.totalamount || 0);
+  //       return acc;
+  //     },
+  //     { paid: 0, due: 0, total: 0 }
+  //   );
 
-    setTotals(sums);
-  };
+  //   setTotals(sums);
+  // };
 
   //   ---- CHART DATA ----
   const chartData = {
@@ -99,7 +110,7 @@ const MRreport = ({month}:any) => {
   };
   return (
     <div className="mr-report">
-      {dataMonth  &&
+      {
       <div className="chart">
           <h3 style={{ textAlign: "center"}}>MR Report</h3>
          <Bar data={chartData} />

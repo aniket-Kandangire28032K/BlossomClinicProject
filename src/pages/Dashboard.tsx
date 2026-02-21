@@ -11,6 +11,7 @@ import NameChecker from "../components/NameChecker";
 
 const Dashboard = () => {
   const URL = import.meta.env.VITE_Backend_URL;
+  const currentdate = new Date().toISOString().split("T")[0].split("-").reverse().join("/")
   const [formData, setFormData] = useState<any>({
     // Post Data
     patientname: "",
@@ -26,6 +27,7 @@ const Dashboard = () => {
   });
   // product States
   const [productName, setProductName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [productRemark, setProductRemark] = useState("");
   const [productPrice, setProductPrice] = useState<Number>(0);
   const [productList, setProductList] = useState<any>([]);
@@ -43,7 +45,6 @@ const Dashboard = () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
       setMeds(res.data)
-      console.log(res.data)
     } catch (error) { 
       console.log(error)
     }
@@ -56,7 +57,9 @@ const Dashboard = () => {
       name: productName,
       price: Number(productPrice),
       remark: productRemark,
-      qty:Number(productQty)
+      qty:Number(productQty),
+      stockindate:currentdate,
+      stockin:Number(productQty)
     };
     setProductList([...productList, object]);
     setProductName("");
@@ -121,6 +124,12 @@ const Dashboard = () => {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
+    if(name === "nextAppointmentDate"){
+      setFormData({
+      ...formData,
+      nextAppointmentDate: value.split("-").reverse().join("/"),
+    });
+    }
     setFormData({
       ...formData,
       [name]: value,
@@ -135,7 +144,7 @@ const Dashboard = () => {
     const nextDate = formData.nextAppointmentDate
       .split("-")
       .reverse()
-      .join("-");
+      .join("/");
     const postData = {
       ...formData,
       nextAppointmentDate: nextDate,
@@ -145,9 +154,11 @@ const Dashboard = () => {
     };
     console.log(postData)
     try {
-      console.log(postData)
-      const result =  await axios.put(`${URL}/medicine/stock-update`, postData)
-      await axios.post(`${URL}/prescription`, postData);
+      // const result =  await axios.put(`${URL}/medicine/stock-update`, postData)
+      // await axios.post(`${URL}/prescription`, postData);
+      const [result, presres] = await Promise.all([
+      axios.put(`${URL}/medicine/stock-update`, postData),
+      axios.post(`${URL}/prescription`, postData)])
       toast.success(result.data.message);
       
       window.print();
@@ -171,7 +182,7 @@ const Dashboard = () => {
         />
         <input
           type="text"
-          placeholder="Patient's Name"
+          placeholder="Patient Name"
           name="patientname"
           required
           onChange={handleChange}
@@ -186,11 +197,19 @@ const Dashboard = () => {
         />
 
         <div className="product-form">
+          <select value={companyName} onChange={e=> setCompanyName(e.target.value)}>
+            <option value="">Company</option>
+            {
+              meds.map((item:any)=>(
+                <option key={item._id} value={item?.companyname}>{item?.companyname}</option>
+              ))
+            }
+          </select>
           <select value={productName} onChange={e=> setProductName(e.target.value)}>
             <option value="">Products</option>
             {
               meds.map((item:any)=>(
-                <option key={item._id} value={item.medicinename}>{item.medicinename} - {item.companyname}</option>
+                <option key={item._id} value={item.medicinename}>{item.medicinename}</option>
               ))
             }
           </select>
@@ -200,11 +219,12 @@ const Dashboard = () => {
             value={productRemark}
             onChange={(e) => setProductRemark(e.target.value)}
           />
+          {/* <label htmlFor="">Qty:</label> */}
           <input
             type="number"
-            placeholder="Qty:"
+            placeholder="Qty"
             min={1}
-            value={productQty}
+            // value={productQty}
             onChange={(e) => setProductQty(e.target.value)}
             
           />
@@ -308,13 +328,10 @@ const Dashboard = () => {
           <button type="reset">Reset</button>
           <button type="button" 
           onClick={() => window.print()}
-          
-          >
-            Print
-          </button>
+          >Print</button>
         </div>
       </form>
-
+{/* ! ---------------------------------------------------------(Print Areas)-------------------------------------------------------- */}
       {/* Print Area */}
       <div className="print-area">
         <div className="header">

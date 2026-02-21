@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 
 const MrForm = () => {
   const URL = import.meta.env.VITE_Backend_URL;
+  const date= new Date().toISOString().split("T")[0].split("-").reverse().join("/")
   const [today, setToday] = useState<string>("");
   const [products, setProducts] = useState<any>({
     medicinename: "",
@@ -29,6 +30,7 @@ const MrForm = () => {
     totalamount: 0,
     invoiceno: "",
     nextpaydate: "",
+    paymentMethod:""
   });
   const reset = () => {
     setFormData({
@@ -42,6 +44,7 @@ const MrForm = () => {
       totalamount: 0,
       invoiceno: " ",
       nextpaydate: " ",
+      paymentMethod:""
     });
     setProducts({
     medicinename: "",
@@ -62,7 +65,8 @@ const MrForm = () => {
           stock: Number(products.stock),
           unitprice: Number(products.unitprice),
           totalprice: products.stock * products.unitprice,
-          
+          stockin:Number(products.stock),
+          stockindate:date
         },
       ],
     });
@@ -284,6 +288,19 @@ const MrForm = () => {
           />
           <label htmlFor="paid">Paid Amount</label>
         </div>
+             <div className="inputfield">
+          <input
+            type="number"
+            placeholder=""
+            id="dueamount"
+            readOnly
+            required step="any"
+            min={0}
+            value={formData.dueamount}
+            // onClick={calDue}
+          />
+          <label htmlFor="due">Due Amount</label>
+        </div>
         <div className="inputfield">
           <input
             type="text"
@@ -296,20 +313,16 @@ const MrForm = () => {
           />
           <label htmlFor="paid">Invoice No.</label>
         </div>
-
         <div className="inputfield">
-          <input
-            type="number"
-            placeholder=""
-            id="dueamount"
-            readOnly
-            required step="any"
-            min={0}
-            value={formData.dueamount}
-            // onClick={calDue}
-          />
-          <label htmlFor="due">due Amount</label>
-        </div>
+          <select id="paymentMethod" onChange={handleChange}value={formData.paymentMethod}>
+            <option>Payment Method</option>
+            <option value="cash">Cash</option>
+            <option value="gpay">Gpay</option>
+            <option value="phonepe">PhonePe</option>
+            <option value="IMPS">IMPS</option>
+            <option value="onlineBankine">Online Banking</option>
+          </select>
+        </div>  
         <div className="inputfield">
           <input
             type="date"

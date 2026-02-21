@@ -115,7 +115,7 @@ const Patientform = () => {
           type="text"
           name="name"
           required value={formData.name}
-          placeholder="Patient's Full name*"
+          placeholder="Patient Full name*"
           onChange={handleChange}
         />
         <input
@@ -157,6 +157,9 @@ const Patientform = () => {
           placeholder="Age*" 
           readOnly
         />
+        
+          
+        
         <select
           value={formData.bloodgroup}
           name="bloodgroup"

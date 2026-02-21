@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { toast } from "react-toastify";
 
 type Staff = {
@@ -16,7 +16,7 @@ function Expense() {
   const URL = import.meta.env.VITE_Backend_URL;
   const [rent, setRent] = useState("");
   const [electricity, setElectricity] = useState("");
-
+  const [expenses,setExpencess] = useState([])
   const [staff, setStaff] = useState<Staff[]>([
     // { name: "", salary: "" }
   ]);
@@ -24,8 +24,33 @@ function Expense() {
   const [otherExpenses, setOtherExpenses] = useState<OtherExpense[]>([
     // { title: "", amount: "" }
   ]);
+  const [staffList,setStaffList] = useState([])
 
-  // ---------- Staff ----------
+  const getStaff = async () => {
+    try {
+      const res =await axios.get(`${URL}/staff`)
+      console.log(res.data.staff)
+      setStaffList(res.data.staff)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    getStaff();
+  },[])
+  // * Get expencess ---------------
+  const getexpencess = async () => {
+    try {
+      const res =await axios.get(`${URL}/expenses`);
+      setExpencess(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    getexpencess();
+  },[])
+  // * ---------- Staff ----------
   const addStaff = () => {
     setStaff([...staff, { name: "", salary: 0 }]);
   };
@@ -47,7 +72,7 @@ function Expense() {
     setStaff(updated);
   };
 
-  //  ---------- Other Expenses ----------
+  // * ---------- Other Expenses ----------
   const addOtherExpense = () => {
     setOtherExpenses([...otherExpenses, { title: "", amount: 0 }]);
   };
@@ -132,14 +157,23 @@ function Expense() {
       <h3>Staff</h3>
       {staff.map((person:any, index) => (
         <div key={index} style={{ marginBottom: 8 }}>
-          <input
+          {/* <input
             type="text"
             placeholder="Staff Name"
             value={person.name}
             onChange={(e) =>
               handleStaffChange(index, "name", e.target.value)
             }
-          />
+          /> */}
+          <select id="" value={person.name} onChange={(e) =>
+              handleStaffChange(index, "name", e.target.value)
+            }>
+            {staffList.length > 0 &&
+              staffList.map((item)=>(
+                <option value={item?.fullname}>{item?.fullname}</option>
+              ))
+            }
+          </select>
           <input
             type="number"
             placeholder="Salary"
@@ -193,6 +227,41 @@ function Expense() {
       </button>
       <button type="submit">Submit</button>
     </form>
+    {expenses.length > 0 && <table border={1}>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Date</th>
+          <th>Rent</th>
+          <th>Elec</th>
+          <th>Staff</th>
+          <th>Other</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        { expenses.map((item:any,num:number)=>(
+          <tr key={item._id}>
+            <td>{num+1}</td>
+            <td>{item.date}</td>
+            <td>{item.rent}</td>
+            <td>{item.electricity}</td>
+            <td>{item.staff.map((st:any,num:number)=>(
+              <ul key={num}>
+                <li>{st.name} ₹. {st.salary}</li>
+              </ul>
+            ))}</td>
+            <td>{item.otherExpenses.map((ex:any,num:number)=>(
+              <ul key={num}>
+                <li>{ex.title} ₹. {ex.amount}</li>
+              </ul>
+            ))}</td>
+            <td>{item.total}</td>
+          </tr>
+        ))
+        }
+      </tbody>
+      </table>}
    </div> 
   );
 }

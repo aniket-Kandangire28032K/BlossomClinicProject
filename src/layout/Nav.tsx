@@ -109,6 +109,7 @@ const toggle=(name:string)=>{
         <Link to="/other_expenses"><FaMoneyBillTrendUp className="icon"/>Other Expenses</Link>
         <Link to='/sales'><FaChartLine className="icon"/>Sales Report</Link>
         <Link to='/users'><HiUsers  className="icon"/>Accounts</Link>
+        <Link to='/staff'><HiUsers  className="icon"/>Staff</Link>
         <button onClick={logout} >Logout</button>
     </div>}
 

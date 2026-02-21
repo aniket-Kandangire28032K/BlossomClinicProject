@@ -35,7 +35,7 @@ interface ExpenseItem {
   total: number;
 }
 
-const ExpensesChart = ({ month }: { month: string }) => {
+const ExpensesChart = ({ dates }: any) => {
   const URL = import.meta.env.VITE_Backend_URL;
   const [reports, setReports] = useState<ExpenseItem[]>([]);
   const [chartValues, setChartValues] = useState({
@@ -61,11 +61,11 @@ const ExpensesChart = ({ month }: { month: string }) => {
 
   // Compute chart data when month or reports change
   useEffect(() => {
-    if (!month || reports.length === 0) return;
+    if (!dates || reports.length === 0) return;
 
     // Filter by month: convert "YYYY-MM" -> "MM/YYYY"
-    const monthStr = month.split("-").reverse().join("/"); // "02/2026"
-    const filtered = reports.filter(item => item.date.includes(monthStr));
+    
+    const filtered = reports.filter(item => dates.includes(item.date));
 
     // Sum all expenses safely
     let rentSum = 0;
@@ -87,7 +87,7 @@ const ExpensesChart = ({ month }: { month: string }) => {
       other: otherSum,
       total: rentSum + electricitySum + staffSum + otherSum
     });
-  }, [month, reports]);
+  }, [dates, reports]);
 
   // Chart configuration
   const data = {
@@ -107,7 +107,7 @@ const ExpensesChart = ({ month }: { month: string }) => {
 
   return (
     <div className="expenses-chart">
-      {month && <>
+      {dates && <>
       <h3>Monthly Expenses</h3>
       <Bar data={data} />
       </>}
