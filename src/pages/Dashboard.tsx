@@ -160,7 +160,7 @@ const Dashboard = () => {
       axios.put(`${URL}/medicine/stock-update`, postData),
       axios.post(`${URL}/prescription`, postData)])
       toast.success(result.data.message);
-      
+      console.log(presres)
       window.print();
     } catch (error:any) {
       let sms:string=error.response.data.message;
