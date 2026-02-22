@@ -8,6 +8,8 @@ const MRPayment = () => {
   const [searchDate, setSearchDate] = useState<any>();
   const [mrList, setMrList] = useState<any[]>([]);
   const [amount, setAmount] = useState<number>(0);
+  const today = new Date().toISOString().split("T")[0].split("-").reverse().join("/");
+  console.log(today)
 
   const handleSubmit = async (e: any) => {
     // search by Data or mrname
@@ -65,6 +67,9 @@ const MRPayment = () => {
         _id: item._id,
         paidamount: totalPaid,
         dueamount: newDue,
+        lastpaymentdate:today,
+        lastpayment:amount
+
       });
       toast.success("Payment Updated!");
       fetchMRList();
@@ -131,13 +136,15 @@ const MRPayment = () => {
                 <p>
                   <b>MR Name:</b> {item.mrname}
                 </p>
+                <p>Last Payment Date:{item.lastpaymentdate || "NA"} </p>
+                <p>Last Payment :₹{item.lastpayment || "NA"} </p>
                 <p className="green">Total Amount ₹:{item.totalamount}</p>
                 <p className="red">Due Amount ₹:{item.dueamount}</p>
                 <input
                   type="number"
                   max={item.dueamount}
                   placeholder="Paid Amount"
-                  value={amount}
+                  // value={amount}
                   onChange={(e: any) => setAmount(e.target.value)}
                 />
                 <button type="submit">Pay</button>

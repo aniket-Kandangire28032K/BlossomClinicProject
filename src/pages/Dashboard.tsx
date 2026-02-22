@@ -58,9 +58,10 @@ const Dashboard = () => {
       price: Number(productPrice),
       remark: productRemark,
       qty:Number(productQty),
-      stockindate:currentdate,
-      stockin:Number(productQty)
+      stockoutdate:currentdate,
+      stockout:Number(productQty)
     };
+    console.log(productList)
     setProductList([...productList, object]);
     setProductName("");
     setProductPrice(0);
@@ -121,6 +122,10 @@ const Dashboard = () => {
       totalCost: treatmentTotal + cost.consultFee,
     });
   }, [productList, treatmentList, cost.consultFee]);
+ 
+  useEffect(()=>{
+    console.log(productList)
+  },[productList])
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;

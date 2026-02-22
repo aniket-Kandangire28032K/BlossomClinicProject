@@ -137,8 +137,8 @@ function Expense() {
 
   return (
     <div className="expenses">
-      <h1>Expense</h1>
-    <form onSubmit={handleSubmit} style={{ maxWidth: 500 }}>
+      <h1>Expenses</h1>
+    <form onSubmit={handleSubmit}>
         <p>Enter Expenses</p>
       {/* Rent */}
       <input
@@ -160,14 +160,6 @@ function Expense() {
       <h3>Staff</h3>
       {staff.map((person:any, index) => (
         <div key={index} style={{ marginBottom: 8 }}>
-          {/* <input
-            type="text"
-            placeholder="Staff Name"
-            value={person.name}
-            onChange={(e) =>
-              handleStaffChange(index, "name", e.target.value)
-            }
-          /> */}
           <select id="" value={person.name} onChange={(e) =>
               handleStaffChange(index, "name", e.target.value)
             }>
