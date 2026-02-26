@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const StockUpdate = () => {
@@ -7,6 +7,20 @@ const StockUpdate = () => {
     const [medName,setMedName]=useState('');
     const [stock,setStock]=useState('');
     const [companyname,setCompanyName]=useState("")
+    const [meds,setMeds] = useState([])
+    const [products,setProducts] = useState([])
+    const getMeds = async()=>{
+      try {
+        const res = await axios.get(`${URL}/medicine`);
+      let list:any = [...new Map(res.data.map((user:any) => [user.companyname,user])).values()];
+      setMeds(list);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    useEffect(()=>{
+      getMeds()
+    },[])
 
     const hnadleSubmit= async (e:any) => {
         e.preventDefault();
@@ -20,18 +34,36 @@ const StockUpdate = () => {
             toast.error('Error in Updating Stock')
         }
     }
+    useEffect(()=>{
+    if(companyname){
+      setProducts(()=> (
+        meds.filter((item:any)=> item.companyname === companyname)
+      ))
+    }
+  },[companyname])
   return (
     <div className="stock">
       <form onSubmit={hnadleSubmit} autoComplete="off"> 
       <h1>Update Stock</h1>
         <div className="inputfield">
-          <input type="text" id="name" placeholder=" " value={companyname} onChange={e=> setCompanyName(e.target.value)}/>
-          <label htmlFor="name">Enter Comapny name</label>
+        <select name="companyname" value={companyname} onChange={e=> setCompanyName(e.target.value)}>
+          <option value="">Company Name</option>
+           {
+             meds.map((item:any)=>(
+              <option key={item._id} value={item.companyname}>{item.companyname}</option>
+             ))
+           }
+        </select> 
         </div>
         <div className="inputfield">
-          <input type="text" id="name" placeholder=" " onChange={e=> setMedName(e.target.value)}/>
-          <label htmlFor="name">Enter Product Name</label>
-        </div>
+        <select value={medName} onChange={e => setMedName(e.target.value)}>
+           <option value="">Product</option>
+           {
+            products.map((item:any,num:number)=>(
+              <option key={num} value={item.medicinename}>{item.medicinename}</option>
+            ))
+           }
+        </select></div>
         <div className="inputfield">
           <input type="text" id="stock" placeholder=" " onChange={e=> setStock(e.target.value)}/>
           <label htmlFor="stock">Stock</label>

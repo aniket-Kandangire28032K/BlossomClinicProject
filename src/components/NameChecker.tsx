@@ -68,7 +68,7 @@ const NameChecker = () => {
       } else {
         setPrescriptionDetails(null); // empty if not found
       }
-
+      
       toast.success("Patient Found");
     } else {
       toast.warning("Patient Not Found");

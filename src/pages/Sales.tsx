@@ -166,7 +166,7 @@ const Sales = () => {
                 <th>Patient Name</th>
                 <th>Products</th>
                 <th>Treatment</th>
-                <th>consult Fee</th>
+                <th>Consult Fee</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -206,7 +206,7 @@ const Sales = () => {
                 <td></td>
                 <td>Product Total:₹ {totals.productTotal}</td>
                 <td>Treatment Total:₹{totals.tretmentTotal}</td>
-                <td>Consolt Total:₹{totals.consultTotal}</td>
+                <td>Consult Total:₹{totals.consultTotal}</td>
                 <td>Grand Total:₹{totals.GrandTotal}</td>
               </tr>
             </tfoot>

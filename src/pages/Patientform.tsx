@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_blue.css"
 import NameChecker from "../components/NameChecker";
 
 const Patientform = () => {
@@ -22,19 +24,24 @@ const Patientform = () => {
   const [today,setDate]=useState<string>('');
   const [opd,setOpdNo]=useState<string>('');
   
-   const calculateAge = (dob:any):number=>{
+   const calculateAge = (dob:any)=>{
+    //  Calculate Age of Patient
     if(!dob) return 0;
-    const birthDate = new Date(dob);
+    let date = dob.split("/").reverse().join("-")
+    const birthDate = new Date(date);
+    console.log(dob)
     const year = new Date().getFullYear();
     let age = year - birthDate.getFullYear();
+
     if (age <0 ) return 0;
+    
     return age;
   }
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    if(name === 'name'){
+    if(name === 'name' || name ==='reference'){
       // For Name
-      const formatted = value.toLowerCase().replace(/\n\w/g, (char:string) => char.toUpperCase());
+      const formatted = value.replace(/[0-9]/g,"");
       setFormData({
         ...formData,
         [name]:formatted
@@ -114,6 +121,7 @@ const Patientform = () => {
         <input
           type="text"
           name="name"
+          pattern="[A-Za-z]{3,}"
           required value={formData.name}
           placeholder="Patient Full name*"
           onChange={handleChange}
@@ -125,7 +133,7 @@ const Patientform = () => {
           onChange={handleChange}
         />
         <input
-          type="text" required
+          type="text"
           name="reference" value={formData.reference}
           placeholder="Reference"
           onChange={handleChange}
@@ -143,30 +151,27 @@ const Patientform = () => {
         </select>
         <div className="DOB">
           <label htmlFor="DOB">Date of Birth:</label>
-          <input
-            type="date"
-            name="DOB" id="ODB"  value={formData.DOB}
-            placeholder="Date of Birth"
-            max={new Date().toISOString().split("T")[0]}
-            onChange={handleChange}
+          <Flatpickr value={formData.DOB} onChange={(selectedDates,dateStr)=>{
+            const age = calculateAge(dateStr)
+            setFormData({
+              ...formData,
+              DOB:String(dateStr),
+              age:age
+            })
+          }}
+          options={{
+            dateFormat:"d/m/Y"
+          }}
           />
         </div>
-        <input
-          type="number"
-          name="age"  value={formData.age}
-          placeholder="Age*" 
-          readOnly
-        />
-        
-          
-        
+        <p>Age: {formData.age || "select Date of Birth"}</p>
         <select
           value={formData.bloodgroup}
           name="bloodgroup"
           // placeholder="Blood Group"
           onChange={handleChange}
         >
-          <option value="" disabled>Blood Type</option>
+          <option value="">Blood Type</option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -178,7 +183,6 @@ const Patientform = () => {
         </select>
         <select
           name="materialstatus" 
-          
           value={formData.materialstatus}
           onChange={handleChange}
         >

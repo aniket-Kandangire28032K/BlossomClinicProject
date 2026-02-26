@@ -18,6 +18,7 @@ const Dashboard = () => {
     opdno:'',
     date: "",
     nextAppointmentDate: "",
+    remark:""
   });
   const [cost, setCost] = useState({
     productCost: 0,
@@ -37,6 +38,8 @@ const Dashboard = () => {
   const [treatmentName, setTreatmentName] = useState("");
   const [treatmentPrice, setTreatmentPrice] = useState("");
   const [treatmentList, setTreatmentList] = useState<any>([]);
+  const [display,setDisplay] = useState(false);
+  const [products,setProducts]= useState([]);
 
 
   // Mr states
@@ -44,7 +47,8 @@ const Dashboard = () => {
   const getMRList = async()=>{
     try {
       const res = await axios.get(`${URL}/medicine`);
-      setMeds(res.data)
+      let list = [...new Map(res.data.map((user:any) => [user.companyname,user])).values()];
+      setMeds(list)
     } catch (error) { 
       console.log(error)
     }
@@ -64,9 +68,9 @@ const Dashboard = () => {
     console.log(productList)
     setProductList([...productList, object]);
     setProductName("");
-    setProductPrice(0);
     setProductRemark("");
-    setProductQty("");
+    
+    
   };
 
   const deleteProduct = (index: number) => {
@@ -83,7 +87,6 @@ const Dashboard = () => {
     };
     setTreatmentList([...treatmentList, object]);
     setTreatmentName("");
-    setTreatmentPrice("");
   };
   const deleteTreatment = (index: number) => {
     setTreatmentList(treatmentList.filter((_: any, i: number) => i !== index));
@@ -119,15 +122,13 @@ const Dashboard = () => {
       ...cost,
       productCost: productTotal,
       treatmentCost: treatmentTotal,
-      totalCost: treatmentTotal + cost.consultFee,
+      totalCost: treatmentTotal + cost.consultFee + productTotal,
     });
   }, [productList, treatmentList, cost.consultFee]);
  
-  useEffect(()=>{
-    console.log(productList)
-  },[productList])
 
   const handleChange = (e: any) => {
+    // handles change function
     const { name, value } = e.target;
     if(name === "nextAppointmentDate"){
       setFormData({
@@ -141,10 +142,12 @@ const Dashboard = () => {
     });
   };
   const calTotal=(rate:String)=>{
+    //  calculate Function 
     let total = Number(rate) * productQty;
     setProductPrice(total)
   }
   const handleSubmit = async (e: any) => {
+    // Submit Function
     e.preventDefault();
     const nextDate = formData.nextAppointmentDate
       .split("-")
@@ -159,8 +162,6 @@ const Dashboard = () => {
     };
     console.log(postData)
     try {
-      // const result =  await axios.put(`${URL}/medicine/stock-update`, postData)
-      // await axios.post(`${URL}/prescription`, postData);
       const [result, presres] = await Promise.all([
       axios.put(`${URL}/medicine/stock-update`, postData),
       axios.post(`${URL}/prescription`, postData)])
@@ -172,6 +173,14 @@ const Dashboard = () => {
       toast.error(sms);
     }
   };
+
+  useEffect(()=>{
+    if(companyName){
+      setProducts(()=> (
+        meds.filter((item:any)=> item.companyname === companyName)
+      ))
+    }
+  },[companyName])
   return (
     <div className="dashboard">
       <NameChecker/>
@@ -213,7 +222,7 @@ const Dashboard = () => {
           <select value={productName} onChange={e=> setProductName(e.target.value)}>
             <option value="">Products</option>
             {
-              meds.map((item:any)=>(
+              products.map((item:any)=>(
                 <option key={item._id} value={item.medicinename}>{item.medicinename}</option>
               ))
             }
@@ -327,6 +336,7 @@ const Dashboard = () => {
             onChange={handleChange}
           />
         </div>
+        <input type="text" placeholder="Remark" name="remark" value={formData.remark} onChange={handleChange}/>
         <h3>Total Fees:Rs.{cost.totalCost || 0}</h3>
         <div className="btn-group">
           <button type="submit">Submit</button>
@@ -334,6 +344,7 @@ const Dashboard = () => {
           <button type="button" 
           onClick={() => window.print()}
           >Print</button>
+          <input type="checkbox" onChange={()=> setDisplay(!display)}/><label>Display Total</label>
         </div>
       </form>
 {/* ! ---------------------------------------------------------(Print Areas)-------------------------------------------------------- */}
@@ -392,6 +403,8 @@ const Dashboard = () => {
               {formData.nextAppointmentDate.split("-").reverse().join("/")}{" "}
             </h3>
           )}
+          {display && <p>Total: ₹{cost.totalCost}</p>}
+          {formData.remark && <p>{formData.remark}</p>}
         </div>
         <div className="footer">
           <div className="footer-container">

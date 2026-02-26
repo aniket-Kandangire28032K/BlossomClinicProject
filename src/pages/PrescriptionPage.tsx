@@ -5,11 +5,11 @@ const PrescriptionPage = () => {
   const URL = import.meta.env.VITE_Backend_URL;
   const [list, setList] = useState([]);
   const inputDateRef = useRef<HTMLInputElement>(null);
+  const [name,setName] = useState("");
   const getAllPrescriptions = async () => {
     try {
       const res = await axios.get(`${URL}/prescription`);
-      // console.log(res.data);
-
+      
       setList(res.data);
     } catch (error) {
       console.log(error);
@@ -20,12 +20,22 @@ const PrescriptionPage = () => {
   }, []);
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    // getAllPrescriptions();
+    e.preventDefault();    
     const value = inputDateRef.current?.value;
     const date = value?.split("-").reverse().join("/");
-    const filteredData = list.filter((item: any) => item.date === date);
-    setList(filteredData);
+    if(name){
+      let patientName = name;
+      const filteredData = list.filter((item: any) => item.patientname === patientName);
+      setList(filteredData);
+      setName("")
+      return;
+    }
+    if(date){
+      const filteredData = list.filter((item: any) => item.date === date);
+      setList(filteredData);
+      return;
+    }
+
   };
 
 
@@ -33,6 +43,7 @@ const PrescriptionPage = () => {
     <div className="prescriptions">
       <h1>Prescriptions</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
+        <input type="text" placeholder="Patient Name" value={name} onChange={e=> setName(e.target.value)}/>
         <input type="date" id="datevalue" ref={inputDateRef} onChange={getAllPrescriptions} />
         <button type="submit">Search</button>
         <button type="reset" onClick={()=> {getAllPrescriptions();}}>

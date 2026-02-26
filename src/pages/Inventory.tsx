@@ -3,6 +3,7 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 
 const Inventory = () => {
+    // const date= new Date().toISOString().split("T")[0].split("-").reverse().join("/")
     const URL = import.meta.env.VITE_Backend_URL;
     const [formData,setFormData]=useState({
         medicinename:'',

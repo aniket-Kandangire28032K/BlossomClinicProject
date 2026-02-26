@@ -1,13 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { IoClose } from "react-icons/io5";
+import { MdOutlineUpdate } from "react-icons/md";
 
 const Reminders = () => {
   const URL = import.meta.env.VITE_Backend_URL;
+  interface objecttype {
+    _id:string,
+    patientname:string,
+    nextAppointmentDate:string
+  }
   const [patientList, setPatientList] = useState([]);
-  const [currentMonth,setCurrentMonth] = useState([]);
+  const [currentMonth, setCurrentMonth] = useState([]);
   const [filteredData, setFilterdData] = useState([]);
-
+  const [display, setDisplay] = useState(false);
+  const [object,setObject] = useState<objecttype | null>(null);
+  const [date,setDate] = useState("");
   const getList = async () => {
     // get All Patient's Prescriptions
     try {
@@ -23,6 +32,30 @@ const Reminders = () => {
       toast.warning("internal Server Error");
     }
   };
+  
+  const displayform = (item:any)=>{
+    console.log(item)
+    setObject({...item})
+    setDisplay(!display)
+
+  }
+  const closeform = () => {
+    setDisplay(!display);
+    setDate("")
+  }
+
+  const updateschedule = async (e:any) => {
+    e.preventDefault();
+    let nextAppointmentDate = date.split("-").reverse().join("/")
+    try {
+      await axios.patch(`${URL}/${object?._id}`,nextAppointmentDate)
+      toast.success("Appointment Rescheduled")
+    } catch (error) {
+      console.log(error)
+    }finally{
+
+    }
+  }
   const handleChange = (e: any) => {
     const data = e.target.value;
     if (!data) {
@@ -32,15 +65,16 @@ const Reminders = () => {
     let list = patientList.filter(
       (item: any) => item.nextAppointmentDate === date,
     );
-    if(list.length === 0){
-      toast.info(`No Appointments on ${date}`)
+    if (list.length === 0) {
+      toast.info(`No Appointments on ${date}`);
     }
     setFilterdData(list);
   };
+
   useEffect(() => {
     getList();
   }, []);
-  
+
   useEffect(() => {
     const date = new Date();
     const month = `${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -55,8 +89,14 @@ const Reminders = () => {
       <h1>Appointments</h1>
       <div className="btn-grp">
         <input type="date" onChange={handleChange} />
-        <button type="button" onClick={()=> setFilterdData([])}>
-          Clear
+        <button
+          type="button"
+          onClick={() => {
+            setFilterdData([]);
+            getList();
+          }}
+        >
+          clear
         </button>
       </div>
       <div className="table-wrapper">
@@ -73,31 +113,67 @@ const Reminders = () => {
           <tbody>
             {filteredData.length > 0 &&
               filteredData.map((item: any, num: number) => (
-                <tr key={item._id}   style={{backgroundColor:"#f0f8ff",fontWeight:"bold"}}>
+                <tr
+                  key={item._id}
+                  style={{ backgroundColor: "#f0f8ff", fontWeight: "bold" }}
+                >
                   <td>{num + 1}</td>
                   <td>{item.date}</td>
                   <td style={{ textTransform: "capitalize" }}>
                     {item.patientname}
                   </td>
                   <td>{item.opdno}</td>
-                  <td>{item.nextAppointmentDate}</td>
+                  <td>
+                    {item.nextAppointmentDate}{" "}
+                    <button className="hover"
+                     onClick={()=>displayform(item)}
+                    >
+                      <MdOutlineUpdate/>
+                    </button>
+                  </td>
                 </tr>
               ))}
-              {filteredData.length > 0 && <br /> }
-            {currentMonth.map((item: any, num: number) => (
-              <tr key={item._id}>
-                <td>{num + 1}</td>
-                <td>{item.date}</td>
-                <td style={{ textTransform: "capitalize" }}>
-                  {item.patientname}
-                </td>
-                <td>{item.opdno}</td>
-                <td>{item.nextAppointmentDate}</td>
-              </tr>
-            ))}
+            {/* {filteredData.length > 0 && <br /> } */}
+            {filteredData.length === 0 &&
+              currentMonth.map((item: any, num: number) => (
+                <tr key={item._id}>
+                  <td>{num + 1}</td>
+                  <td>{item.date}</td>
+                  <td style={{ textTransform: "capitalize" }}>
+                    {item.patientname}
+                  </td>
+                  <td>{item.opdno}</td>
+                  <td>
+                    {item.nextAppointmentDate} 
+                    <button className="hover" onClick={()=>displayform(item)}><MdOutlineUpdate/></button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
+      {display && (
+        <div className="overview" onClick={closeform}>
+          <form className="reschedule-form" onClick={e=> e.stopPropagation()} onSubmit={updateschedule}>
+            <h3>Reschedule Appointment</h3>
+            <p>
+              Name: <span>{object?.patientname}</span>
+            </p>
+            <p>Appointment Date: <span>{object?.nextAppointmentDate}</span></p>
+            <input type="date"
+            onChange={e=> setDate(e.target.value)}
+            />
+            <button className="hover" type="submit">update</button>
+            <button className="hover" type="reset">clear</button>
+            <button
+              className="close"
+              type="button"
+              onClick={closeform}>
+              <IoClose/>
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

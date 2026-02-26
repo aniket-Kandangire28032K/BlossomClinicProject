@@ -7,7 +7,7 @@ const MedsList = () => {
   const [medsList, setList] = useState([]);
   const [medName, setMedName] = useState("");
   const [singleMed, setSingleMed] = useState<any>([]);
-
+  const date= new Date().toISOString().split("T")[0].split("-").reverse().join("/");
   const getAllMeds = async () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
@@ -54,16 +54,17 @@ const MedsList = () => {
       <table className="meds-table">
         <thead>
           <tr>
+            <th>Date</th>
             <th>Company</th>
             <th>Medincine Name</th>
-            <th>MR</th>
+            {/* <th>MR</th> */}
             <th>Stock In Date</th>
             <th>stock In</th>
             <th>stock</th>
             <th>stock Out Date</th>
             <th>stock Out</th>
-            <th>Unit Price</th>
-            <th>Total Price</th>
+            {/* <th>Unit Price</th> */}
+            {/* <th>Total Price</th> */}
 
 
           </tr>
@@ -71,30 +72,32 @@ const MedsList = () => {
         <tbody>
           {medName && (
             <tr>
+              <td>{date}</td>
               <td>{singleMed.companyname}</td>
               <td>{singleMed.medicinename}</td>
-              <td>{singleMed.mrname}</td>
+              {/* <td>{singleMed.mrname}</td> */}
               <td>{singleMed?.stockindate || "NULL"} </td>
               <td>{singleMed?.stockin || "NULL"}</td>
               <td>{singleMed.stock}</td>
               <td>{singleMed.stockoutdate || "NULL"} </td>
               <td>{singleMed?.stockout || "NULL"}</td>
-              <td>{singleMed.unitprice}</td>
-              <td>{singleMed.totalprice}</td>
+              {/* <td>{singleMed.unitprice}</td> */}
+              {/* <td>{singleMed.totalprice}</td> */}
             </tr>
           )}
           {medsList.map((e: any, i: number) => (
             <tr key={i}>
+              <td>{date}</td>
               <td>{e.companyname}</td>
               <td>{e.medicinename}</td>
-              <td>{e.mrname}</td>
+              {/* <td>{e.mrname}</td> */}
               <td>{e?.stockindate || "NULL"} </td>
               <td>{e?.stockin || "NULL"}</td>
               <td>{e.stock}</td>
               <td>{e.stockoutdate || "NULL"} </td>
               <td>{e?.stockout || "NULL"}</td>
-              <td>{e.unitprice}</td>
-              <td>{e.totalprice}</td>
+              {/* <td>{e.unitprice}</td> */}
+              {/* <td>{e.totalprice}</td> */}
             </tr>
           ))}
         </tbody>

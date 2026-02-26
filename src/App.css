@@ -550,6 +550,14 @@ tr td:hover .del-btn {
 .patientform form h3{
   grid-column: span 4;
 }
+.patientform form p{
+  font-size: 1.2rem;
+  width: auto;
+  padding-bottom: 0.5rem;
+  padding-left: 0.4rem ;
+  border-bottom: 2px solid;
+}
+
 .patientform form > input,
 .patientform form div > input,
 .patientform form select {  
@@ -1165,7 +1173,7 @@ tr td:hover .del-btn {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   gap: 1rem;
   box-shadow: 0 0 500px 5000px rgba(0, 0, 0, 0.422);
 }
@@ -1173,6 +1181,17 @@ tr td:hover .del-btn {
   width: 50%;
   margin: 0 auto;
   padding-top: 1rem;
+}
+.stock form div select{
+  font-size: 1.5rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #000;
+  color: #888;
+}
+.stock form div select option:first-of-type{
+  color: #808080;
 }
 .stock form div:last-of-type {
   display: flex;
@@ -1256,7 +1275,7 @@ tr td:hover .del-btn {
     font-weight: 600;
     /* vertical-align: top; */
   }
-  input {
+  .btn-grp > input{
     vertical-align: top;
     margin-left: auto;
     margin-right: 1rem;
@@ -1292,7 +1311,7 @@ tr td:hover .del-btn {
     position: sticky;
     
     top: -1px;
-    z-index: 99;
+    z-index: 59;
   }
   table thead > tr > th {
     border: 2px solid royalblue;
@@ -1305,6 +1324,78 @@ tr td:hover .del-btn {
     padding: 0.5rem 1.5rem;
     text-align: center;
     border: 2px solid #f1f1f1;
+  }
+  table tbody tr td button{
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    padding-left: 0.5rem;
+    vertical-align: middle;
+    color: rgb(125, 0, 25);
+  }
+  .overview{
+    width: 100%;
+    min-height: 100dvh;
+    position: fixed;
+    top: 0;
+    z-index: 80;
+  }
+  .reschedule-form{
+    z-index: 90;
+    border-radius: 12px;
+    width: 40%;
+    height: min-content;
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 0 1500px rgb(0 0 0 / 0.5);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    border: transparent;
+  }
+  .reschedule-form > *{
+    margin: 0.2rem .7rem;
+    padding: 0.5rem;
+  }
+  .reschedule-form  span{
+    font-weight: 500;
+  }
+  .reschedule-form > input,.reschedule-form > span{
+    text-transform: uppercase;
+  }
+  .reschedule-form > input{
+    width: 50%;
+    border-radius: 8px;
+    border: 1px solid #ccc ;
+    box-shadow: 4px 4px 8px rgb(0 0 0 / 0.1);
+  }
+  .reschedule-form > button{
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    text-transform: uppercase;
+  }
+  .reschedule-form > button:first-of-type{
+    background-color: royalblue;
+    color: #fff;
+  }
+  .close{
+    position: absolute;
+    width: 70px;
+    margin: 0 !important;
+    padding:0 !important;
+    top: 0;
+    right: 0;
+    font-size: 2rem;
+    border-radius: 0 0 0 8px !important;
+    background-color: crimson;
+    color: #fff;
+    transition: all ease-in-out 0.3s;
+  }
+  .close:hover{
+    background-color: #e81123;
   }
 }
 
@@ -1348,56 +1439,123 @@ tr td:hover .del-btn {
   justify-content: center;
 }
 .mr-reminders .card-grid .reminder-card{
-  border: 1px solid #ddd;
   position: relative;
   border-radius: 8px;
   width: 400px;
-  padding:1rem .5rem  ;
+  padding:1rem ;
+  padding-left: 2.3rem;
   background-color: white;
-  box-shadow: 0px 5px 7px rgb(0 0 0 / 0.3);
-  transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.3s;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0px #ccc;
+  gap: 0.3rem;
 }
 .mr-reminders .card-grid .reminder-card:hover{
-  box-shadow: 0 10px 10px #ccc;
+  box-shadow: 4px 4px 8px rgb(0 0 0 / 0.3);
   cursor:pointer;
-}
-.mr-reminders .card-grid .reminder-card > p:nth-of-type(1){
-  text-transform: capitalize;
-  margin-bottom: .5rem;
 }
 .mr-reminders .card-grid .reminder-card > p:nth-of-type(2){
   text-transform: capitalize;
-  margin-bottom: .7rem;
+  /* margin-bottom: .5rem; */
 }
-.mr-reminders .card-grid .reminder-card span{
-  padding: .5rem;
-  font-weight: 500;
-  
+.mr-reminders .card-grid .reminder-card .total{
+  border:  2px solid #008f0f;
+  width: max-content;
+  padding: 0.3rem 0.4rem;
+  border-radius: 8px;
+  background-color: #008f0f;
+  color: #fff;
+  align-self: center;
 }
-.mr-reminders .card-grid .reminder-card span:nth-of-type(1){
+.mr-reminders .card-grid .reminder-card .due{
   color: tomato;
+  font-weight: 500;
 }
-.mr-reminders .card-grid .reminder-card span:nth-of-type(2){
-  color: green;
+.mr-reminders .card-grid .reminder-card .paid{
+  color: #008f0f;
+  font-weight: 500;
 }
-.mr-reminders .card-grid .reminder-card p:nth-of-type(3){
-  margin: 0 auto;
-  width: 70%;
-  margin-top: 1rem;
-  padding: .5rem;
-  text-align: center;
-  border: 1px solid green;
-  border-radius:8px;
-  background-color: green;
-  color: white;
-  font-weight: 600;
+.mr-reminders .card-grid .reminder-card button{
+  width: max-content;
+  background-color: transparent;
+  border: none;
+  color: royalblue;
+  font-weight: 500;
+  padding: 0rem;
 }
-.mr-reminders .card-grid .reminder-card p:nth-of-type(4){
-  position: absolute;
-  top: .5rem;
-  right: .7rem;
+@scope (.mr-reminders){
+  .reschedule-form{
+    width: 50%;
+    height: max-content;
+    position: fixed;
+    background-color: #fff;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: .5rem 0;
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0 0 2150px rgb(0 0 0 / 0.8);
+  }
+  p{
+    text-transform: capitalize;
+    font-weight: 500;
+    grid-column:span 4;
+    word-wrap: nowrap;
+  }
+  p:nth-of-type(2){
+    grid-column:span 4;
+  }
+  h3{
+    grid-column: span 4;
+    margin: 1rem 0;
+    /* text-align: center; */
+  }
+  .reschedule-form input{
+    width: 60%;
+    padding: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    grid-column: span 4;
+    
+  }
+  .reschedule-form button{
+    width: 70%;
+    padding: 0.5rem;
+    border: 1px solid ;
+    border-radius: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: royalblue;
+  }
+  .reschedule-form button:first-of-type{
+    background-color: crimson;
+    color: #fff;
+  }
+  .reschedule-form button:hover{
+    box-shadow: 3px 3px 6px rgb(0 0 0 / 0.2);
+  }
+  .close{
+    width: min-content !important;
+    padding: 0 !important;
+    background-color: transparent;
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-size: 2rem;
+    color: crimson !important;
+    border: none !important;
+  }
+  .close:hover{
+    transform: scale(1);
+    box-shadow: none;
+  }
 }
-
 /* sales Pages */
 .sales-report{
   width: 100%;
@@ -1598,12 +1756,17 @@ tr td:hover .del-btn {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  padding-bottom: 0.7rem;
 }
 .prescriptions form input{
   font-size: 1.2rem;
   padding: 0.5rem;
   border-radius: 8px;
   border: none;
+  box-shadow: 4px 4px 8px rgb(0 0 0 / 0.2);
+}
+.prescriptions form input:nth-of-type(2){
+  text-transform: uppercase;
 }
 .prescriptions form button{
 padding: 0.2rem 1.2rem ;

@@ -67,10 +67,10 @@ const MRlist = () => {
             <th>Date</th>
             <th>Company Name</th>
             <th>MR Name</th>
-            <th>contact</th>
+            <th>Contact</th>
             <th>Products</th>
             <th>Total</th>
-            <th>paid</th>
+            <th>Paid</th>
             <th>Due</th>
           </tr>
         </thead>

@@ -213,24 +213,10 @@
   top: 10rem;
   position: absolute;
 }
-button{
+.hover{
   transition: all ease-in-out 0.2s;
 }
-button:hover{
-  /* animation: btnhover 1.2s ease-in-out; */
+.hover:hover{
   transform: scale(1.1);
   transition: all ease-in-out 0.2s;
-  /* box-shadow: 5px 5px 10px rgba(0, 0,0,0.5); */
-}
-
-@keyframes btnhover {
-  0%{
-    transform: scale(1);
-  }
-  50%{
-    transform: scale(1.1);
-  }
-  100%{
-    transform: scale(1);
-  }
 }

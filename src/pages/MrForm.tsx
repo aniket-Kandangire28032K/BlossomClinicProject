@@ -83,6 +83,14 @@ const MrForm = () => {
       });
       return;
     }
+    if(id === "mrname"){
+      const clean = value.replace(/[0-9]/g, "");
+      setFormData({
+        ...formData,
+        mrname:clean
+      })
+      return;
+    }
     // if((id==='nextpaydate'))
     setFormData({
       ...formData,
@@ -317,10 +325,10 @@ const MrForm = () => {
           <select id="paymentMethod" onChange={handleChange}value={formData.paymentMethod}>
             <option>Payment Method</option>
             <option value="cash">Cash</option>
-            <option value="gpay">Gpay</option>
-            <option value="phonepe">PhonePe</option>
-            <option value="IMPS">IMPS</option>
-            <option value="onlineBankine">Online Banking</option>
+            <option value="upi">UPI</option>
+            <option value="debit card">Debit Card</option>
+            <option value="credit card">Credit card</option>
+            <option value="net Banking">Net Banking</option>
           </select>
         </div>  
         <div className="inputfield">
@@ -334,7 +342,7 @@ const MrForm = () => {
         </div>
 
         <div className="btn-grp">
-          <button type="submit">Sumbit</button>
+          <button type="submit">Submit</button>
           <button type="reset" onClick={reset}>
             Reset
           </button>
