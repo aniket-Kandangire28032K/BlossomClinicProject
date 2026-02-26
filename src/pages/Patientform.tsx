@@ -151,7 +151,7 @@ const Patientform = () => {
         </select>
         <div className="DOB">
           <label htmlFor="DOB">Date of Birth:</label>
-          <Flatpickr value={formData.DOB} onChange={(selectedDates,dateStr)=>{
+          <Flatpickr value={formData.DOB} onChange={(_selectedDates,dateStr)=>{
             const age = calculateAge(dateStr)
             setFormData({
               ...formData,
