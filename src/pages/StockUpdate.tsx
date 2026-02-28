@@ -34,6 +34,8 @@ const StockUpdate = () => {
             toast.error('Error in Updating Stock')
         }finally{
           setStock("")
+          setCompanyName("")
+          setMedName("")
         }
     }
     useEffect(()=>{

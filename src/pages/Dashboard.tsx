@@ -181,6 +181,7 @@ const Dashboard = () => {
       ))
     }
   },[companyName])
+  const today = new Date().toISOString().split("T")[0]
   return (
     <div className="dashboard">
       <NameChecker formData={formData} setFormData={setFormData}/>
@@ -337,6 +338,7 @@ const Dashboard = () => {
             type="date"
             name="nextAppointmentDate"
             onChange={handleChange}
+            min={today}
           />
         </div>
         <input type="text" placeholder="Remark" name="remark" value={formData.remark} onChange={handleChange}/>

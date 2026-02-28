@@ -870,6 +870,9 @@ tr td:hover .del-btn {
   background: transparent;
   outline: none;
 }
+.mr-list > form input[type=date]{
+  text-transform: uppercase;
+}
 .mr-list form button {
   padding: 0.7rem 1rem;
   border: none;
@@ -1505,6 +1508,7 @@ tr td:hover .del-btn {
 @scope (.mr-reminders){
   .reschedule-form{
     width: 50%;
+    overflow: hidden;
     height: max-content;
     position: fixed;
     background-color: #fff;
@@ -1512,11 +1516,12 @@ tr td:hover .del-btn {
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: .5rem 0;
-    
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     box-shadow: 0 0 0 2150px rgb(0 0 0 / 0.8);
+    border-radius: 8px;
+    border: none;
   }
   p{
     text-transform: capitalize;
@@ -1545,32 +1550,35 @@ tr td:hover .del-btn {
     width: 70%;
     padding: 0.5rem;
     border: 1px solid ;
-    border-radius: 8px;
     font-weight: 500;
     text-transform: uppercase;
     background-color: transparent;
     color: royalblue;
+    transition: all ease-in-out 0.2s;
   }
   .reschedule-form button:first-of-type{
     background-color: crimson;
     color: #fff;
   }
+  .reschedule-form button:first-of-type,.reschedule-form button:nth-of-type(2){
+    border-radius: 10px;
+  }
   .reschedule-form button:hover{
     box-shadow: 3px 3px 6px rgb(0 0 0 / 0.2);
   }
   .close{
-    width: min-content !important;
+    width: 7% !important;
     padding: 0 !important;
-    background-color: transparent;
+    background-color: crimson !important;
     position: absolute;
-    top: 1rem;
-    right: 1.2rem;
-    font-size: 2rem;
-    color: crimson !important;
-    border: none !important;
+    top: -1px;
+    right: -3px;
+    font-size: 1.8rem;
+    color:#fff !important;
+    border-radius: 0 0 0 0.8rem;
   }
   .close:hover{
-    transform: scale(1);
+    font-size: 2rem;
     box-shadow: none;
   }
 }

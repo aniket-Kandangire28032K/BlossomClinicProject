@@ -131,7 +131,7 @@ const Reminders = () => {
               <th>Date</th>
               <th>Name</th>
               <th>OPD No.</th>
-              <th>Appointmenet Date</th>
+              <th>Appointment Date</th>
             </tr>
           </thead>
           <tbody>

@@ -153,7 +153,7 @@ const Sales = () => {
       {filteredData.length > 0 && <BarChart data={filteredData} />}
       {totals.GrandTotal > 0 && <PieChart chartdata={totals} />}
 
-      <MRreport dates={filteredDates} />
+      <MRreport dates={filteredDates}  />
       <ExpensesChart dates={filteredDates} />    
 
       {filteredData.length > 0 && (

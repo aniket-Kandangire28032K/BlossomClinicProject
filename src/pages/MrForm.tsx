@@ -5,7 +5,8 @@ import { MdDelete } from "react-icons/md";
 
 const MrForm = () => {
   const URL = import.meta.env.VITE_Backend_URL;
-  const date= new Date().toISOString().split("T")[0].split("-").reverse().join("/")
+  const firstDay =new Date().toISOString().split("T")[0]
+  const date= firstDay.split("-").reverse().join("/")
   const [today, setToday] = useState<string>("");
   const [products, setProducts] = useState<any>({
     medicinename: "",
@@ -337,6 +338,8 @@ const MrForm = () => {
             id="nextpaydate"
             onChange={handleChange}
             value={formData.nextpaydate}
+            min={firstDay}
+            
           />
           <label htmlFor="due">Next Payment Date</label>
         </div>

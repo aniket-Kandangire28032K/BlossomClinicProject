@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { IoMdCloseCircle } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 const MRreminders = () => {
   const URL = import.meta.env.VITE_Backend_URL;
@@ -65,8 +65,9 @@ const MRreminders = () => {
         {object.mrname && <p>Name: {object?.mrname}</p>}
         {object.nextpaydate && <p>Next Payment Date: {object?.nextpaydate}</p>}
         <input type="date" value={date} onChange={(e)=> setDate(e.target.value)}/>
-        <button type="submit">Submit</button><button type="reset" onClick={()=>setDate("")}>reset</button>
-        <button className="close" type="button" onClick={()=>setDisplay(!display)}><IoMdCloseCircle/></button>
+        <button type="submit">Submit</button>
+        <button type="reset" onClick={()=>setDate("")}>reset</button>
+        <button className="close" type="button" onClick={()=>setDisplay(!display)}><IoClose/></button>
       </form>}
     </div>
   );
