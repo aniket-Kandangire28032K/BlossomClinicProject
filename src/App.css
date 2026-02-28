@@ -1252,6 +1252,15 @@ tr td:hover .del-btn {
   grid-column: span 2;
 }
 
+  .profits-chart{
+    width: 20%;
+    border: 1px solid #f5f5f5;
+    margin: 0 1.5rem;    
+    border-radius: 8px;
+    box-shadow: 4px 4px 8px rgb(0 0 0 / 0.2);
+  }
+
+
 /* reminders Page */
 .reminders{
   width: 100%;

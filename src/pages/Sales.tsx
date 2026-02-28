@@ -6,6 +6,9 @@ import * as xlsx from "xlsx";
 import PieChart from "../assets/charts/PieChart";
 import MRreport from "../components/MRreport";
 import ExpensesChart from "../components/ExpensesChart";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS,ArcElement,Tooltip,Legend } from "chart.js";
+ChartJS.register(ArcElement,Tooltip,Legend)
 
 const Sales = () => {
   const URL = import.meta.env.VITE_Backend_URL;
@@ -23,6 +26,10 @@ const Sales = () => {
     // dates:[]
   });
   const [filteredDates, setFilteredDates] = useState<string []>([]);
+  const [dataTotal,setDataTotal] = useState({
+    mrTotal:0,
+    expencessTotal:0
+  })
 
   const getData = async () => {
     // Get Prescription Data from Backend
@@ -60,17 +67,20 @@ const Sales = () => {
     const year = String(date.getFullYear());
     return `${day}/${month}/${year}`;
   };
-  // const printdate = () => {
-  //   // e.preventDefault();
-  //   let logs = []
-  //   logs = presData.filter((item) =>
-  //     filteredDates.includes(item.date)
-  // );
-  //   setFilteredData(logs)
-  // };
-  // useEffect(()=>{
-  //   printdate();
-  // },[formData.endDate])
+
+  // & Pie Chart Data of profit and loss _________________________________________________________________________________
+  const PieData = {
+    labels:["Profit","Loss"],
+    datasets:[{
+      // label:"Profit And Loss",
+      data:[totals.GrandTotal,Number(Number(dataTotal.expencessTotal)+Number(dataTotal.mrTotal))],
+      backgroundColor:[
+        "#00FF7F",
+        "#e25c5e"
+      ]
+    }]
+  } 
+
   useEffect(() => {
   if (!formData.startDate || !formData.endDate) return;
 
@@ -153,9 +163,11 @@ const Sales = () => {
       {filteredData.length > 0 && <BarChart data={filteredData} />}
       {totals.GrandTotal > 0 && <PieChart chartdata={totals} />}
 
-      <MRreport dates={filteredDates}  />
-      <ExpensesChart dates={filteredDates} />    
-
+      <MRreport dates={filteredDates}  setDataTotal={setDataTotal}/>
+      <ExpensesChart dates={filteredDates} setDataTotal={setDataTotal}/>    
+      <div className="profits-chart">
+      <Pie data={PieData} />
+      </div>    
       {filteredData.length > 0 && (
         <div className="table-wrapper">
           <table border={1} id="sales-table">
@@ -213,6 +225,7 @@ const Sales = () => {
           </table>
         </div>
       )}
+      
       {filteredData.length > 0 && (
         <button className="download-button" onClick={DownloadFile}>
           <MdFileDownload className="icon" />

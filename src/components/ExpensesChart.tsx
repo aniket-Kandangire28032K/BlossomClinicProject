@@ -35,7 +35,7 @@ interface ExpenseItem {
   total: number;
 }
 
-const ExpensesChart = ({ dates }: any) => {
+const ExpensesChart = ({ dates,setDataTotal }: any) => {
   const URL = import.meta.env.VITE_Backend_URL;
   const [reports, setReports] = useState<ExpenseItem[]>([]);
   const [chartValues, setChartValues] = useState({
@@ -88,6 +88,12 @@ const ExpensesChart = ({ dates }: any) => {
       total: rentSum + electricitySum + staffSum + otherSum
     });
   }, [dates, reports]);
+  useEffect(()=>{
+    setDataTotal((prev:any)=>({
+      ...prev,
+      expencessTotal:chartValues.total
+    }))
+  },[chartValues.total])
 
   // Chart configuration
   const data = {

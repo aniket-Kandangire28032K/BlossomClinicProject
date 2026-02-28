@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const MRreport = ({dates}:any) => {
+const MRreport = ({dates,setDataTotal}:any) => {
   const URL = import.meta.env.VITE_Backend_URL;
   type MR = {
     companyname: string;
@@ -75,28 +75,6 @@ const MRreport = ({dates}:any) => {
   setTotals(sums);
 }, [dates, mrList]);
 
-  // ---- FILTER WHEN SUBMIT ----
-  // const handleSubmit = () => {
-  //   // e.preventDefault();
-  //   if (!datadates) return;
-  //   const result = mrList.filter((item) => dates.includes(item.date));
-
-  //   // setFiltered(result);
-
-  //   // totals
-  //   const sums = result.reduce(
-  //     (acc, item) => {
-  //       acc.paid += Number(item?.paidamount || 0);
-  //       acc.due += Number(item?.dueamount || 0);
-  //       acc.total += Number(item?.totalamount || 0);
-  //       return acc;
-  //     },
-  //     { paid: 0, due: 0, total: 0 }
-  //   );
-
-  //   setTotals(sums);
-  // };
-
   //   ---- CHART DATA ----
   const chartData = {
     labels: ["Paid", "Due", "Total"],
@@ -108,6 +86,12 @@ const MRreport = ({dates}:any) => {
       },
     ],
   };
+  useEffect(()=>{
+    setDataTotal((prev:any)=>({
+      ...prev,
+      mrTotal:totals.paid
+    }))
+  },[totals.paid])
   return (
     <div className="mr-report">
       {
