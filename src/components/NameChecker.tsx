@@ -2,9 +2,10 @@ import { useState } from "react";
 import "./Components.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FaCopy } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { FaEdit } from "react-icons/fa";
 
-const NameChecker = () => {
+const NameChecker = ({formData,setFormData}:any) => {
   const URL = import.meta.env.VITE_Backend_URL;
     interface data {
       date: string;
@@ -32,15 +33,10 @@ const NameChecker = () => {
       consultFee: number;
       totalCost: number;
     }
-    // interface product{
-    //     name:String,
-    //     price:number
-    // }
   const [name, setName] = useState<any>("");
   const [details, setDetails] = useState<data | null>(null);
-  const [presDetails, setPrescriptionDetails] = useState<prescription | null>(
-    null
-  );
+  const [presDetails, setPrescriptionDetails] = useState<prescription | null>(null);
+  const [display,setDisplay] = useState(false)
 
   const checkforPatient = async (e: any) => {
     e.preventDefault();
@@ -60,8 +56,14 @@ const NameChecker = () => {
 
     // Check if card data exists
     if (cardRes.status === "fulfilled" && cardRes.value.data.card) {
+      console.log(cardRes.value.data.card.name)
+      console.log(cardRes.value.data.card.opdno)
       setDetails(cardRes.value.data.card);
-
+      setFormData({
+        ...formData,
+        patientname:cardRes.value.data.card.name,
+        opdno:cardRes.value.data.card.opdno
+      })
       // Prescription may or may not exist
       if (prescriptionRes.status === "fulfilled") {
         setPrescriptionDetails(prescriptionRes.value.data.details);
@@ -80,15 +82,19 @@ const NameChecker = () => {
     toast.error("Unexpected error occurred");
   }
   };
-  const copyText =(text:any) =>{
-    navigator.clipboard.writeText(text)
-    .then(() => {
-      toast.success("Copied to clipboard");
-    })
-    .catch(() => {
-      toast.error("Copy failed");
-    });
+// Update Patient Details
+const updatePatient= async()=>{
+  try {
+    const res = await axios.patch(`${URL}/patient`,details);
+    console.log(res.data)
+    toast.success("Patient Details Updated")
+  } catch (error) {
+    console.log(error);
+    toast.warn('Internal Server Error')
+  }finally{
+    setDisplay(!display)
   }
+}
 
   return (
     <div className="checker">
@@ -104,19 +110,36 @@ const NameChecker = () => {
       </form>
       {details && (
         <div className="patient-details">
-          <button onClick={() => setDetails(null)}>Close</button>
+          <button onClick={() => setDetails(null)}><IoClose/></button>
           <div className="popup-body">
-          <h3>Patient Details</h3>
+          <h3>Patient Details<button type="button" className="edit-btn" onClick={()=> setDisplay(!display)}>Update{display ? <IoClose color="red"/> :<FaEdit/>}</button></h3>
           <p>Date: {details.date}</p>
-          <p>OPD No: {details.opdno} <button className="copy-btn" onClick={()=> copyText(details.opdno) }><FaCopy/></button></p>
-          <p>Name: {details.name} <button className="copy-btn" onClick={()=> copyText(details.name) }><FaCopy/></button></p>
-          <p>History: {details.history}</p>
-          <p>Ref: {details.reference}</p>
-          <p></p>
+          <p>OPD No: {details.opdno}</p>
+          {display ? <input type="text" value={details.name} onChange={(e)=>{
+            setDetails({
+              ...details,
+              name:e.target.value
+            })
+          }} />  : <p>Name: {details.name}</p>}
+          {display ? <input type="text" value={details.history} onChange={(e)=>{
+            setDetails({
+              ...details,
+              history:e.target.value
+            })
+          }}/>  : <p>History: {details.history}</p>}
+          {display ? <input type="text" value={details.reference} 
+          onChange={(e)=>{
+            setDetails({
+              ...details,
+              reference:e.target.value
+            })
+          }}
+          />  : <p>Ref: {details.reference}</p>}
+          {display && <button type="button" onClick={updatePatient}>Submit</button>}
           {presDetails && (
             <div>
               <h3>Prescription Details</h3>
-              <p>OPD No.{presDetails.opdno || ""}</p>
+              {/* <p>OPD No.{presDetails.opdno || ""}</p> */}
               <p>Appointment: {presDetails.nextAppointmentDate || ""}</p>
             </div>
           )}

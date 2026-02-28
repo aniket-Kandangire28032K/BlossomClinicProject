@@ -183,7 +183,7 @@ const Dashboard = () => {
   },[companyName])
   return (
     <div className="dashboard">
-      <NameChecker/>
+      <NameChecker formData={formData} setFormData={setFormData}/>
       <h1>prescription</h1>
       <form onSubmit={handleSubmit} autoComplete="off">
         <h3>Date: {formData.date}</h3>
@@ -191,13 +191,15 @@ const Dashboard = () => {
           type="text"
           placeholder="OPD No."
           name="opdno"
+          value={formData.opdno}
           required
           onChange={handleChange}
-        />
+          />
         <input
           type="text"
           placeholder="Patient Name"
           name="patientname"
+          value={formData.patientname}
           required
           onChange={handleChange}
         />
@@ -291,6 +293,7 @@ const Dashboard = () => {
             value={treatmentName}
             onChange={(e) => setTreatmentName(e.target.value)}
           />
+          <input type="number" placeholder="sessions" max={5} min={0} />
           <input
             type="text"
             placeholder="Price"

@@ -11,12 +11,20 @@ const Reminders = () => {
     patientname:string,
     nextAppointmentDate:string
   }
+  type datestate ={
+    startdate:string,
+    enddate:string
+  }
   const [patientList, setPatientList] = useState([]);
   const [currentMonth, setCurrentMonth] = useState([]);
   const [filteredData, setFilterdData] = useState([]);
   const [display, setDisplay] = useState(false);
   const [object,setObject] = useState<objecttype | null>(null);
   const [date,setDate] = useState("");
+  const [dates,setDates]=useState<datestate>({
+    startdate:"",
+    enddate:""
+  })
   const getList = async () => {
     // get All Patient's Prescriptions
     try {
@@ -48,28 +56,16 @@ const Reminders = () => {
     e.preventDefault();
     let nextAppointmentDate = date.split("-").reverse().join("/")
     try {
-      await axios.patch(`${URL}/${object?._id}`,nextAppointmentDate)
+      await axios.patch(`${URL}/prescription/${object?._id}`,{nextAppointmentDate})
       toast.success("Appointment Rescheduled")
     } catch (error) {
       console.log(error)
-    }finally{
-
+    } finally{
+      setDisplay(!display);
+      setDate("");
+      getList();
     }
   }
-  const handleChange = (e: any) => {
-    const data = e.target.value;
-    if (!data) {
-      return;
-    }
-    const date = data.split("-").reverse().join("/");
-    let list = patientList.filter(
-      (item: any) => item.nextAppointmentDate === date,
-    );
-    if (list.length === 0) {
-      toast.info(`No Appointments on ${date}`);
-    }
-    setFilterdData(list);
-  };
 
   useEffect(() => {
     getList();
@@ -84,20 +80,48 @@ const Reminders = () => {
       ),
     );
   }, [patientList]);
+
+  const getfilteredData = async () => {
+    let array =[];
+    let start = new Date(dates.startdate);
+    let end = new Date(dates.enddate);
+    
+    while(start <= end){
+      array.push(new Date(start));
+      start.setDate(start.getDate()+1);
+    }
+    let newDates = array.map((item)=>(
+      item.toISOString().split("T")[0].split("-").reverse().join("/")
+    ) )
+     let list = patientList.filter(
+      (item: any) => newDates.includes(item.nextAppointmentDate)
+    );
+    setFilterdData(list);
+  }
+  useEffect(()=>{
+    getfilteredData();
+  },[dates.enddate]) 
+
+  const clearfunction = ()=>{
+    setFilterdData([]);
+    getList();
+    setDates({
+      startdate:"",
+      enddate:""
+    })
+  }
   return (
     <div className="reminders">
       <h1>Appointments</h1>
       <div className="btn-grp">
-        <input type="date" onChange={handleChange} />
+        <label htmlFor="">Start:</label>
+        <input type="date" value={dates.startdate} onChange={(e)=> setDates({...dates,startdate:e.target.value})}/>
+        <label htmlFor="">End:</label>
+        <input type="date" value={dates.enddate} onChange={(e)=> setDates({...dates,enddate:e.target.value})}/>
         <button
-          type="button"
-          onClick={() => {
-            setFilterdData([]);
-            getList();
-          }}
-        >
-          clear
-        </button>
+          type="reset"
+          onClick={clearfunction}
+        >Clear</button>
       </div>
       <div className="table-wrapper">
         <table border={1}>
@@ -106,8 +130,8 @@ const Reminders = () => {
               <th>No</th>
               <th>Date</th>
               <th>Name</th>
-              <th>OPD NO.</th>
-              <th>Appointmnet Date</th>
+              <th>OPD No.</th>
+              <th>Appointmenet Date</th>
             </tr>
           </thead>
           <tbody>
@@ -160,11 +184,11 @@ const Reminders = () => {
               Name: <span>{object?.patientname}</span>
             </p>
             <p>Appointment Date: <span>{object?.nextAppointmentDate}</span></p>
-            <input type="date"
+            <input type="date"required
             onChange={e=> setDate(e.target.value)}
             />
-            <button className="hover" type="submit">update</button>
-            <button className="hover" type="reset">clear</button>
+            <button className="hover" type="submit">Update</button>
+            <button className="hover" type="reset">Clear</button>
             <button
               className="close"
               type="button"

@@ -32,6 +32,8 @@ const StockUpdate = () => {
         } catch (error) {
             console.log(error)
             toast.error('Error in Updating Stock')
+        }finally{
+          setStock("")
         }
     }
     useEffect(()=>{
