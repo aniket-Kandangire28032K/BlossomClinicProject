@@ -171,6 +171,15 @@ const Dashboard = () => {
     } catch (error:any) {
       let sms:string=error.response.data.message;
       toast.error(sms);
+    }finally{
+        setFormData({
+          patientname: "",
+          opdno:'',    
+          nextAppointmentDate: "",
+          remark:""
+        })
+        setProductList([])
+        setTreatmentList([])
     }
   };
 

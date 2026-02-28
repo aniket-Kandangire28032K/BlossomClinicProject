@@ -121,7 +121,7 @@ const Patientform = () => {
         <input
           type="text"
           name="name"
-          pattern="[A-Za-z]{3,}"
+          // pattern="[A-Za-z]{3,}"
           required value={formData.name}
           placeholder="Patient Full name*"
           onChange={handleChange}
