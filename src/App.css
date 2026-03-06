@@ -937,7 +937,7 @@ tr td:hover .del-btn {
   padding-top: 1rem;
 }
 .meds-list form {
-  width: 50%;
+  width: 80%;
   padding: 0.2rem;
   padding-top: 1.7rem;
   margin: 0 auto;
@@ -947,18 +947,21 @@ tr td:hover .del-btn {
 }
 .meds-list form input {
   font-size: 1.2rem;
-  width: 50%;
+  width: 40%;
   padding-left: 0.3rem;
   border: none;
   outline: none;
   background: transparent;
   border-bottom: 3px solid var(--bluegreenDark);
 }
-.meds-list form button {
+.meds-list form input[type=date]{
   width: 15%;
+}
+.meds-list form button {
+  width: 13%;
   text-transform: capitalize;
   font-size: 1.2rem;
-  padding: 0.3rem 1rem;
+  padding: 0.2rem 1rem;
   border-radius: 8px;
   border-color: var(--bluegreenDark);
   color: white;
