@@ -18,10 +18,10 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
-const MRreport = ({dates,setDataTotal}:any) => {
+const MRreport = ({ dates, setDataTotal }: any) => {
   const URL = import.meta.env.VITE_Backend_URL;
   type MR = {
     companyname: string;
@@ -48,7 +48,7 @@ const MRreport = ({dates,setDataTotal}:any) => {
     } catch (err) {
       console.log(err);
     }
-  };  
+  };
   // ---- GET DATA ----
   useEffect(() => {
     getMR();
@@ -56,49 +56,58 @@ const MRreport = ({dates,setDataTotal}:any) => {
   }, [dates]);
 
   useEffect(() => {
-  if (!dates || mrList.length === 0) return;
+    if (!dates || mrList.length === 0) return;
 
-  const result = mrList.filter((item) =>
-    dates.includes(item.date)
-  );
+    const result = mrList.filter((item) => dates.includes(item.date));
 
-  const sums = result.reduce(
-    (acc, item) => {
-      acc.paid += Number(item?.paidamount || 0);
-      acc.due += Number(item?.dueamount || 0);
-      acc.total += Number(item?.totalamount || 0);
-      return acc;
-    },
-    { paid: 0, due: 0, total: 0 }
-  );
+    const sums = result.reduce(
+      (acc, item) => {
+        acc.paid += Number(item?.paidamount || 0);
+        acc.due += Number(item?.dueamount || 0);
+        acc.total += Number(item?.totalamount || 0);
+        return acc;
+      },
+      { paid: 0, due: 0, total: 0 },
+    );
 
-  setTotals(sums);
-}, [dates, mrList]);
+    setTotals(sums);
+  }, [dates, mrList]);
 
   //   ---- CHART DATA ----
   const chartData = {
-    labels: ["Paid", "Due", "Total"],
+    labels: ["MR Report"],
     datasets: [
       {
-        label: "Monthly Report",
-        data: [totals.paid, totals.due, totals.total],
-        backgroundColor: ["#4ade80", "#f87171", "#60a5fa"],
+        label: "Paid",
+        data: [totals.paid],
+        backgroundColor: "#4ade80",
+      },
+      {
+        label: "Due",
+        data: [totals.due],
+        backgroundColor: "#f87171",
+      },
+      {
+        label: "Total",
+        data: [totals.total],
+        backgroundColor: "#60a5fa",
       },
     ],
   };
-  useEffect(()=>{
-    setDataTotal((prev:any)=>({
+  useEffect(() => {
+    setDataTotal((prev: any) => ({
       ...prev,
-      mrTotal:totals.paid
-    }))
-  },[totals.paid])
+      mrTotal: totals.paid,
+    }));
+  }, [totals.paid]);
   return (
     <div className="mr-report">
       {
-      <div className="chart">
-          <h3 style={{ textAlign: "center"}}>MR Report</h3>
-         <Bar data={chartData} />
-      </div>}
+        <div className="chart">
+          <h3 style={{ textAlign: "center" }}>MR Report</h3>
+          <Bar data={chartData} />
+        </div>
+      }
     </div>
   );
 };

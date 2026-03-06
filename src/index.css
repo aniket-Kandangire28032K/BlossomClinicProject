@@ -223,3 +223,6 @@
 input[type=date]{
   text-transform: uppercase;
 }
+table thead tr th{
+  text-transform: uppercase !important;
+}

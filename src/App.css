@@ -2168,6 +2168,7 @@ box-shadow: none;
   }
   thead tr th{
     padding: 0.5rem;
+    
   }
   thead tr:nth-of-type(1){
     font-size: 1.2rem;
