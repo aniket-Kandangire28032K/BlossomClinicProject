@@ -19,6 +19,7 @@ const Patientform = () => {
     contact: "",
     email: "",
     address: "",
+    
   }
   const [formData, setFormData] = useState(initialState);
   const [today,setDate]=useState<string>('');
@@ -39,7 +40,7 @@ const Patientform = () => {
   }
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    if(name === 'name' || name ==='reference'){
+    if(name === 'name' || name ==='reference' || name==="history"){
       // For Name
       const formatted = value.replace(/[0-9]/g,"");
       setFormData({
@@ -89,6 +90,7 @@ const Patientform = () => {
     setDate(today)
     getCount();
   },[])
+  
   const handleReset = ()=>{
     setFormData(initialState)
   }
@@ -186,7 +188,7 @@ const Patientform = () => {
           value={formData.materialstatus}
           onChange={handleChange}
         >
-          <option value="" disabled>Marital Status*</option>
+          <option value="" disabled>Marital Status</option>
           <option value="single">Single</option>
           <option value="married">Married</option>
         </select>

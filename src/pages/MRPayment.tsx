@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const MRPayment = () => {
@@ -8,11 +8,30 @@ const MRPayment = () => {
   const [searchDate, setSearchDate] = useState<any>();
   const [mrList, setMrList] = useState<any[]>([]);
   const [amount, setAmount] = useState<number>(0);
-  const today = new Date().toISOString().split("T")[0].split("-").reverse().join("/");
-  console.log(today)
-
+  const [nextpaydate, setNextpaydate] = useState("");
+  const today = new Date()
+    .toISOString()
+    .split("T")[0]
+    .split("-")
+    .reverse()
+    .join("/");
+  const [display, setDisplay] = useState("");
+  const [details, setDetails] = useState({
+    companyname: "",
+    contact: "",
+    date: "0",
+    dueamount: 0,
+    email: "",
+    invoiceno:"",
+    mrname: "",
+    nextpaydate: "",
+    paidamount: 0,
+    productlist:[] ,
+    totalamount: 0,
+    _id:""
+    });
   const handleSubmit = async (e: any) => {
-    // search by Data or mrname
+    // search by Date or mrname
     e.preventDefault();
     let formatedate = "";
     if (!mrname && !searchDate)
@@ -20,7 +39,6 @@ const MRPayment = () => {
     if (searchDate) {
       let [year, month, day] = searchDate.split("-");
       formatedate = `${day}/${month}/${year}`;
-      console.log(formatedate);
     }
     try {
       const res = await axios.post(`${URL}/mr-payment`, {
@@ -32,7 +50,6 @@ const MRPayment = () => {
         (item: any) => Number(item.dueamount) > 0,
       );
       setMrList(filterList);
-      // if(filterList.length > 0) { toast.success(message)} else {toast.warn('MR Not found with dueAmount')}
       toast.info(message);
     } catch (error) {
       toast.error("MR not Found try again");
@@ -53,56 +70,74 @@ const MRPayment = () => {
     } catch (error) {
       toast.error("MR not Found");
       console.log(error);
-    } finally {
     }
   };
 
-  const UpdateDuaAmount = async (e: any, item: any) => {
+  const UpdateDuaAmount = async (e:any) => {
     e.preventDefault();
     let paidAmountNow = Number(amount);
-    const totalPaid = Number(item.paidamount) + paidAmountNow;
-    const newDue = Number(item.totalamount) - totalPaid;
+    const totalPaid = Number(details.paidamount) + paidAmountNow;
+    const newDue = Number(details.totalamount) - totalPaid;
     try {
       await axios.patch(`${URL}/mr-payment`, {
-        _id: item._id,
+        _id: details._id,
         paidamount: totalPaid,
         dueamount: newDue,
-        lastpaymentdate:today,
-        lastpayment:amount
-
+        lastpaymentdate: today,
+        lastpayment: amount,
+        nextpaydate: nextpaydate,
       });
       toast.success("Payment Updated!");
       fetchMRList();
     } catch (error) {
       console.log(error);
       toast.error("Internal Server Error");
+    } finally {
+      setNextpaydate("");
+      setAmount(0);
     }
   };
-
+  const getMRList = async () => {
+    try {
+      const res = await axios.get(`${URL}/mrlist`);
+      let list = res.data.filter((item:any)=> item.dueamount !== 0)
+      setMrList(list);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getMRList();
+  }, []);
+  const payMr = async (item: any) => {
+    console.log(item)
+    setDetails({ ...item });
+    setDisplay("update");
+  };
   return (
     <div className="mr-payment">
       <h1>Update MR</h1>
       <form onSubmit={handleSubmit}>
-          <div className="inputfield">
-            <input
-              type="text"
-              placeholder=""
-              value={mrname}
-              onChange={(e: any) => setMRName(e.target.value)}
-            />
-            <label htmlFor="">MR Name</label>
-          </div>
-        
-          <div className="inputfield">
-            <input
-              type="date"
-              placeholder=""
-              value={searchDate}
-              onChange={(e: any) => setSearchDate(e.target.value)}
-            />
-            <label htmlFor="">Date</label>
-          </div>
-        
+        <div className="inputfield">
+          <input
+            type="text"
+            placeholder=""
+            value={mrname}
+            onChange={(e: any) => setMRName(e.target.value)}
+          />
+          <label htmlFor="">MR Name</label>
+        </div>
+
+        <div className="inputfield">
+          <input
+            type="date"
+            placeholder=""
+            value={searchDate}
+            onChange={(e: any) => setSearchDate(e.target.value)}
+          />
+          <label htmlFor="">Date</label>
+        </div>
+
         <div className="btn-group">
           <button type="submit">Submit</button>
           <button
@@ -125,7 +160,7 @@ const MRPayment = () => {
               <form
                 key={index}
                 className="card"
-                onSubmit={(e: any) => UpdateDuaAmount(e, item)}
+                // onSubmit={(e: any) => UpdateDuaAmount(e)}
               >
                 <p>
                   <b>Date:</b> {item.date}
@@ -140,19 +175,70 @@ const MRPayment = () => {
                 <p>Last Payment :₹{item.lastpayment || "NA"} </p>
                 <p className="green">Total Amount ₹:{item.totalamount}</p>
                 <p className="red">Due Amount ₹:{item.dueamount}</p>
-                <input
+                {/* <input
                   type="number"
                   max={item.dueamount}
                   placeholder="Paid Amount"
                   // value={amount}
                   onChange={(e: any) => setAmount(e.target.value)}
                 />
-                <button type="submit">Pay</button>
+                {item.dueamount !== 0 && (
+                  <div>
+                    <label htmlFor="">Next Payment Date</label>{" "}
+                    <input
+                      type="date"
+                      onChange={(e: any) => {
+                        setNextpaydate(e.target.value);
+                      }}
+                    />{" "}
+                  </div>
+                )} */}
+                <button type="button" onClick={()=>payMr(item)}>Pay</button>
+                {/* <button type="submit">Pay</button> */}
               </form>
             ))}
           </>
         )}
       </div>
+      {display == "update" && (
+        <div className="popup">
+        <form  onSubmit={UpdateDuaAmount}>
+          <h2>Update MR Amounts</h2>
+          <div>
+          <p><strong>Date: </strong>{details.date}</p>
+          <p><strong>Company: </strong>{details.companyname}</p>
+          <p><strong>MR: </strong>{details.mrname}</p>
+          <p><strong>Due Amount: ₹ </strong>{details.dueamount}</p>
+          <p><strong>Paid Amount: ₹ </strong>{details.paidamount}</p>
+          <p><strong>Total Amount: ₹ </strong>{details.totalamount}</p>
+          </div>
+          <div>
+          <label htmlFor="">Payment Amount</label>
+          <input
+            type="number"
+            max={details?.dueamount}
+            placeholder="Paid Amount" required
+            value={amount == 0 ? "" : amount}
+            onChange={(e: any) => setAmount(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="">Next Payment Date</label>{" "}
+            <input
+              type="date" required={amount !== details.dueamount}
+              onChange={(e: any) => {
+                setNextpaydate(e.target.value);
+              }}
+            />
+          </div>
+          <div >
+          <button type="submit">Submit</button>
+          <button type="button" onClick={()=> setDisplay("")}>Close</button>
+          </div>
+        </form>
+        </div>
+      )}
     </div>
   );
 };

@@ -11,66 +11,77 @@ import NameChecker from "../components/NameChecker";
 
 const Dashboard = () => {
   const URL = import.meta.env.VITE_Backend_URL;
-  const currentdate = new Date().toISOString().split("T")[0].split("-").reverse().join("/")
+  const currentdate = new Date()
+    .toISOString()
+    .split("T")[0]
+    .split("-")
+    .reverse()
+    .join("/");
+  const [loading,setLoading] = useState(false);
   const [formData, setFormData] = useState<any>({
     // Post Data
     patientname: "",
-    opdno:'',
+    opdno: "",
     date: "",
     nextAppointmentDate: "",
-    remark:""
+    remark: "",
   });
   const [cost, setCost] = useState({
     productCost: 0,
     treatmentCost: 0,
     totalCost: 0,
     consultFee: 0,
+    paidamount: 0,
+    balanceamount: 0,
   });
   // product States
   const [productName, setProductName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [productRemark, setProductRemark] = useState("");
-  const [productPrice, setProductPrice] = useState<Number>(0);
+  const [productPrice, setProductPrice] = useState<number>(0);
   const [productList, setProductList] = useState<any>([]);
   const [productQty, setProductQty] = useState<any>(0);
 
   // treatment States
   const [treatmentName, setTreatmentName] = useState("");
-  const [treatmentPrice, setTreatmentPrice] = useState("");
+  const [treatmentPrice, setTreatmentPrice] = useState(0);
+  const [treatmentSessions, setTreatmentSessions] = useState<number>(0);
   const [treatmentList, setTreatmentList] = useState<any>([]);
-  const [display,setDisplay] = useState(false);
-  const [products,setProducts]= useState([]);
-
+  const [display, setDisplay] = useState(false);
+  const [products, setProducts] = useState([]);
 
   // Mr states
-  const [meds,setMeds] = useState<any>([])
-  const getMRList = async()=>{
+  const [meds, setMeds] = useState<any>([]);
+  const getMRList = async () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
-      let list = [...new Map(res.data.map((user:any) => [user.companyname,user])).values()];
-      setMeds(list)
-    } catch (error) { 
-      console.log(error)
+      let list = [
+        ...new Map(
+          res.data.map((user: any) => [user.companyname, user]),
+        ).values(),
+      ];
+      setMeds(list);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
   const addProducts = () => {
     // add Product to List
     if (productName.length == 0 || productPrice == 0)
       return alert("Please Enter Value in All fields");
     const object = {
       name: productName,
-      price: Number(productPrice),
+      price: Number(productPrice) * Number(productQty),
       remark: productRemark,
-      qty:Number(productQty),
-      stockoutdate:currentdate,
-      stockout:Number(productQty)
+      qty: Number(productQty),
+      stockoutdate: currentdate,
+      stockout: Number(productQty),
     };
-    console.log(productList)
     setProductList([...productList, object]);
     setProductName("");
     setProductRemark("");
-    
-    
+    setProductQty(0)
+    setProductPrice(0)
   };
 
   const deleteProduct = (index: number) => {
@@ -79,25 +90,29 @@ const Dashboard = () => {
   };
   const addTreatment = () => {
     // add Treatment to List
-    if (treatmentName.length == 0 || treatmentPrice.length == 0)
+    if (treatmentName.length == 0 || treatmentPrice == 0)
       return alert("Please Enter Value in All fields");
     const object = {
       name: treatmentName,
-      price: treatmentPrice,
+      price: Number(treatmentPrice) * Number(treatmentSessions),
+      sessions:treatmentSessions
     };
     setTreatmentList([...treatmentList, object]);
     setTreatmentName("");
-  };
-  const deleteTreatment = (index: number) => {
-    setTreatmentList(treatmentList.filter((_: any, i: number) => i !== index));
+    setTreatmentPrice(0)
+    setTreatmentSessions(0)
   };
 
+  const deleteTreatment = (index: number) => {
+    // Delete from List
+    setTreatmentList(treatmentList.filter((_: any, i: number) => i !== index));
+  };
 
   useEffect(() => {
     // Default Date Save
     const d = new Date();
-    const day = String(d.getDate()).padStart(2,"0");
-    const month = String(d.getMonth() + 1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
     const year = d.getFullYear();
     const today = `${day}/${month}/${year}`;
 
@@ -112,43 +127,41 @@ const Dashboard = () => {
     //  cal Total Cost
     let productTotal = productList.reduce(
       (sum: number, item: any) => sum + Number(item.price),
-      0
+      0,
     ); // zero is default value
     let treatmentTotal = treatmentList.reduce(
       (sum: number, i: any) => sum + Number(i.price),
-      0
+      0,
     );
+    let balance = Number(cost.totalCost) - Number(cost.paidamount);
     setCost({
       ...cost,
       productCost: productTotal,
       treatmentCost: treatmentTotal,
       totalCost: treatmentTotal + cost.consultFee + productTotal,
+      balanceamount: balance,
     });
-  }, [productList, treatmentList, cost.consultFee]);
- 
+  }, [productList, treatmentList, cost.consultFee, cost.paidamount]);
 
   const handleChange = (e: any) => {
     // handles change function
     const { name, value } = e.target;
-    if(name === "nextAppointmentDate"){
+    if (name === "nextAppointmentDate") {
       setFormData({
-      ...formData,
-      nextAppointmentDate: value.split("-").reverse().join("/"),
-    });
+        ...formData,
+        nextAppointmentDate: value.split("-").reverse().join("/"),
+      });
     }
     setFormData({
       ...formData,
       [name]: value,
     });
   };
-  const calTotal=(rate:String)=>{
-    //  calculate Function 
-    let total = Number(rate) * productQty;
-    setProductPrice(total)
-  }
+
   const handleSubmit = async (e: any) => {
     // Submit Function
     e.preventDefault();
+    setLoading(true)
     const nextDate = formData.nextAppointmentDate
       .split("-")
       .reverse()
@@ -160,40 +173,49 @@ const Dashboard = () => {
       products: productList,
       treatments: treatmentList,
     };
-    console.log(postData)
     try {
-      const [result, presres] = await Promise.all([
-      axios.put(`${URL}/medicine/stock-update`, postData),
-      axios.post(`${URL}/prescription`, postData)])
+      const [result, _presres] = await Promise.all([
+        axios.put(`${URL}/medicine/stock-update`, postData),
+        axios.post(`${URL}/prescription`, postData),
+      ]);
       toast.success(result.data.message);
-      console.log(presres)
+      setLoading(false)
       window.print();
-    } catch (error:any) {
-      let sms:string=error.response.data.message;
+    } catch (error: any) {
+      let sms: string = error.response.data.message;
       toast.error(sms);
-    }finally{
-        setFormData({
-          patientname: "",
-          opdno:'',    
-          nextAppointmentDate: "",
-          remark:""
-        })
-        setProductList([])
-        setTreatmentList([])
+      setLoading(false)
+    } finally {
+      setFormData({
+        patientname: "",
+        opdno: "",
+        nextAppointmentDate: "",
+        remark: "",
+      });
+      setProductList([]);
+      setTreatmentList([]);
+      setCost({
+        productCost: 0,
+        treatmentCost: 0,
+        totalCost: 0,
+        consultFee: 0,
+        paidamount: 0,
+        balanceamount: 0,
+      });
     }
   };
 
-  useEffect(()=>{
-    if(companyName){
-      setProducts(()=> (
-        meds.filter((item:any)=> item.companyname === companyName)
-      ))
+  useEffect(() => {
+    if (companyName) {
+      setProducts(() =>
+        meds.filter((item: any) => item.companyname === companyName),
+      );
     }
-  },[companyName])
-  const today = new Date().toISOString().split("T")[0]
+  }, [companyName]);
+  const today = new Date().toISOString().split("T")[0];
   return (
     <div className="dashboard">
-      <NameChecker formData={formData} setFormData={setFormData}/>
+      <NameChecker formData={formData} setFormData={setFormData} />
       <h1>prescription</h1>
       <form onSubmit={handleSubmit} autoComplete="off">
         <h3>Date: {formData.date}</h3>
@@ -204,7 +226,7 @@ const Dashboard = () => {
           value={formData.opdno}
           required
           onChange={handleChange}
-          />
+        />
         <input
           type="text"
           placeholder="Patient Name"
@@ -223,21 +245,27 @@ const Dashboard = () => {
         />
 
         <div className="product-form">
-          <select value={companyName} onChange={e=> setCompanyName(e.target.value)}>
+          <select
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+          >
             <option value="">Company</option>
-            {
-              meds.map((item:any)=>(
-                <option key={item._id} value={item?.companyname}>{item?.companyname}</option>
-              ))
-            }
+            {meds.map((item: any) => (
+              <option key={item._id} value={item?.companyname}>
+                {item?.companyname}
+              </option>
+            ))}
           </select>
-          <select value={productName} onChange={e=> setProductName(e.target.value)}>
+          <select
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+          >
             <option value="">Products</option>
-            {
-              products.map((item:any)=>(
-                <option key={item._id} value={item.medicinename}>{item.medicinename}</option>
-              ))
-            }
+            {products.map((item: any) => (
+              <option key={item._id} value={item.medicinename}>
+                {item.medicinename}
+              </option>
+            ))}
           </select>
           <input
             type="text"
@@ -250,15 +278,14 @@ const Dashboard = () => {
             type="number"
             placeholder="Qty"
             min={1}
-            // value={productQty}
+            value={productQty ==0 ? "" :productQty}
             onChange={(e) => setProductQty(e.target.value)}
-            
           />
           <input
-            type="number"
+            type="number" value={productPrice == 0 ? " " : productPrice}
             placeholder="Price"
-            onChange={(e) => {
-              calTotal(e.target.value)
+            onChange={(e:any) => {
+              setProductPrice(e.target.value);
             }}
           />
           <button type="button" onClick={addProducts}>
@@ -303,12 +330,20 @@ const Dashboard = () => {
             value={treatmentName}
             onChange={(e) => setTreatmentName(e.target.value)}
           />
-          <input type="number" placeholder="sessions" max={5} min={0} />
+          <input
+            type="number"
+            placeholder="sessions"
+            value={treatmentSessions == 0 ? "" : treatmentSessions}
+            onChange={(e: any) => setTreatmentSessions(Number(e.target.value))}
+            max={5}
+            min={0}
+          />
           <input
             type="text"
             placeholder="Price"
-            value={treatmentPrice}
-            onChange={(e) => setTreatmentPrice(e.target.value)}
+            id="treatmentrate"
+            value={treatmentPrice == 0 ? "" : treatmentPrice }
+            onChange={(e:any) => setTreatmentPrice(e.target.value)}
           />
           <button type="button" onClick={addTreatment}>
             Add
@@ -318,14 +353,16 @@ const Dashboard = () => {
           <table className="treatment-table">
             <thead>
               <tr className="table-head">
-                <td>Treatment</td>
-                <td>Price</td>
+                <th>Treatment</th>
+                <th>sessions</th>
+                <th>Price</th>
               </tr>
             </thead>
             <tbody>
               {treatmentList.map((e: any, i: number) => (
                 <tr key={i}>
                   <td>{e.name}</td>
+                  <td>{e.sessions}</td>
                   <td>
                     Rs.{e.price}{" "}
                     <button
@@ -350,18 +387,38 @@ const Dashboard = () => {
             min={today}
           />
         </div>
-        <input type="text" placeholder="Remark" name="remark" value={formData.remark} onChange={handleChange}/>
-        <h3>Total Fees:Rs.{cost.totalCost || 0}</h3>
+        <div className="paidamount">
+          <label>Paid Amount:</label>
+          <input
+            type="number"
+            value={cost.paidamount}
+            name="paidamount"
+            onChange={(e: any) =>
+              setCost({ ...cost, paidamount: e.target.value })
+            }
+            min={0}
+          />
+        </div>
+        <input
+          type="text"
+          placeholder="Remark"
+          name="remark"
+          value={formData.remark}
+          onChange={handleChange}
+        />
+        <h3>Balance Amount: ₹{cost.balanceamount}</h3>
+        <h3>Total Fees: ₹{cost.totalCost || 0}</h3>
         <div className="btn-group">
-          <button type="submit">Submit</button>
+          {!loading ? <button type="submit">Submit</button> : <button style={{opacity:0.5}} type="submit" disabled>Submit</button> }
           <button type="reset">Reset</button>
-          <button type="button" 
-          onClick={() => window.print()}
-          >Print</button>
-          <input type="checkbox" onChange={()=> setDisplay(!display)}/><label>Display Total</label>
+          <button type="button" onClick={() => window.print()}>
+            Print
+          </button>
+          <input type="checkbox" onChange={() => setDisplay(!display)} />
+          <label>Display Total</label>
         </div>
       </form>
-{/* ! ---------------------------------------------------------(Print Areas)-------------------------------------------------------- */}
+      {/* ! ---------------------------------------------------------(Print Areas)-------------------------------------------------------- */}
       {/* Print Area */}
       <div className="print-area">
         <div className="header">
@@ -402,22 +459,22 @@ const Dashboard = () => {
             <div>
               <h3>Treatments</h3>
               {treatmentList.map((e: any, i: number) => (
-                <p key={i}>{i + 1}. {e.name}</p>
+                <p key={i}>
+                  {i + 1}. {e.name}
+                </p>
               ))}
             </div>
           )}
         </div>
         <div className="sub-footer">
-          {/* <h3>Consult Fee: Rs.{cost.consultFee || 0}/-</h3> */}
-          {/* <h3>Total Fee: Rs. {cost.totalCost || 0}/-</h3> */}
 
           {formData.nextAppointmentDate && (
-            <h3>
+            <h3 style={{backgroundColor:"transparent"}}>
               Follow up Date:{" "}
               {formData.nextAppointmentDate.split("-").reverse().join("/")}{" "}
             </h3>
           )}
-          {display && <p>Total: ₹{cost.totalCost}</p>}
+          {display && <p style={{backgroundColor:"transparent",color:"#000"}}>Total: ₹{cost.totalCost}</p>}
           {formData.remark && <p>{formData.remark}</p>}
         </div>
         <div className="footer">

@@ -323,8 +323,8 @@ const MrForm = () => {
           <label htmlFor="paid">Invoice No.</label>
         </div>
         <div className="inputfield">
-          <select id="paymentMethod" onChange={handleChange}value={formData.paymentMethod}>
-            <option>Payment Method</option>
+          <select id="paymentMethod" required onChange={handleChange}value={formData.paymentMethod}>
+            <option>Payment Method*</option>
             <option value="cash">Cash</option>
             <option value="upi">UPI</option>
             <option value="debit card">Debit Card</option>
@@ -332,7 +332,7 @@ const MrForm = () => {
             <option value="net Banking">Net Banking</option>
           </select>
         </div>  
-        <div className="inputfield">
+        {formData.dueamount !== 0 &&  <div className="inputfield">
           <input
             type="date"
             id="nextpaydate"
@@ -342,7 +342,7 @@ const MrForm = () => {
             
           />
           <label htmlFor="due">Next Payment Date</label>
-        </div>
+        </div>}
 
         <div className="btn-grp">
           <button type="submit">Submit</button>

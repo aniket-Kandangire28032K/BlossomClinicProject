@@ -125,10 +125,10 @@ const MedsList = () => {
               <th>Company</th>
               <th>Medincine Name</th>
               <th>Stock In Date</th>
-              <th>stock In</th>
+              <th>opening stock</th>
               <th>stock</th>
-              <th>stock Out Date</th>
-              <th>stock Out</th>
+              <th>sold stock Date</th>
+              <th>sold</th>
             </tr>
           </thead>
           <tbody>

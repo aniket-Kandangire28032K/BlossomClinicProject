@@ -228,7 +228,7 @@ function Expense() {
           <th>No.</th>
           <th>Date</th>
           <th>Rent</th>
-          <th>Elec</th>
+          <th>Electricity</th>
           <th>Staff</th>
           <th>Other</th>
           <th>Total</th>

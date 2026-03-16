@@ -198,13 +198,14 @@ const Sales = () => {
                     </ol>
                   </td>
                   <td>
+                    {item.treatments.length > 0 ?
                     <ol>
                       {item.treatments.map((e: any, num: number) => (
                         <li key={num}>
                           {e.name}: ₹{e.price}
                         </li>
                       ))}
-                    </ol>
+                    </ol> : "No Treatment"}
                   </td>
                   <td>₹{item.consultFee}</td>
                   <td>₹{item.totalCost}</td>
