@@ -7,6 +7,7 @@ import {
   Legend,
   Tooltip,
 } from "chart.js";
+import { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 ChartJS.register(
   CategoryScale,
@@ -23,10 +24,10 @@ const BarChart = ({ data = [] }: any) => {
     acc[date] = (acc[date] || 0) + Number(cost);
     return acc;
   }, {});
-
+  
   const labels = Object.keys(dailyTotals);
   const values = Object.values(dailyTotals);
-
+  
   let chartData = {
     labels: labels,
     datasets: [
@@ -40,7 +41,11 @@ const BarChart = ({ data = [] }: any) => {
     ],
   };
 
-  return (
+  useEffect(()=>{
+    if(!data) return
+},[data])
+
+return (
     <div className="main-chart">
       <Bar data={chartData}/>
     </div>

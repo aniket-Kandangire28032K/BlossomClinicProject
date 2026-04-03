@@ -7,8 +7,8 @@ import PieChart from "../assets/charts/PieChart";
 import MRreport from "../components/MRreport";
 import ExpensesChart from "../components/ExpensesChart";
 import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS,ArcElement,Tooltip,Legend } from "chart.js";
-ChartJS.register(ArcElement,Tooltip,Legend)
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Sales = () => {
   const URL = import.meta.env.VITE_Backend_URL;
@@ -24,11 +24,11 @@ const Sales = () => {
     startDate: "",
     endDate: "",
   });
-  const [filteredDates, setFilteredDates] = useState<string []>([]);
-  const [dataTotal,setDataTotal] = useState({
-    mrTotal:0,
-    expencessTotal:0
-  })
+  const [filteredDates, setFilteredDates] = useState<string[]>([]);
+  const [dataTotal, setDataTotal] = useState({
+    mrTotal: 0,
+    expencessTotal: 0,
+  });
 
   const getData = async () => {
     try {
@@ -38,7 +38,7 @@ const Sales = () => {
       console.log(error);
     }
   };
-//  * --------------------------------------------------------
+  //  * --------------------------------------------------------
   const getDates = () => {
     const start = new Date(formData.startDate);
     const end = new Date(formData.endDate);
@@ -52,13 +52,13 @@ const Sales = () => {
       dates.push(formatDate(current));
       current.setDate(current.getDate() + 1);
     }
-    setFilteredDates(dates);    
+    setFilteredDates(dates);
   };
-  
+
   useEffect(() => {
     getDates();
   }, [formData.endDate]);
-  
+
   const formatDate = (date: Date) => {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -68,62 +68,47 @@ const Sales = () => {
 
   // & Pie Chart Data of profit and loss _________________________________________________________________________________
   const PieData = {
-    labels:["Profit","Loss"],
-    datasets:[{
-      // label:"Profit And Loss",
-      data:[totals.GrandTotal,Number(Number(dataTotal.expencessTotal)+Number(dataTotal.mrTotal))],
-      backgroundColor:[
-        "#00FF7F",
-        "#e25c5e"
-      ]
-    }]
-  } 
+    labels: ["Profit", "Loss"],
+    datasets: [
+      {
+        // label:"Profit And Loss",
+        data: [
+          totals.GrandTotal,
+          Number(Number(dataTotal.expencessTotal) + Number(dataTotal.mrTotal)),
+        ],
+        backgroundColor: ["#00FF7F", "#e25c5e"],
+      },
+    ],
+  };
+  useEffect(() => {
+    let start: Date;
+    let end: Date;
 
-//   useEffect(() => {
-//   if (!formData.startDate || !formData.endDate) return;
+    // 👉 If user selected dates
+    if (formData.startDate && formData.endDate) {
+      start = new Date(formData.startDate);
+      end = new Date(formData.endDate);
+    } else {
+      // 👉 Default = current month
+      const now = new Date();
+      start = new Date(now.getFullYear(), now.getMonth(), 1); // 1st day
+      end = new Date(now.getFullYear(), now.getMonth() + 1, 0); // last day
+    }
 
-//   const start = new Date(formData.startDate);
-//   const end = new Date(formData.endDate);
+    const logs = presData.filter((item: any) => {
+      if (!item.date) return false;
 
-//   const logs = presData.filter((item: any) => {
-//     const itemDate = new Date(
-//       String(item.date).split("/").reverse().join("-") 
-//     );
-//     return itemDate >= start && itemDate <= end;
-//   });
+      const parts = item.date.split("/");
+      if (parts.length !== 3) return false;
 
-//   setFilteredData(logs);
-// }, [formData.startDate, formData.endDate, presData]);
- useEffect(() => {
-  let start: Date;
-  let end: Date;
+      const itemDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
 
-  // 👉 If user selected dates
-  if (formData.startDate && formData.endDate) {
-    start = new Date(formData.startDate);
-    end = new Date(formData.endDate);
-  } else {
-    // 👉 Default = current month
-    const now = new Date();
-    start = new Date(now.getFullYear(), now.getMonth(), 1); // 1st day
-    end = new Date(now.getFullYear(), now.getMonth() + 1, 0); // last day
-  }
+      return itemDate >= start && itemDate <= end;
+    });
 
-  const logs = presData.filter((item: any) => {
-    if (!item.date) return false;
-
-    const parts = item.date.split("/");
-    if (parts.length !== 3) return false;
-
-    const itemDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
-
-    return itemDate >= start && itemDate <= end;
-  });
-
-  setFilteredData(logs);
-
-}, [formData.startDate, formData.endDate, presData]); 
-useEffect(() => {
+    setFilteredData(logs);
+  }, [formData.startDate, formData.endDate, presData]);
+  useEffect(() => {
     getData();
   }, []);
 
@@ -160,11 +145,14 @@ useEffect(() => {
     });
   }, [filteredData]);
 
-  const resetFun = ()=>{
-    setFilteredDates([]);
-    setFilteredData([]);
+  const resetFun = () => {
+    setFormData({
+    startDate: "",
+    endDate: "",
+  });
 
-  }
+  setFilteredDates([]);
+  };
   return (
     <div className="sales-report">
       <h1>Sales Report</h1>
@@ -183,18 +171,21 @@ useEffect(() => {
             setFormData({ ...formData, endDate: e.target.value })
           }
         />
-        {/* <button type="submit">Sumbit</button> */}
-        <button type="reset" onReset={resetFun}>Clear</button>
+        <button type="reset" onClick={resetFun}>
+          Clear
+        </button>
       </form>
 
-      {filteredData.length > 0 && <BarChart data={filteredData} />}
+      {filteredData.length > 0 && (
+        <BarChart data={filteredData} />
+      )}
       {totals.GrandTotal > 0 && <PieChart chartdata={totals} />}
 
-      <MRreport dates={filteredDates}  setDataTotal={setDataTotal}/>
-      <ExpensesChart dates={filteredDates} setDataTotal={setDataTotal}/>    
+      <MRreport dates={filteredDates} setDataTotal={setDataTotal} />
+      <ExpensesChart dates={filteredDates} setDataTotal={setDataTotal} />
       <div className="profits-chart">
-      <Pie data={PieData} />
-      </div>    
+        <Pie data={PieData} />
+      </div>
       {filteredData.length > 0 && (
         <div className="table-wrapper">
           <table border={1} id="sales-table">
@@ -225,14 +216,17 @@ useEffect(() => {
                     </ol>
                   </td>
                   <td>
-                    {item.treatments.length > 0 ?
-                    <ol>
-                      {item.treatments.map((e: any, num: number) => (
-                        <li key={num}>
-                          {e.name}: ₹{e.price}
-                        </li>
-                      ))}
-                    </ol> : "No Treatment"}
+                    {item.treatments.length > 0 ? (
+                      <ol>
+                        {item.treatments.map((e: any, num: number) => (
+                          <li key={num}>
+                            {e.name}: ₹{e.price}
+                          </li>
+                        ))}
+                      </ol>
+                    ) : (
+                      "No Treatment"
+                    )}
                   </td>
                   <td>₹{item.consultFee}</td>
                   <td>₹{item.totalCost}</td>
@@ -253,14 +247,13 @@ useEffect(() => {
           </table>
         </div>
       )}
-      
+
       {filteredData.length > 0 && (
         <button className="download-button" onClick={DownloadFile}>
           <MdFileDownload className="icon" />
           Download
         </button>
       )}
-      
     </div>
   );
 };
