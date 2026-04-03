@@ -9,12 +9,12 @@ const MedsList = () => {
 
   const [medsList, setList] = useState<any>();
   const [medName, setMedName] = useState("");
-  const [singleMed, setSingleMed] = useState<any>(null);
+  const [_singleMed, setSingleMed] = useState<any>(null);
 
   const [stockDate, setStockDate] = useState<string | null>(null);
-  const [dateStock, setDateStock] = useState<any[]>([]);
+  const [_dateStock, setDateStock] = useState<any[]>([]);
 
-  const today = new Date().toLocaleDateString("en-GB");
+  // const today = new Date().toLocaleDateString("en-GB");
 
   // 🔹 Get all medicines (current stock)
   const getAllMeds = async () => {
