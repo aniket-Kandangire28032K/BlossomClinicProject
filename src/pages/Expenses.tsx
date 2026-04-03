@@ -132,6 +132,7 @@ function Expense() {
       setOtherExpenses([]);
       setRent("");
       setStaff([]);
+      getexpencess();
     }
   };
 
@@ -143,7 +144,7 @@ function Expense() {
       {/* Rent */}
       <input
         type="number"
-        placeholder="Rent*" required
+        placeholder="Rent*" 
         value={rent}
         onChange={(e) => setRent(e.target.value)}
       />
@@ -151,7 +152,7 @@ function Expense() {
       {/* Electricity */}
       <input
         type="number"
-        placeholder="Electricity Bill*" required
+        placeholder="Electricity Bill*" 
         value={electricity}
         onChange={(e) => setElectricity(e.target.value)}
       />

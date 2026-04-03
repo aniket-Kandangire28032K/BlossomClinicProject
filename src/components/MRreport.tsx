@@ -55,23 +55,48 @@ const MRreport = ({ dates, setDataTotal }: any) => {
     // handleSubmit();
   }, [dates]);
 
-  useEffect(() => {
-    if (!dates || mrList.length === 0) return;
+useEffect(() => {
+  if (mrList.length === 0) return;
 
-    const result = mrList.filter((item) => dates.includes(item.date));
+  let result = [];
 
-    const sums = result.reduce(
-      (acc, item) => {
-        acc.paid += Number(item?.paidamount || 0);
-        acc.due += Number(item?.dueamount || 0);
-        acc.total += Number(item?.totalamount || 0);
-        return acc;
-      },
-      { paid: 0, due: 0, total: 0 },
-    );
+  // ✅ If dates selected → use them
+  if (dates && dates.length > 0) {
+    result = mrList.filter((item) => dates.includes(item.date));
+  } else {
+    // ✅ Default → current month
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
 
-    setTotals(sums);
-  }, [dates, mrList]);
+    result = mrList.filter((item) => {
+      if (!item.date) return false;
+
+      const parts = item.date.split("/");
+      if (parts.length !== 3) return false;
+
+      const itemDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+
+      return (
+        itemDate.getMonth() === currentMonth &&
+        itemDate.getFullYear() === currentYear
+      );
+    });
+  }
+
+  const sums = result.reduce(
+    (acc, item) => {
+      acc.paid += Number(item?.paidamount || 0);
+      acc.due += Number(item?.dueamount || 0);
+      acc.total += Number(item?.totalamount || 0);
+      return acc;
+    },
+    { paid: 0, due: 0, total: 0 }
+  );
+
+  setTotals(sums);
+
+}, [dates, mrList]);
 
   //   ---- CHART DATA ----
   const chartData = {

@@ -79,18 +79,10 @@ const PrescriptionPage = () => {
                     {e?.products?.length == 0 && <tr> <td></td><td>No Record Found</td></tr>}
                 </tbody>
               </table>
-              {/* <div className="">
-                <p>treatments</p>
-                {e?.treatment?.length > 0 &&
-                  e.treatment.map((treat: any, index: number) => (
-                    <div key={index} className="data">
-                      <p>Name: {treat.name}</p>
-                      <p>Price: {treat.price}</p>
-                    </div>
-                  ))}
-              </div> */}
+              
             </div>
           ))}
+          {list.length === 0 && <h2>No Prescription Found</h2>}
       </div>
     </div>
   );

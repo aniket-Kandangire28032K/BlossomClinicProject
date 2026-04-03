@@ -17,6 +17,7 @@ const Reminders = () => {
   };
   const [patientList, setPatientList] = useState([]);
   const [currentMonth, setCurrentMonth] = useState([]);
+  console.log(currentMonth)
   const [filteredData, setFilterdData] = useState([]);
   const [display, setDisplay] = useState(false);
   const [object, setObject] = useState<objecttype | null>(null);
@@ -195,20 +196,26 @@ const Reminders = () => {
                   </td>
                   <td>{item.opdno}</td>
                   <td>
-                   {item.treatments > 0 ? <table border={1} >
-                        
-                        <tbody>
-                          <tr>
+                   {item?.treatments.length > 0 ? <table className="innertable" border={1} >
+                          <thead >
+                            <tr>
                             <td>Name</td>
+                            <td>Remaining</td>
                             <td>Sessions</td>
-                          </tr>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+
                           {item.treatments.map((item: any, num: number) => (
                             <tr key={num}>
-                              <td>{item.name || "NA"}</td>
-                              <td>{item.sessions || "NA"}</td>
+                              <td>{item.name}</td>
+                              <td>{Number(item.sessions)-Number(item.completesessions)}</td>
+                              <td>{item.sessions}</td>
                             </tr>
                           ))}
-                        </tbody>
+                          </tbody>
+                        
                       </table> : "No Treatments"}
                   </td>
                   <td>{item.balanceamount || 0}</td>

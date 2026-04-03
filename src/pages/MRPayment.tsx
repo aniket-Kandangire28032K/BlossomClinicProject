@@ -175,30 +175,14 @@ const MRPayment = () => {
                 <p>Last Payment :₹{item.lastpayment || "NA"} </p>
                 <p className="green">Total Amount ₹:{item.totalamount}</p>
                 <p className="red">Due Amount ₹:{item.dueamount}</p>
-                {/* <input
-                  type="number"
-                  max={item.dueamount}
-                  placeholder="Paid Amount"
-                  // value={amount}
-                  onChange={(e: any) => setAmount(e.target.value)}
-                />
-                {item.dueamount !== 0 && (
-                  <div>
-                    <label htmlFor="">Next Payment Date</label>{" "}
-                    <input
-                      type="date"
-                      onChange={(e: any) => {
-                        setNextpaydate(e.target.value);
-                      }}
-                    />{" "}
-                  </div>
-                )} */}
+                
                 <button type="button" onClick={()=>payMr(item)}>Pay</button>
-                {/* <button type="submit">Pay</button> */}
+                
               </form>
             ))}
           </>
         )}
+        {mrList.length === 0 && <h1>No Data Found</h1>}
       </div>
       {display == "update" && (
         <div className="popup">

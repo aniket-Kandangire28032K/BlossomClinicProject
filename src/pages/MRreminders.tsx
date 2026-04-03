@@ -45,7 +45,7 @@ const MRreminders = () => {
   }, []);
   return (
     <div className="mr-reminders">
-      <h1>MR Payment Reminders</h1>
+      <h1 style={{textAlign:"center"}}>MR Payment Reminders</h1>
       <div className="card-grid">
         {MRList.map((item: any, index) => (
           <div key={index} className="reminder-card">
@@ -60,6 +60,7 @@ const MRreminders = () => {
           </div>
         ))}
       </div>
+        {MRList.length ===0 && <h2 style={{textAlign:"center"}}>No Data Found</h2>}
       {display &&  <form onSubmit={Reschedule} className="reschedule-form">
         <h3>Next Payment Date</h3>
         {object.mrname && <p>Name: {object?.mrname}</p>}

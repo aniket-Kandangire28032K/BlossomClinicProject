@@ -10,6 +10,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import NameChecker from "../components/NameChecker";
 
 const Dashboard = () => {
+  const today = new Date().toISOString().split("T")[0];
   const URL = import.meta.env.VITE_Backend_URL;
   const currentdate = new Date()
     .toISOString()
@@ -25,6 +26,7 @@ const Dashboard = () => {
     date: "",
     nextAppointmentDate: "",
     remark: "",
+    nextpaymentdate:""
   });
   const [cost, setCost] = useState({
     productCost: 0,
@@ -46,6 +48,7 @@ const Dashboard = () => {
   const [treatmentName, setTreatmentName] = useState("");
   const [treatmentPrice, setTreatmentPrice] = useState(0);
   const [treatmentSessions, setTreatmentSessions] = useState<number>(0);
+  const [completeSessions,setCompletedSessions] = useState(0)
   const [treatmentList, setTreatmentList] = useState<any>([]);
   const [display, setDisplay] = useState(false);
   const [products, setProducts] = useState([]);
@@ -95,12 +98,15 @@ const Dashboard = () => {
     const object = {
       name: treatmentName,
       price: Number(treatmentPrice) * Number(treatmentSessions),
-      sessions:treatmentSessions
+      sessions:treatmentSessions,
+      completesessions:Number(completeSessions)
+
     };
     setTreatmentList([...treatmentList, object]);
     setTreatmentName("");
     setTreatmentPrice(0)
     setTreatmentSessions(0)
+    
   };
 
   const deleteTreatment = (index: number) => {
@@ -133,7 +139,8 @@ const Dashboard = () => {
       (sum: number, i: any) => sum + Number(i.price),
       0,
     );
-    let balance = Number(cost.totalCost) - Number(cost.paidamount);
+    let balance = 0
+     balance = Number(cost.totalCost) - Number(cost.paidamount || 0);
     setCost({
       ...cost,
       productCost: productTotal,
@@ -141,7 +148,7 @@ const Dashboard = () => {
       totalCost: treatmentTotal + cost.consultFee + productTotal,
       balanceamount: balance,
     });
-  }, [productList, treatmentList, cost.consultFee, cost.paidamount]);
+  }, [productList, treatmentList, cost.consultFee, cost.paidamount,cost.totalCost]);
 
   const handleChange = (e: any) => {
     // handles change function
@@ -157,7 +164,7 @@ const Dashboard = () => {
       [name]: value,
     });
   };
-
+  
   const handleSubmit = async (e: any) => {
     // Submit Function
     e.preventDefault();
@@ -166,7 +173,8 @@ const Dashboard = () => {
       .split("-")
       .reverse()
       .join("/");
-    const postData = {
+    
+      const postData = {
       ...formData,
       nextAppointmentDate: nextDate,
       ...cost,
@@ -179,6 +187,7 @@ const Dashboard = () => {
         axios.post(`${URL}/prescription`, postData),
       ]);
       toast.success(result.data.message);
+      // console.log(postData)
       setLoading(false)
       window.print();
     } catch (error: any) {
@@ -191,9 +200,8 @@ const Dashboard = () => {
         opdno: "",
         nextAppointmentDate: "",
         remark: "",
+        nextpaymentdate:""
       });
-      setProductList([]);
-      setTreatmentList([]);
       setCost({
         productCost: 0,
         treatmentCost: 0,
@@ -202,6 +210,11 @@ const Dashboard = () => {
         paidamount: 0,
         balanceamount: 0,
       });
+      setProductList([]);
+      setTreatmentList([]);
+      setCompanyName("")
+      setProductName("")
+      setCompletedSessions(0)
     }
   };
 
@@ -212,13 +225,12 @@ const Dashboard = () => {
       );
     }
   }, [companyName]);
-  const today = new Date().toISOString().split("T")[0];
   return (
     <div className="dashboard">
       <NameChecker formData={formData} setFormData={setFormData} />
-      <h1>prescription</h1>
+      <h2>prescription</h2>
       <form onSubmit={handleSubmit} autoComplete="off">
-        <h3>Date: {formData.date}</h3>
+        <h3>Date: {currentdate}</h3>
         <input
           type="text"
           placeholder="OPD No."
@@ -238,7 +250,7 @@ const Dashboard = () => {
         <input
           type="number"
           placeholder="Consult Fee"
-          required
+          required value={cost.consultFee}
           onChange={(e) =>
             setCost({ ...cost, consultFee: parseInt(e.target.value) })
           }
@@ -339,7 +351,7 @@ const Dashboard = () => {
             min={0}
           />
           <input
-            type="text"
+            type="number"
             placeholder="Price"
             id="treatmentrate"
             value={treatmentPrice == 0 ? "" : treatmentPrice }
@@ -378,10 +390,13 @@ const Dashboard = () => {
             </tbody>
           </table>
         )}
-        <div>
-          <label htmlFor="">Next Appointment Date:</label>
+        <div className="section1">
+          <label>Completed Session</label>
+          <input type="number" value={completeSessions} onChange={(e:any)=>setCompletedSessions(e.target.value)}/>
+          <label>Next Appointment Date:</label>
           <input
             type="date"
+            value={formData.nextAppointmentDate}
             name="nextAppointmentDate"
             onChange={handleChange}
             min={today}
@@ -397,6 +412,14 @@ const Dashboard = () => {
               setCost({ ...cost, paidamount: e.target.value })
             }
             min={0}
+          />
+          <label>Next Payment Date:</label>
+          <input
+            type="date"
+            name="nextpaymentdate"
+            value={formData.nextpaymentdate}
+            onChange={handleChange}
+            min={today}
           />
         </div>
         <input

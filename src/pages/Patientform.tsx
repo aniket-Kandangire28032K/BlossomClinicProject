@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { toast } from "react-toastify";
-import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/material_blue.css"
 import NameChecker from "../components/NameChecker";
+import FlexiDatepicker from 'flexidatepicker';
+import 'flexidatepicker/dist/flexidatepicker.min.css';
+
 
 const Patientform = () => {
   const URL = import.meta.env.VITE_Backend_URL;
@@ -24,7 +25,8 @@ const Patientform = () => {
   const [formData, setFormData] = useState(initialState);
   const [today,setDate]=useState<string>('');
   const [opd,setOpdNo]=useState<string>('');
-  
+  // const dobRef = useRef<HTMLInputElement>(null);
+const pickerRef = useRef<any>(null);
    const calculateAge = (dob:any)=>{
     //  Calculate Age of Patient
     if(!dob) return 0;
@@ -96,13 +98,13 @@ const Patientform = () => {
   }
  
   const handleSubmit=async (e:any) => {
-    console.log(opd)
     e.preventDefault();
     const postData={
       ...formData,
       date:today,
       opdno:opd
     };
+    console.log(postData)
     try {
       await axios.post(`${URL}/patient/`,postData)
       toast.success(`${formData.name}'s Data Added`)
@@ -114,6 +116,48 @@ const Patientform = () => {
       setFormData(initialState);
     }
   }
+  // !-----------------------------------------Date Picker Code--------------------------------------------------
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    if (!pickerRef.current) {
+      const el = document.querySelector("#dob-picker");
+
+      if (!el) {
+        console.log("DOB input not ready yet");
+        return;
+      }
+
+      pickerRef.current = new FlexiDatepicker("#dob-picker", {
+        mode: "single",
+        dateFormat: "dd/MM/yyyy",
+
+        onSelectionChange: (data: any) => {
+          if (!data?.dates?.length) return;
+
+          const d = new Date(data.dates[0]);
+
+          const day = String(d.getDate()).padStart(2, "0");
+          const month = String(d.getMonth() + 1).padStart(2, "0");
+          const year = d.getFullYear();
+
+          const formatted = `${day}/${month}/${year}`;
+          const age = calculateAge(formatted);
+
+          setFormData((prev) => ({
+            ...prev,
+            DOB: formatted,
+            age,
+          }));
+        },
+      });
+    }
+  }, 0);
+
+  return () => {
+    clearTimeout(timer);
+    pickerRef.current = null;
+  };
+}, []);
   return (
     <div className="patientform">
       <p>Date: {today}</p>
@@ -152,20 +196,15 @@ const Patientform = () => {
           <option value="other">other</option>
         </select>
         <div className="DOB">
-          <label htmlFor="DOB">Date of Birth:</label>
-          <Flatpickr value={formData.DOB} onChange={(_selectedDates,dateStr)=>{
-            const age = calculateAge(dateStr)
-            setFormData({
-              ...formData,
-              DOB:String(dateStr),
-              age:age
-            })
-          }}
-          options={{
-            dateFormat:"d/m/Y"
-          }}
-          />
-        </div>
+  <label htmlFor="DOB">Date of Birth:</label>
+  <input
+  id="dob-picker"
+  type="text"
+  readOnly
+  value={formData.DOB}
+  placeholder="Select DOB"
+/>
+</div>
         <p>Age: {formData.age || "select Date of Birth"}</p>
         <select
           value={formData.bloodgroup}

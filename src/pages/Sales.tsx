@@ -23,7 +23,6 @@ const Sales = () => {
   const [formData, setFormData] = useState<any>({
     startDate: "",
     endDate: "",
-    // dates:[]
   });
   const [filteredDates, setFilteredDates] = useState<string []>([]);
   const [dataTotal,setDataTotal] = useState({
@@ -32,7 +31,6 @@ const Sales = () => {
   })
 
   const getData = async () => {
-    // Get Prescription Data from Backend
     try {
       let res = await axios.get(`${URL}/prescription`);
       setPresData(res.data);
@@ -81,22 +79,51 @@ const Sales = () => {
     }]
   } 
 
-  useEffect(() => {
-  if (!formData.startDate || !formData.endDate) return;
+//   useEffect(() => {
+//   if (!formData.startDate || !formData.endDate) return;
 
-  const start = new Date(formData.startDate);
-  const end = new Date(formData.endDate);
+//   const start = new Date(formData.startDate);
+//   const end = new Date(formData.endDate);
+
+//   const logs = presData.filter((item: any) => {
+//     const itemDate = new Date(
+//       String(item.date).split("/").reverse().join("-") 
+//     );
+//     return itemDate >= start && itemDate <= end;
+//   });
+
+//   setFilteredData(logs);
+// }, [formData.startDate, formData.endDate, presData]);
+ useEffect(() => {
+  let start: Date;
+  let end: Date;
+
+  // 👉 If user selected dates
+  if (formData.startDate && formData.endDate) {
+    start = new Date(formData.startDate);
+    end = new Date(formData.endDate);
+  } else {
+    // 👉 Default = current month
+    const now = new Date();
+    start = new Date(now.getFullYear(), now.getMonth(), 1); // 1st day
+    end = new Date(now.getFullYear(), now.getMonth() + 1, 0); // last day
+  }
 
   const logs = presData.filter((item: any) => {
-    const itemDate = new Date(
-      item.date.split("/").reverse().join("-") // convert dd/mm/yyyy → yyyy-mm-dd
-    );
+    if (!item.date) return false;
+
+    const parts = item.date.split("/");
+    if (parts.length !== 3) return false;
+
+    const itemDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+
     return itemDate >= start && itemDate <= end;
   });
 
   setFilteredData(logs);
-}, [formData.startDate, formData.endDate, presData]);
-  useEffect(() => {
+
+}, [formData.startDate, formData.endDate, presData]); 
+useEffect(() => {
     getData();
   }, []);
 

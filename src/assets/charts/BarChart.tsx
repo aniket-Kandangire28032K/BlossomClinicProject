@@ -31,7 +31,7 @@ const BarChart = ({ data = [] }: any) => {
     labels: labels,
     datasets: [
       {
-        label: "Daily Collections ",
+        label: "Prescriptions Chart",
         data: values,
         backgroundColor: "royalblue",
         barThickness: 20,

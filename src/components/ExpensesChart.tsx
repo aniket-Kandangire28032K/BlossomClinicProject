@@ -60,34 +60,84 @@ const ExpensesChart = ({ dates,setDataTotal }: any) => {
   }, []);
 
   // Compute chart data when month or reports change
-  useEffect(() => {
-    if (!dates || reports.length === 0) return;
+  // useEffect(() => {
+  //   if (!dates || reports.length === 0) return;
 
-    // Filter by month: convert "YYYY-MM" -> "MM/YYYY"
+  //   // Filter by month: convert "YYYY-MM" -> "MM/YYYY"
     
-    const filtered = reports.filter(item => dates.includes(item.date));
+  //   const filtered = reports.filter(item => dates.includes(item.date));
 
-    // Sum all expenses safely
-    let rentSum = 0;
-    let electricitySum = 0;
-    let staffSum = 0;
-    let otherSum = 0;
+  //   // Sum all expenses safely
+  //   let rentSum = 0;
+  //   let electricitySum = 0;
+  //   let staffSum = 0;
+  //   let otherSum = 0;
 
-    filtered.forEach(item => {
-      rentSum += item.rent || 0;
-      electricitySum += item.electricity || 0;
-      staffSum += item.staff?.reduce((acc, s) => acc + (s.salary || 0), 0) || 0;
-      otherSum += item.otherExpenses?.reduce((acc, o) => acc + (o.amount || 0), 0) || 0;
+  //   filtered.forEach(item => {
+  //     rentSum += item.rent || 0;
+  //     electricitySum += item.electricity || 0;
+  //     staffSum += item.staff?.reduce((acc, s) => acc + (s.salary || 0), 0) || 0;
+  //     otherSum += item.otherExpenses?.reduce((acc, o) => acc + (o.amount || 0), 0) || 0;
+  //   });
+
+  //   setChartValues({
+  //     rent: rentSum,
+  //     electricity: electricitySum,
+  //     staff: staffSum,
+  //     other: otherSum,
+  //     total: rentSum + electricitySum + staffSum + otherSum
+  //   });
+  // }, [dates, reports]);
+  useEffect(() => {
+  if (reports.length === 0) return;
+
+  let filtered = [];
+
+  // ✅ If dates selected
+  if (dates && dates.length > 0) {
+    filtered = reports.filter(item => dates.includes(item.date));
+  } else {
+    // ✅ Default → current month
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    filtered = reports.filter(item => {
+      if (!item.date) return false;
+
+      const parts = item.date.split("/");
+      if (parts.length !== 3) return false;
+
+      const itemDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+
+      return (
+        itemDate.getMonth() === currentMonth &&
+        itemDate.getFullYear() === currentYear
+      );
     });
+  }
 
-    setChartValues({
-      rent: rentSum,
-      electricity: electricitySum,
-      staff: staffSum,
-      other: otherSum,
-      total: rentSum + electricitySum + staffSum + otherSum
-    });
-  }, [dates, reports]);
+  let rentSum = 0;
+  let electricitySum = 0;
+  let staffSum = 0;
+  let otherSum = 0;
+
+  filtered.forEach(item => {
+    rentSum += item.rent || 0;
+    electricitySum += item.electricity || 0;
+    staffSum += item.staff?.reduce((acc, s) => acc + (s.salary || 0), 0) || 0;
+    otherSum += item.otherExpenses?.reduce((acc, o) => acc + (o.amount || 0), 0) || 0;
+  });
+
+  setChartValues({
+    rent: rentSum,
+    electricity: electricitySum,
+    staff: staffSum,
+    other: otherSum,
+    total: rentSum + electricitySum + staffSum + otherSum
+  });
+
+}, [dates, reports]);
   useEffect(()=>{
     setDataTotal((prev:any)=>({
       ...prev,

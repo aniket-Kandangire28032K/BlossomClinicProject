@@ -4,7 +4,8 @@ Chart.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({chartdata}:any ) => {
     const data:any = {
-        labels:Object.keys(chartdata),
+        // labels:Object.keys(chartdata),
+        labels: Object.keys(chartdata).map(label => label.toUpperCase()),
         datasets:[{data:Object.values(chartdata),
         backgroundColor:[
             "#ff6384",

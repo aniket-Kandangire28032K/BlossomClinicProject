@@ -8,9 +8,10 @@ const MrForm = () => {
   const firstDay =new Date().toISOString().split("T")[0]
   const date= firstDay.split("-").reverse().join("/")
   const [today, setToday] = useState<string>("");
+  const [loading,setLoading] = useState(false)
   const [products, setProducts] = useState<any>({
     medicinename: "",
-    stock: 0,
+    qty: 0,
     unitprice: 0,
     totalprice:0
   });
@@ -31,48 +32,52 @@ const MrForm = () => {
     totalamount: 0,
     invoiceno: "",
     nextpaydate: "",
-    paymentMethod:""
+    paymentMethod:"",
+    chequeNumber:0,
+    lastpaymentdate:date
   });
   const reset = () => {
     setFormData({
-      companyname: " ",
-      mrname: " ",
-      contact: " ",
-      email: " ",
+      companyname: "",
+      mrname: "",
+      contact: "",
+      email: "",
       productlist: [],
       paidamount: 0,
       dueamount: 0,
       totalamount: 0,
-      invoiceno: " ",
-      nextpaydate: " ",
+      invoiceno: "",
+      nextpaydate: "",
       paymentMethod:""
     });
     setProducts({
     medicinename: "",
-    stock: 0,
+    qty: 0,
     unitprice: 0,
     totalprice:0
     })
   };
   const addProduct = () => {
-    setFormData({
-      ...formData,
-      productlist: [
-        ...formData.productlist,
-        {
-          companyname:formData.companyname,
-          mrname:formData.mrname,
-          medicinename: products.medicinename,
-          stock: Number(products.stock),
-          unitprice: Number(products.unitprice),
-          totalprice: products.stock * products.unitprice,
-          stockin:Number(products.stock),
-          stockindate:date
-        },
-      ],
-    });
-    console.log(formData.productlist);
-  };
+  setFormData({
+    ...formData,
+    productlist: [
+      ...formData.productlist,
+      {
+        medicinename: products.medicinename,
+        qty: Number(products.qty),
+        unitprice: Number(products.unitprice),
+        totalprice: products.qty * products.unitprice
+      },
+    ],
+  });
+  setProducts({
+     medicinename: "",
+    qty: 0,
+    unitprice: 0,
+    totalprice:0
+  })
+  console.log(formData)
+};
   const handleChange = (e: any) => {
     const { id, value } = e.target;
     if (id === "contact") {
@@ -125,8 +130,10 @@ const MrForm = () => {
   }, [formData.totalamount, formData.paidamount]);
 
   const handleSubmit = async (e: any) => {
+    setLoading(true)
     e.preventDefault();
     const [year, month, day] = formData.nextpaydate.split("-");
+    console.log(year , month , day)
     let postData ={}
     if(formData.nextpaydate !== ""){
       postData = {
@@ -144,16 +151,15 @@ const MrForm = () => {
       }
     }
     try {
-      await Promise.all([
-        axios.post(`${URL}/mr`, postData),
-        axios.post(`${URL}/medicine-bulk`, formData.productlist),
-      ]);
+      await  axios.post(`${URL}/mr`, postData)
+      console.log(postData)
       toast.success("MR added Successfully");
     } catch (error) {
       console.log(error);
       toast.warn("Internal Server Error");
     }finally{
       reset();
+      setLoading(false)
     }
   };
 
@@ -162,8 +168,6 @@ const MrForm = () => {
       <h1>MR Form</h1>
       <h3>Date: {today}</h3>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        {/* <div className="inputfield">
-        </div> */}
         <div className="inputfield">
           <input
             type="text"
@@ -226,9 +230,9 @@ const MrForm = () => {
             type="number"
             placeholder="Qty"
             min={0}
-            value={products.stock}
+            value={products.qty}
             onChange={(e) =>
-              setProducts({ ...products, stock: e.target.value })
+              setProducts({ ...products, qty: e.target.value })
             }
           />
           <label>₹:</label>{" "}
@@ -257,9 +261,9 @@ const MrForm = () => {
             <tbody>
               {formData.productlist.map((item: any, num: number) => (
                 <tr key={num}>
-                  <td>{item?.medicinename}</td>
-                  <td>{item?.stock}</td>
-                  <td>₹: {item?.unitprice}/-</td>
+                  <td>{item.medicinename}</td>
+                  <td>{item.qty}</td>
+                  <td>₹: {item.totalprice}/-</td>
                   <td>
                     <button type="button"
                       onClick={() =>
@@ -283,7 +287,7 @@ const MrForm = () => {
             readOnly
             id="totalamount"
             step="any"
-            value={formData.totalamount}
+            value={formData.totalamount === 0 ? "" : formData.totalamount}
           />
           <label htmlFor="totalamount">total Amount</label>
         </div>
@@ -291,9 +295,9 @@ const MrForm = () => {
           <input
             type="number"
             placeholder="" step="any"
-            id="paidamount"
+            id="paidamount" value={formData.paidamount === 0 ? "" : formData.paidamount}
             onChange={handleChange}
-            // max={formData.totalamount}
+            max={formData.totalamount}
           />
           <label htmlFor="paid">Paid Amount</label>
         </div>
@@ -306,7 +310,7 @@ const MrForm = () => {
             required step="any"
             min={0}
             value={formData.dueamount}
-            // onClick={calDue}
+           
           />
           <label htmlFor="due">Due Amount</label>
         </div>
@@ -316,22 +320,29 @@ const MrForm = () => {
             placeholder=""
             id="invoiceno"
             onChange={handleChange}
-            pattern="[a-zA-Z0-9]+"
+            
             maxLength={15}
             value={formData.invoiceno}
+            style={{textTransform:"uppercase"}}
           />
           <label htmlFor="paid">Invoice No.</label>
         </div>
         <div className="inputfield">
-          <select id="paymentMethod" required onChange={handleChange}value={formData.paymentMethod}>
+          <select id="paymentMethod" required onChange={handleChange} value={formData.paymentMethod}>
             <option>Payment Method*</option>
             <option value="cash">Cash</option>
             <option value="upi">UPI</option>
             <option value="debit card">Debit Card</option>
             <option value="credit card">Credit card</option>
             <option value="net Banking">Net Banking</option>
+            <option value="cheque">Cheque</option>
           </select>
         </div>  
+        {formData.paymentMethod === "cheque" && 
+        <div className="inputfield">
+        <input type="number" value={formData.chequeNumber === 0 ? "" : formData.chequeNumber}  onChange={(e)=>setFormData((prev:any)=>({...prev,chequeNumber:e.target.value}))}/>
+          <label>Cheque Number</label>
+        </div>}
         {formData.dueamount !== 0 &&  <div className="inputfield">
           <input
             type="date"
@@ -345,7 +356,7 @@ const MrForm = () => {
         </div>}
 
         <div className="btn-grp">
-          <button type="submit">Submit</button>
+          {loading ? <button disabled style={{opacity:"0.5"}} type="submit">Submit</button> : <button type="submit">Submit</button>}
           <button type="reset" onClick={reset}>
             Reset
           </button>
