@@ -43,7 +43,7 @@ const Dashboard = () => {
   const [productPrice, setProductPrice] = useState<number>(0);
   const [productList, setProductList] = useState<any>([]);
   const [productQty, setProductQty] = useState<any>(0);
-
+  // const [productUnitprice,setUnitprice] = useState(0)
   // treatment States
   const [treatmentName, setTreatmentName] = useState("");
   const [treatmentPrice, setTreatmentPrice] = useState(0);
@@ -58,14 +58,9 @@ const Dashboard = () => {
   const getMRList = async () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
-      // let list = [
-      //   ...new Map(
-      //     res.data.map((user: any) => [user.companyname, user]),
-      //   ).values(),
-      // ];
       const list =res.data
       let uniqueNames:any = [...new Set(list.map((item:any)=> item.companyname))]
-      console.log(uniqueNames)
+      // console.log(uniqueNames)
 
       setUniqueCompanyNames(uniqueNames)
       setMeds(res.data);
@@ -79,7 +74,10 @@ const Dashboard = () => {
     if (productName.length == 0 || productPrice == 0)
       return alert("Please Enter Value in All fields");
     const object = {
+
       name: productName,
+      companyname:companyName,
+      unitprice:Number(productPrice),
       price: Number(productPrice) * Number(productQty),
       remark: productRemark,
       qty: Number(productQty),
@@ -105,6 +103,7 @@ const Dashboard = () => {
       name: treatmentName,
       price: Number(treatmentPrice) * Number(treatmentSessions),
       sessions:treatmentSessions,
+      persession:Number(treatmentPrice),
       completesessions:Number(completeSessions)
 
     };
@@ -188,14 +187,10 @@ const Dashboard = () => {
       treatments: treatmentList,
     };
     try {
-      const [result, _presres] = await Promise.all([
-        axios.put(`${URL}/medicine/stock-update`, postData),
-        axios.post(`${URL}/prescription`, postData),
-      ]);
-      toast.success(result.data.message);
-      // console.log(postData)
+      const res = await axios.post(`${URL}/prescription`, postData)
+      toast.success(res.data.message);
       setLoading(false)
-      window.print();
+      // window.print();
     } catch (error: any) {
       let sms: string = error.response.data.message;
       toast.error(sms);
@@ -278,10 +273,10 @@ const Dashboard = () => {
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
           >
-            <option value="">Products</option>
+            <option value="">Products  Qty   unit Rate</option>
             {products.map((item: any) => (
               <option key={item._id} value={item.medicinename}>
-                {item.medicinename}
+                {item.medicinename} - {item.stock} -  Rs.{item.unitprice}
               </option>
             ))}
           </select>
@@ -317,6 +312,7 @@ const Dashboard = () => {
                 <td>Product</td>
                 <td>Remark</td>
                 <td>Qty</td>
+                <td>Per Unit</td>
                 <td>Price</td>
               </tr>
             </thead>
@@ -326,6 +322,7 @@ const Dashboard = () => {
                   <td>{e.name}</td>
                   <td>{e.remark}</td>
                   <td>{e.qty}</td>
+                  <td>{e.unitprice}</td>
                   <td>
                     Rs.{e.price}
                     <button
@@ -373,6 +370,7 @@ const Dashboard = () => {
               <tr className="table-head">
                 <th>Treatment</th>
                 <th>sessions</th>
+                <th>Per Session</th>
                 <th>Price</th>
               </tr>
             </thead>
@@ -381,6 +379,7 @@ const Dashboard = () => {
                 <tr key={i}>
                   <td>{e.name}</td>
                   <td>{e.sessions}</td>
+                  <td>{e.persession}</td>
                   <td>
                     Rs.{e.price}{" "}
                     <button

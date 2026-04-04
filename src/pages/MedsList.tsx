@@ -9,10 +9,10 @@ const MedsList = () => {
 
   const [medsList, setList] = useState<any>();
   const [medName, setMedName] = useState("");
-  const [_singleMed, setSingleMed] = useState<any>(null);
+  const [singleMed, setSingleMed] = useState<any>(null);
 
   const [stockDate, setStockDate] = useState<string | null>(null);
-  const [_dateStock, setDateStock] = useState<any[]>([]);
+  const [dateStock, setDateStock] = useState<any[]>([]);
 
   // const today = new Date().toLocaleDateString("en-GB");
 
@@ -45,8 +45,14 @@ const MedsList = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await axios.get(`${URL}/medicine/search?med=${medName}`);
-      setSingleMed(res.data);
+      let filteredData = []
+      if(medName){
+      // filteredData =  medsList.filter((item:any)=> item.product.map(pro=>))
+    }else{
+      filteredData =  medsList.filter((item:any)=> item.productname === dateStock)
+    }
+      setSingleMed(filteredData);
+      // console.log(medsList)
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +84,7 @@ const MedsList = () => {
       <form autoComplete="off" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Enter Medicine Name"
+          placeholder="Enter Medicine Name" value={medName}
           onChange={(e) => setMedName(e.target.value)}
         />
 
@@ -95,6 +101,24 @@ const MedsList = () => {
         </button>
       </form>
 
+      { singleMed &&
+      <table border={1}>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+      <tbody>
+      {singleMed.map((med:any)=> <tr key={med._id}>
+          <td>{med.date}</td>
+          <td>{med.medicinename}</td>
+          <td>{med.stock}</td>
+        </tr>)}
+      </tbody>
+      </table>
+      }
       {/* 🔥 DEFAULT CURRENT STOCK TABLE */}
       {!stockDate && (
         <table className="meds-table" border={1}>

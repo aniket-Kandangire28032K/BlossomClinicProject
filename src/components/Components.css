@@ -311,6 +311,7 @@ h3 > .edit-btn:hover{
 
 .checker > .patient-details .popup-body {
     overflow-y: auto;
+    scroll-behavior: contain;
     padding-bottom: .5rem;
     display: flex;
     flex-direction: column;

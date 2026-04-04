@@ -196,7 +196,7 @@ const NameChecker = ({ formData, setFormData }: any) => {
                         </tr>
                         <tr>
                           <th>Name</th>
-                          <th>Remaining Sessions</th>
+                          <th>completed Sessions</th>
                           <th>Total Sessions</th>
                           <th>total Price</th>
                         </tr>
@@ -205,7 +205,7 @@ const NameChecker = ({ formData, setFormData }: any) => {
                     {
                       pres.treatments.map((treat:any,num:number)=> <tr key={num}>
                         <td>{treat.name}</td> 
-                        <td>{Number(treat.sessions)-Number(treat.completesessions)}</td>
+                        <td>{Number(treat.completesessions)}</td>
                         <td>{treat.sessions }</td>
                         <td>{treat.price}</td>
                       </tr>)
@@ -221,7 +221,7 @@ const NameChecker = ({ formData, setFormData }: any) => {
                     <p>Remark: {pres.remark || "NA"}</p>
                     <p>Next Appointment: {pres.nextAppointmentDate}</p>
                     <p>Consult Fee: Rs.{pres.consultFee}</p>
-                    {Number(pres.balanceamount) > 1 &&  <p>Reamaining Amount:Rs.{pres.balanceamount}</p>}
+                    {Number(pres.balanceamount) > 1 &&  <p>Remaining Amount:Rs.{pres.balanceamount}</p>}
                     <p>Total Fees: Rs.{pres.totalCost}</p>
                 </div>)
               }

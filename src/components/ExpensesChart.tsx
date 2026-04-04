@@ -164,7 +164,7 @@ const ExpensesChart = ({ dates,setDataTotal }: any) => {
   return (
     <div className="expenses-chart">
       {dates && <>
-      <h3>Monthly Expenses</h3>
+      <h3> Expenses</h3>
       <Bar data={data} />
       </>}
     </div>

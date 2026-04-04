@@ -88,7 +88,7 @@ const MRlist = () => {
                 <td>
                   <ul>
                   {Array.isArray(e.productlist) &&  e.productlist.map((item:any,num:any)=>(
-                  <li key={num}>{item.medicinename} * {item.stock} = per unit ₹.{item.unitprice}</li>
+                  <li key={num}>{item.medicinename} * {item.stock} = per unit Rs.{item.unitprice}</li>
                 ))}
                   </ul>
                 </td>

@@ -430,11 +430,10 @@ form .inputfield input:not(:placeholder-shown) + label {
 .dashboard form .product-table,
 .dashboard form .treatment-table {
   visibility: visible;
-  width: min-content;
-  min-width: 50%;
+  width: 70%;
   margin: 0 auto;
   border-collapse: collapse;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   
 }
 .table-head {
@@ -445,6 +444,9 @@ form .inputfield input:not(:placeholder-shown) + label {
 }
 .dashboard tr td:last-of-type {
   width: 20%;
+}
+table{
+  white-space: nowrap;
 }
 /* .dashboard form .product-table tr td:first-of-type{} */
 .product-table tr td,
@@ -1779,9 +1781,11 @@ tr td:hover .del-btn {
   gap: 1rem;
 }
 .mr-payment > .mrlist .card{
+  position: relative;
   font-size: 1.1rem;
   user-select: none;
   width:23% ;
+  height: max-content;
   padding: 1rem;
   background-color: white;
   border: none;
@@ -1790,6 +1794,36 @@ tr td:hover .del-btn {
   display: flex;
   flex-direction: column;
   gap: .7rem;
+}
+.mr-payment .mrlist .card .close-btn{
+  background-color: #fff;
+  width: 10%;
+  border-radius: 0;
+  padding: 0 ;
+  aspect-ratio: 1/1 !important;
+  padding: 0.2rem;
+  color: crimson;
+  outline: 1px solid crimson;
+  background-color: rgba(220, 20, 60, 0.2);
+  position: absolute;
+  right: 1rem;
+  
+}
+.mr-payment .mrlist .card .history{
+  color: #008fff;
+  margin: 0;
+  width: 40%;
+  text-align: center;
+  align-self: flex-start !important;
+  background-color: #008fff22;
+  font-size: 0.9rem;
+  border-bottom: 1px solid ;
+  border-radius: 0;
+
+}
+.mr-payment .mrlist .card > div{
+  /* border: 1px solid red; */
+  text-align: center;
 }
 .mr-payment .mrlist .card .red{
   color: red;

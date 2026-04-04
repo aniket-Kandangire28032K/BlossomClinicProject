@@ -95,6 +95,7 @@ const MRPayment = () => {
     } finally {
       setNextpaydate("");
       setAmount(0);
+      fetchMRList();
     }
   };
   const getMRList = async () => {
@@ -114,6 +115,11 @@ const MRPayment = () => {
     setDetails({ ...item });
     setDisplay("update");
   };
+  const closefuntion = () =>{
+    setDisplay("")
+    setAmount(0)
+    setNextpaydate("")
+  }
   return (
     <div className="mr-payment">
       <h1>Update MR</h1>
@@ -157,7 +163,7 @@ const MRPayment = () => {
         {mrList.length > 0 && (
           <>
             {mrList.map((item: any, index: number) => (
-              <form
+              <div
                 key={index}
                 className="card"
                 // onSubmit={(e: any) => UpdateDuaAmount(e)}
@@ -175,10 +181,20 @@ const MRPayment = () => {
                 <p>Last Payment :₹{item.lastpayment || "NA"} </p>
                 <p className="green">Total Amount ₹:{item.totalamount}</p>
                 <p className="red">Due Amount ₹:{item.dueamount}</p>
-                
+                {display=== "" && <button type="button" className="history" onClick={()=> setDisplay(String(index))}>History</button>}
+                { display === String(index) && <div>
+                  <button type="button" className="close-btn" onClick={()=>setDisplay("")}>X</button>
+                  {item.paymentHistory ? item.paymentHistory.map((data:any)=>
+                  <div>
+                    <p><strong>Date: </strong>{data.paymentDate} - <strong>Rs.</strong>{data.paymentAmount}</p>
+                  </div>
+                  ) : <p>No History of Payment</p> }
+                </div>
+
+                }
                 <button type="button" onClick={()=>payMr(item)}>Pay</button>
                 
-              </form>
+              </div>
             ))}
           </>
         )}
@@ -200,15 +216,23 @@ const MRPayment = () => {
           <label htmlFor="">Payment Amount</label>
           <input
             type="number"
-            max={details?.dueamount}
             placeholder="Paid Amount" required
-            value={amount == 0 ? "" : amount}
-            onChange={(e: any) => setAmount(e.target.value)}
+            value={amount === 0 ? "" : amount}
+            max={details.dueamount}
+            onChange={(e: any) => 
+            {
+              let val = e.target.value
+              if(val > details.dueamount){
+                val = details.dueamount
+              }
+              setAmount(val)
+            }
+            }
             />
           </div>
 
           <div>
-            <label htmlFor="">Next Payment Date</label>{" "}
+            <label>Next Payment Date</label>{" "}
             <input
               type="date" required={amount !== details.dueamount}
               onChange={(e: any) => {
@@ -218,7 +242,7 @@ const MRPayment = () => {
           </div>
           <div >
           <button type="submit">Submit</button>
-          <button type="button" onClick={()=> setDisplay("")}>Close</button>
+          <button type="button" onClick={closefuntion}>Close</button>
           </div>
         </form>
         </div>
