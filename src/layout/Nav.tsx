@@ -88,7 +88,7 @@ const toggle=(name:string)=>{
               open === 'reminder' && (
                 <div className="dropdown-menu">
                   <Link to='/reminders'><IoIosNotifications className="icon"/>Patients</Link>
-                  <Link to='/mr-reminders'><IoIosNotifications className="icon"/>MR payment</Link>
+                  <Link to='/mr-reminders'><IoIosNotifications className="icon"/>MR Payment</Link>
                 </div>
               )
             }

@@ -104,8 +104,8 @@ const MedsList = () => {
               <th>Company</th>
               <th>Medicine</th>
               <th>Opening</th>
-              <th>Stock</th>
               <th>Sold</th>
+              <th>Closing</th>
             </tr>
           </thead>
           <tbody>
@@ -116,8 +116,8 @@ const MedsList = () => {
         <td>{(item.companyName)}</td>
         <td>{(item.productname)}</td>
         <td>{item.openingstock}</td>
-        <td>{item.closingstock}</td>
         <td>{item.sold}</td>
+        <td>{item.closingstock}</td>
       </tr>
     ))
   )}

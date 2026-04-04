@@ -52,18 +52,24 @@ const Dashboard = () => {
   const [treatmentList, setTreatmentList] = useState<any>([]);
   const [display, setDisplay] = useState(false);
   const [products, setProducts] = useState([]);
-
+  const [uniqueCompanyNames,setUniqueCompanyNames] = useState([])
   // Mr states
   const [meds, setMeds] = useState<any>([]);
   const getMRList = async () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
-      let list = [
-        ...new Map(
-          res.data.map((user: any) => [user.companyname, user]),
-        ).values(),
-      ];
-      setMeds(list);
+      // let list = [
+      //   ...new Map(
+      //     res.data.map((user: any) => [user.companyname, user]),
+      //   ).values(),
+      // ];
+      const list =res.data
+      let uniqueNames:any = [...new Set(list.map((item:any)=> item.companyname))]
+      console.log(uniqueNames)
+
+      setUniqueCompanyNames(uniqueNames)
+      setMeds(res.data);
+      // console.log(list)
     } catch (error) {
       console.log(error);
     }
@@ -249,7 +255,7 @@ const Dashboard = () => {
         />
         <input
           type="number"
-          placeholder="Consult Fee"
+          placeholder="Consultation Fee"
           required value={cost.consultFee}
           onChange={(e) =>
             setCost({ ...cost, consultFee: parseInt(e.target.value) })
@@ -262,9 +268,9 @@ const Dashboard = () => {
             onChange={(e) => setCompanyName(e.target.value)}
           >
             <option value="">Company</option>
-            {meds.map((item: any) => (
-              <option key={item._id} value={item?.companyname}>
-                {item?.companyname}
+            {uniqueCompanyNames.map((item: any,num:number) => (
+              <option key={num} value={item}>
+                {item}
               </option>
             ))}
           </select>
@@ -281,7 +287,7 @@ const Dashboard = () => {
           </select>
           <input
             type="text"
-            placeholder="Remark"
+            placeholder="Remarks"
             value={productRemark}
             onChange={(e) => setProductRemark(e.target.value)}
           />
@@ -424,7 +430,7 @@ const Dashboard = () => {
         </div>
         <input
           type="text"
-          placeholder="Remark"
+          placeholder="Remarks"
           name="remark"
           value={formData.remark}
           onChange={handleChange}

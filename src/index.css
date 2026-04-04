@@ -241,3 +241,6 @@ table thead tr th{
 input:focus{
   border-color: royalblue !important;
 }
+input::placeholder{
+  text-transform: capitalize;
+}

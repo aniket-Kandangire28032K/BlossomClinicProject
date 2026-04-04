@@ -254,8 +254,9 @@ const MrForm = () => {
               <tr>
                 <th>Name</th>
                 <th>Qty</th>
-                <th>Per Unit Price</th>
-                <th></th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                {/* <th></th> */}
               </tr>
               </thead>
             <tbody>
@@ -263,8 +264,8 @@ const MrForm = () => {
                 <tr key={num}>
                   <td>{item.medicinename}</td>
                   <td>{item.qty}</td>
-                  <td>₹: {item.totalprice}/-</td>
-                  <td>
+                  <td>{item.unitprice}</td>
+                  <td>₹: {item.totalprice}/-
                     <button type="button"
                       onClick={() =>
                         setFormData((prev: any) => ({
@@ -289,7 +290,7 @@ const MrForm = () => {
             step="any"
             value={formData.totalamount === 0 ? "" : formData.totalamount}
           />
-          <label htmlFor="totalamount">total Amount</label>
+          <label htmlFor="totalamount">Total Amount</label>
         </div>
         <div className="inputfield">
           <input
@@ -333,7 +334,7 @@ const MrForm = () => {
             <option value="cash">Cash</option>
             <option value="upi">UPI</option>
             <option value="debit card">Debit Card</option>
-            <option value="credit card">Credit card</option>
+            <option value="credit card">Credit Card</option>
             <option value="net Banking">Net Banking</option>
             <option value="cheque">Cheque</option>
           </select>
