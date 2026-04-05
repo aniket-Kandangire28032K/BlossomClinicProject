@@ -34,20 +34,23 @@ const BarChart = ({ data = [] }: any) => {
       {
         label: "Prescriptions Chart",
         data: values,
-        backgroundColor: "royalblue",
+        backgroundColor: "#005fff",
         barThickness: 20,
         
       },
     ],
   };
-
+  const option = {
+    responsive:true,
+    maintainAspectRatio:false
+  }
   useEffect(()=>{
     if(!data) return
 },[data])
 
 return (
     <div className="main-chart">
-      <Bar data={chartData}/>
+      <Bar data={chartData} options={option}/>
     </div>
   );
 };

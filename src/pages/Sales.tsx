@@ -176,9 +176,10 @@ const Sales = () => {
         </button>
       </form>
 
-      {filteredData.length > 0 && (
+      {filteredData.length > 0 && ( 
         <BarChart data={filteredData} />
-      )}
+      )} 
+      
       {totals.GrandTotal > 0 && <PieChart chartdata={totals} />}
 
       <MRreport dates={filteredDates} setDataTotal={setDataTotal} />

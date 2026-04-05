@@ -1,80 +1,53 @@
 import axios from "axios"
-import { useState } from "react"
-import { toast } from "react-toastify"
+import { useEffect, useState } from "react"
 
 const Inventory = () => {
-    // const date= new Date().toISOString().split("T")[0].split("-").reverse().join("/")
+    
     const URL = import.meta.env.VITE_Backend_URL;
-    const [formData,setFormData]=useState({
-        medicinename:'',
-        mrname:'',
-        batchno:'',
-        expiredate:'',
-        stock:'',
-        unitprice:'',
-        totalprice:'',
-    })
-
-    const handleChange=(e:any)=>{
-        const {id,value}=e.target;
-        if(id === "expiredate" ){
-            const [year, month,day] = value.split("-")
-            setFormData({
-                ...formData,
-                expiredate:`${day}/${month}/${year}`
-            })
-            return
-        }
-        setFormData({
-            ...formData,
-            [id]:value
-        })
-    }
-    const handlesubmit=async(e:any)=>{
-        e.preventDefault()
+    const [products,setProducts] = useState([])
+    const date = new Date().toLocaleDateString('in-gb');
+    const today = `${String(new Date(date).getDate()).padStart(2,"0")}/${String(new Date(date).getMonth()+1).padStart(2,"0")}/${new Date().getFullYear()}`
+    const getProducts = async () => {
         try {
-            await axios.post(`${URL}/medicine`,formData)
-            toast.success('Medicine added')
+            const res = await axios.get(`${URL}/medicine`)
+            console.log(res.data)
+            setProducts(res.data)
         } catch (error) {
-            console.log(error);
-            toast.error('Internal Server Error');
+            console.log(error)
         }
     }
+    useEffect(()=>{
+        getProducts();
+    },[])
     return (
     <div className="invnetorypage">
-        <form onSubmit={handlesubmit}>
-            <h1>Medicine Form</h1>
-            <div className="inputfield">
-                <input type="text" placeholder="" id="medicinename" onChange={handleChange}/>
-                <label htmlFor="medicinename">Medicine Name</label>
-            </div>
-            <div className="inputfield">
-                <input type="text" placeholder="" id="mrname" onChange={handleChange}/>
-                <label htmlFor="mrname">MR Name</label>
-            </div>
-            <div className="inputfield">
-                <input type="text" placeholder="" id="batchno" onChange={handleChange}/>
-                <label htmlFor="batchno">Batch No.</label>
-            </div>
-            <div className="inputfield">
-                <input type="date" placeholder="" id="expiredate" onChange={handleChange}/>
-                <label htmlFor="expiredate">Expiry Date</label>
-            </div>
-            <div className="inputfield">
-                <input type="text" placeholder="" id="stock" onChange={handleChange}/>
-                <label htmlFor="stock">Stock Qty</label>
-            </div>
-            <div className="inputfield">
-                <input type="text" placeholder="" id="unitprice" onChange={handleChange}/>
-                <label htmlFor="unitprice">Unit Price</label>
-            </div>
-            <div className="inputfield">
-                <input type="text" placeholder="" id="totalprice" onChange={handleChange}/>
-                <label htmlFor="totalprice">Total Value</label>
-            </div>
-            <button type="submit">Submit</button>
-            <button type='reset'>Clear</button>
-        </form>
+        <h1>Products</h1>
+        <h3>Date:{today}</h3>
+        <table border={1}>
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Product Name</th>
+                    <th>MR Name</th>
+                    <th>Stock</th>
+                    <th>Unit Price</th>
+                    <th>total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                { products.length > 0 && products.map((product:any)=>
+                    <tr key={product._id}>
+                        <td >{product.companyname}</td>
+                        <td>{product.medicinename}</td>
+                        <td style={{textTransform:"capitalize"}}>{product.mrname}</td>
+                        <td>{product.stock}</td>
+                        <td>{product.unitprice}</td>
+                        <td>{product.totalprice}</td>
+                        
+                    </tr>
+                )}
+            </tbody>
+        </table>
     </div>
   )
 }

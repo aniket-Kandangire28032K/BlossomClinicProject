@@ -72,8 +72,8 @@ const toggle=(name:string)=>{
             {
               open === 'medicine' && (
                 <div className="dropdown-menu">
-                  {/* <Link to='/inventory'>< FaFile className="icon"/>Medicine Form</Link> */}
-                  <Link to='/medicine'><MdFormatListBulleted className="icon"/>Products</Link>
+                  <Link to='/inventory'><MdFormatListBulleted className="icon"/>Inventory</Link>
+                  <Link to='/products'>< FaFile className="icon"/>Products</Link>
                   <Link to='/stock'><FaBoxOpen className="icon"/>Stock Update</Link>
                 </div>
               )

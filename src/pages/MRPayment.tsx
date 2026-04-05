@@ -190,8 +190,8 @@ const MRPayment = () => {
                   </div>
                   ) : <p>No History of Payment</p> }
                 </div>
-
                 }
+                
                 <button type="button" onClick={()=>payMr(item)}>Pay</button>
                 
               </div>

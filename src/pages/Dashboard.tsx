@@ -12,12 +12,7 @@ import NameChecker from "../components/NameChecker";
 const Dashboard = () => {
   const today = new Date().toISOString().split("T")[0];
   const URL = import.meta.env.VITE_Backend_URL;
-  const currentdate = new Date()
-    .toISOString()
-    .split("T")[0]
-    .split("-")
-    .reverse()
-    .join("/");
+  const currentdate = new Date().toISOString().split("T")[0].split("-").reverse().join("/");
   const [loading,setLoading] = useState(false);
   const [formData, setFormData] = useState<any>({
     // Post Data
@@ -55,7 +50,7 @@ const Dashboard = () => {
   const [uniqueCompanyNames,setUniqueCompanyNames] = useState([])
   // Mr states
   const [meds, setMeds] = useState<any>([]);
-  const getMRList = async () => {
+  const getProducts = async () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
       const list =res.data
@@ -131,7 +126,7 @@ const Dashboard = () => {
       ...formData,
       date: today,
     });
-    getMRList();
+    getProducts();
   }, []);
 
   useEffect(() => {

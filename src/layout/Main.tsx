@@ -45,11 +45,11 @@ const Main = () => {
       <Routes>
             <Route path='/' element={<Login/>}/>
             <Route path='/home' element={jobRole === 'doctor' ? <Dashboard/> : <Navigate to='/patientform'/> }/>
-            <Route path='/inventory' element={ jobRole == 'doctor' ? <Inventory/> : <Navigate to='/patientform'/>}/>
+            <Route path='/products' element={ jobRole == 'doctor' ? <Inventory/> : <Navigate to='/patientform'/>}/>
             <Route path='/mr' element={ jobRole == 'doctor' ? <MRlist/> : <Navigate to='/patientform'/> }/>
             <Route path='/mrform' element={ jobRole == 'doctor' ? <MrForm/> : <Navigate to='/patientform'/>}/>
             <Route path='/mr-payment' element={ jobRole == 'doctor' ? <MrPayment/> : <Navigate to='/patientform'/>}/>
-            <Route path='/medicine' element={ jobRole == 'doctor' ? <MedsList/> : <Navigate to='/patientform'/>}/>
+            <Route path='/inventory' element={ jobRole == 'doctor' ? <MedsList/> : <Navigate to='/patientform'/>}/>
             <Route path='/users' element={ jobRole == 'doctor' ? <Access/> : <Navigate to='/patientform'/> }/>
             <Route path='/stock' element={ jobRole == 'doctor' ? <StockUpdate/> : <Navigate to='/patientform'/>}/>
             <Route path='/sales' element={ jobRole == 'doctor' ? <Sales/> : <Navigate to='/patientform'/>}/>
