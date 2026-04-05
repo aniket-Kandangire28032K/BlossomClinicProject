@@ -42,6 +42,7 @@ const Dashboard = () => {
   const [treatmentName, setTreatmentName] = useState("");
   const [treatmentPrice, setTreatmentPrice] = useState(0);
   const [treatmentSessions, setTreatmentSessions] = useState<number>(0);
+  const [pendingSessions,setPendingSessions] = useState(0)
   const [completeSessions,setCompletedSessions] = useState(0)
   const [treatmentList, setTreatmentList] = useState<any>([]);
   const [display, setDisplay] = useState(false);
@@ -95,11 +96,11 @@ const Dashboard = () => {
       return alert("Please Enter Value in All fields");
     const object = {
       name: treatmentName,
-      price: Number(treatmentPrice) * Number(treatmentSessions),
+      price: Number(treatmentPrice),
       sessions:treatmentSessions,
       persession:Number(treatmentPrice),
-      completesessions:Number(completeSessions)
-
+      completesessions:Number(completeSessions),
+      pendingsessions:Number(pendingSessions)
     };
     setTreatmentList([...treatmentList, object]);
     setTreatmentName("");
@@ -347,7 +348,7 @@ const Dashboard = () => {
             value={treatmentName}
             onChange={(e) => setTreatmentName(e.target.value)}
           />
-          <input type="number" placeholder="complete Sessions" value={completeSessions == 0 ? "": completeSessions} onChange={(e:any)=>setCompletedSessions(Number(e.target.value))}/>
+          <input type="number" min={0} max={treatmentSessions} placeholder="Current Sessions" value={completeSessions == 0 ? "": completeSessions} onChange={(e:any)=>setCompletedSessions(Number(e.target.value))}/>
           <input
             type="number"
             placeholder="sessions"
@@ -356,6 +357,7 @@ const Dashboard = () => {
             max={5}
             min={0}
           />
+          <input type="number" name="pendingSessions" placeholder="Pending" max={treatmentSessions} min={0} value={pendingSessions == 0 ? "" : pendingSessions} onChange={(e:any)=>setPendingSessions(Number(e.target.value))}/>
           <input
             type="number"
             placeholder="Price"

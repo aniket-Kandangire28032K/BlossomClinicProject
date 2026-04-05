@@ -6,7 +6,7 @@ const StockUpdate = () => {
   const URL = import.meta.env.VITE_Backend_URL;
   const [medName, setMedName] = useState("");
   const [stock, setStock] = useState(0);
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState(null);
   const [companyname, setCompanyName] = useState("");
   const [meds, setMeds] = useState([]);
   const [products, setProducts] = useState([]);
@@ -28,27 +28,7 @@ const StockUpdate = () => {
     getMeds();
   }, []);
 
-  const hnadleSubmit = async (e: any) => {
-    e.preventDefault();
-    console.log(medName, stock, rate);
-    try {
-      await axios.put(`${URL}/medicine/stock`, {
-        medicinename: medName,
-        companyname: companyname, // 🔥 IMPORTANT
-        stock: Number(stock),
-        unitprice: Number(rate),
-      });
-      toast.success("Medicine Stock Updated");
-    } catch (error) {
-      console.log(error);
-      toast.error("Error in Updating Stock");
-    } finally {
-      setStock(0);
-      setCompanyName("");
-      setMedName("");
-      setRate(0);
-    }
-  };
+  
   useEffect(() => {
     if (companyname) {
       setProducts(() =>
@@ -56,9 +36,43 @@ const StockUpdate = () => {
       );
     }
   }, [companyname]);
+
+  const handleSubmit = async (e: any) => {
+  e.preventDefault(); // Prevent form from refreshing the page
+
+  if (!medName || !companyname) {
+    toast.error("Please select company and product");
+    return;
+  }
+  try {
+    const body: any = {
+      companyname:companyname,
+      medicinename: medName,
+      stock: Number(stock),
+    };
+    // Include unitprice only if the user entered a value
+    if (rate !== null && rate !== "") {
+      body.unitprice = Number(rate);
+    }
+    // console.log(body)
+    // Make PUT request to update stock
+    const res = await axios.put(`${URL}/medicine/stock-update`, body);
+    toast.success(res.data.message || "Stock updated successfully");
+   console.log(res.data)
+   
+  } catch (error: any) {
+    console.error(error);
+    toast.error(error.response?.data?.message || "Error updating stock");
+  }finally{
+     setMedName("");
+    setCompanyName("");
+    setStock(0);
+    setRate(null);
+  }
+};
   return (
     <div className="stock">
-      <form onSubmit={hnadleSubmit} autoComplete="off">
+      <form onSubmit={handleSubmit} autoComplete="off">
         <h1>Update Stock</h1>
         <div className="inputfield">
           <select
@@ -104,7 +118,7 @@ const StockUpdate = () => {
             type="number"
             id="unitprice"
             placeholder=" "
-            value={rate == 0 ? "" : rate}
+            value={rate == null ? "" : rate}
             onChange={(e: any) => setRate(e.target.value)}
           />
           <label htmlFor="unitprice">Unit Price</label>

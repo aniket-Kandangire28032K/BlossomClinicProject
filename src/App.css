@@ -484,7 +484,10 @@ table{
   width: 20%;
 }
 .treatment-Form > input:nth-of-type(3){
-  width: 15%;
+  width: 12%;
+}
+.treatment-Form > input:nth-of-type(4){
+  width: 12%;
 }
 .treatment-Form > input:last-of-type {
   width: 10%;
@@ -2349,5 +2352,61 @@ box-shadow: none;
     text-align: center;
     padding: 0.2rem;
     color: #222;
+  }
+  .edit-form{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #000000b6;
+    display: grid;
+    place-items: center;
+  }
+  .edit-form form{
+    width: 50%;
+    height: max-content;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    gap: 0.7rem;
+  }
+  .edit-form form div{
+    padding: 0.3rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    /* border: 1px solid ; */
+  }
+  .edit-form form div:last-of-type{
+    justify-content: center;
+    gap: 1rem;
+  }
+  .edit-form form div:last-of-type button{
+   padding: 0.5rem; 
+   width: 15%;
+   color: #fff;
+   border: transparent;
+   font-weight: 500;
+   border-radius: 5px;
+  }
+  .edit-form form div:last-of-type button:first-of-type{
+    background-color: #008080;
+  }
+  .edit-form form div:last-of-type button:first-of-type:hover{
+    color: #008080;
+    border-color: #008080;
+    background-color: #0080804d;
+  }
+  .edit-form form div:last-of-type button:last-of-type{
+    background-color: crimson;
+  }
+  
+  .edit-form form div input{
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    
   }
 }

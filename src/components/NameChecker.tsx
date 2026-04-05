@@ -208,7 +208,7 @@ const NameChecker = ({ formData, setFormData }: any) => {
                         <td>{treat.name}</td> 
                         <td>{treat.sessions }</td>
                         <td>{Number(treat.completesessions)}</td>
-                        <td>{treat.sessions-treat.completesessions }</td>
+                        <td>{treat.pendingsessions }</td>
                         <td>{treat.price}</td>
                       </tr>)
                     }
