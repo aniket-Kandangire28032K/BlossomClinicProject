@@ -155,7 +155,7 @@ const NameChecker = ({ formData, setFormData }: any) => {
               {
                 presDetails?.length > 0 &&  presDetails.map((pres:any)=> <div key={pres._id}>
                     <h3>Prescription</h3>
-                    <p>Data: {pres.date}</p>
+                    <p>Date: {pres.date}</p>
                     <p>Name: {pres.patientname}</p>
                     <p>OPD: {pres.opdno}</p>
                     
@@ -218,10 +218,11 @@ const NameChecker = ({ formData, setFormData }: any) => {
                       </tr>
                     </tfoot>
                     </table>}
-                    <p>Remark: {pres.remark || "NA"}</p>
-                    <p>Next Appointment: {pres.nextAppointmentDate}</p>
-                    <p>Consult Fee: Rs.{pres.consultFee}</p>
+                    {pres.remark && <p>Remark: {pres.remark}</p>}
+                    { pres.nextAppointmentDate && <p>Next Appointment: {pres.nextAppointmentDate}</p>}
+                    <p>Consult Fee: Rs. {pres.consultFee}</p>
                     {Number(pres.balanceamount) > 1 &&  <p>Remaining Amount:Rs.{pres.balanceamount}</p>}
+                    <p>Paid Amount:{(Number(pres.totalCost)-Number(pres.balanceamount))}</p>
                     <p>Total Fees: Rs.{pres.totalCost}</p>
                 </div>)
               }

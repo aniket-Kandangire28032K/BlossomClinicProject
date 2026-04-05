@@ -38,7 +38,6 @@ const Dashboard = () => {
   const [productPrice, setProductPrice] = useState<number>(0);
   const [productList, setProductList] = useState<any>([]);
   const [productQty, setProductQty] = useState<any>(0);
-  // const [productUnitprice,setUnitprice] = useState(0)
   // treatment States
   const [treatmentName, setTreatmentName] = useState("");
   const [treatmentPrice, setTreatmentPrice] = useState(0);
@@ -106,6 +105,7 @@ const Dashboard = () => {
     setTreatmentName("");
     setTreatmentPrice(0)
     setTreatmentSessions(0)
+    setCompletedSessions(0)
     
   };
 
@@ -184,6 +184,7 @@ const Dashboard = () => {
     try {
       const res = await axios.post(`${URL}/prescription`, postData)
       toast.success(res.data.message);
+      // console.log(postData)
       setLoading(false)
       // window.print();
     } catch (error: any) {
@@ -191,6 +192,7 @@ const Dashboard = () => {
       toast.error(sms);
       setLoading(false)
     } finally {
+      getProducts();
       setFormData({
         patientname: "",
         opdno: "",
@@ -211,6 +213,7 @@ const Dashboard = () => {
       setCompanyName("")
       setProductName("")
       setCompletedSessions(0)
+      
     }
   };
 
@@ -225,7 +228,11 @@ const Dashboard = () => {
     <div className="dashboard">
       <NameChecker formData={formData} setFormData={setFormData} />
       <h2>prescription</h2>
-      <form onSubmit={handleSubmit} autoComplete="off">
+      <form onSubmit={handleSubmit} onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  }} autoComplete="off">
         <h3>Date: {currentdate}</h3>
         <input
           type="text"
@@ -268,7 +275,7 @@ const Dashboard = () => {
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
           >
-            <option value="">Products  Qty   unit Rate</option>
+            <option value="">Products - Qty -  Unit Rate</option>
             {products.map((item: any) => (
               <option key={item._id} value={item.medicinename}>
                 {item.medicinename} - {item.stock} -  Rs.{item.unitprice}
@@ -307,8 +314,8 @@ const Dashboard = () => {
                 <td>Product</td>
                 <td>Remark</td>
                 <td>Qty</td>
-                <td>Per Unit</td>
-                <td>Price</td>
+                <td>Per Unit Price</td>
+                <td>Total</td>
               </tr>
             </thead>
             <tbody>
@@ -340,6 +347,7 @@ const Dashboard = () => {
             value={treatmentName}
             onChange={(e) => setTreatmentName(e.target.value)}
           />
+          <input type="number" placeholder="complete Sessions" value={completeSessions == 0 ? "": completeSessions} onChange={(e:any)=>setCompletedSessions(Number(e.target.value))}/>
           <input
             type="number"
             placeholder="sessions"
@@ -391,8 +399,7 @@ const Dashboard = () => {
           </table>
         )}
         <div className="section1">
-          <label>Completed Session</label>
-          <input type="number" value={completeSessions} onChange={(e:any)=>setCompletedSessions(e.target.value)}/>
+          
           <label>Next Appointment Date:</label>
           <input
             type="date"
@@ -429,7 +436,7 @@ const Dashboard = () => {
           value={formData.remark}
           onChange={handleChange}
         />
-        <h3>Balance Amount: ₹{cost.balanceamount}</h3>
+        {cost.balanceamount > 0 && <h3>Balance Amount: ₹{cost.balanceamount}</h3>}
         <h3>Total Fees: ₹{cost.totalCost || 0}</h3>
         <div className="btn-group">
           {!loading ? <button type="submit">Submit</button> : <button style={{opacity:0.5}} type="submit" disabled>Submit</button> }

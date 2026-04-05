@@ -184,8 +184,8 @@ const MRPayment = () => {
                 {display=== "" && <button type="button" className="history" onClick={()=> setDisplay(String(index))}>History</button>}
                 { display === String(index) && <div>
                   <button type="button" className="close-btn" onClick={()=>setDisplay("")}>X</button>
-                  {item.paymentHistory ? item.paymentHistory.map((data:any)=>
-                  <div>
+                  {item.paymentHistory ? item.paymentHistory.map((data:any,num:number)=>
+                  <div key={num} >
                     <p><strong>Date: </strong>{data.paymentDate} - <strong>Rs.</strong>{data.paymentAmount}</p>
                   </div>
                   ) : <p>No History of Payment</p> }

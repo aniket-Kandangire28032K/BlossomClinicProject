@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import BarChart from "../assets/charts/BarChart";
+// import BarChart from "../assets/charts/BarChart";
 import { MdFileDownload } from "react-icons/md";
 import * as xlsx from "xlsx";
 import PieChart from "../assets/charts/PieChart";
@@ -175,10 +175,6 @@ const Sales = () => {
           Clear
         </button>
       </form>
-
-      {filteredData.length > 0 && ( 
-        <BarChart data={filteredData} />
-      )} 
       
       {totals.GrandTotal > 0 && <PieChart chartdata={totals} />}
 

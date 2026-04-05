@@ -198,20 +198,12 @@
   }
 }
 
-.main-chart{
-  height:70dvh;
-  /* width: 100%; */
-  /* border: 1px solid #ccc; */
-  /* border-radius: 18px; */
-}
 .pie-chart{
+  margin: 0 auto;
   margin-top: 1rem;
-  aspect-ratio: 1/1;
-  width: 22%;
-  display: inline;
-  right: 0;
-  top: 10rem;
-  position: absolute;
+  height:70dvh;
+  display: block;
+  width: 100%;
 }
 .hover{
   transition: all ease-in-out 0.2s;

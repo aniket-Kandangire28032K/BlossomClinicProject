@@ -149,7 +149,7 @@ const ExpensesChart = ({ dates,setDataTotal }: any) => {
   const data = {
     labels: ["Rent", "Electricity", "Staff", "Other", "Total"],
     datasets: [{
-      label: "Monthly Expenses",
+      label: "Expenses",
       data: [
         chartValues.rent,
         chartValues.electricity,
