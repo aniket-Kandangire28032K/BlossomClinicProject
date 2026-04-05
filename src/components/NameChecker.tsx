@@ -196,8 +196,9 @@ const NameChecker = ({ formData, setFormData }: any) => {
                         </tr>
                         <tr>
                           <th>Name</th>
-                          <th>completed Sessions</th>
                           <th>Total Sessions</th>
+                          <th>completed Sessions</th>
+                          <th>Pending Sessions</th>
                           <th>total Price</th>
                         </tr>
                       </thead>
@@ -205,8 +206,9 @@ const NameChecker = ({ formData, setFormData }: any) => {
                     {
                       pres.treatments.map((treat:any,num:number)=> <tr key={num}>
                         <td>{treat.name}</td> 
-                        <td>{Number(treat.completesessions)}</td>
                         <td>{treat.sessions }</td>
+                        <td>{Number(treat.completesessions)}</td>
+                        <td>{treat.sessions-treat.completesessions }</td>
                         <td>{treat.price}</td>
                       </tr>)
                     }

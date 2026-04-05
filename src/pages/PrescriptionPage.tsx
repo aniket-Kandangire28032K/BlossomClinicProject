@@ -57,6 +57,8 @@ const PrescriptionPage = () => {
               <p>Date: {e.date}</p>
               <p>Patient Name: {e.patientname}</p>
               <p>Patient OPD NO.:-{e.opdno}</p>
+              <p>Paid Amount:Rs.{e.paidamount}</p>
+              <p>Payment Method:{e.paymentMethod}</p>
               <table className="data-list" border={1}>
                 <thead>
                   <tr>

@@ -67,16 +67,21 @@ const Sales = () => {
   };
 
   // & Pie Chart Data of profit and loss _________________________________________________________________________________
+  const totalExpenses = Number(dataTotal.expencessTotal) + Number(dataTotal.mrTotal);
+  const profit = Number(totals.GrandTotal)-Number(totalExpenses)
+  const isProfit = profit >=0
   const PieData = {
-    labels: ["Profit", "Loss"],
+    labels:isProfit? ["Profit","Expenses"] : ["Loss","Expenses"],
+
     datasets: [
       {
-        // label:"Profit And Loss",
-        data: [
-          totals.GrandTotal,
-          Number(Number(dataTotal.expencessTotal) + Number(dataTotal.mrTotal)),
-        ],
-        backgroundColor: ["#00FF7F", "#e25c5e"],
+        data: isProfit
+        ? [profit, totalExpenses]
+        : [Math.abs(profit), totalExpenses],
+      backgroundColor: isProfit
+        ? ["#00FF7F", "#e25c5e"]
+        : ["#e25c5e", "#36A2EB"], 
+       
       },
     ],
   };

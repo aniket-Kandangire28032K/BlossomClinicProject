@@ -1,17 +1,17 @@
-:root{
-  --bluegreen:rgb(36 186 161);
-  --bluegreenDark:rgb(26, 107, 94);
-  --bluegreenLight:rgb(23, 225, 192);
-  --navbarWidth:12%;
+:root {
+  --bluegreen: rgb(36 186 161);
+  --bluegreenDark: rgb(26, 107, 94);
+  --bluegreenLight: rgb(23, 225, 192);
+  --navbarWidth: 12%;
 }
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   scroll-behavior: smooth;
 }
-.Navbar{
+.Navbar {
   width: var(--navbarWidth);
   background: var(--bluegreenDark);
   height: 100dvh;
@@ -22,128 +22,123 @@
   user-select: none;
 }
 
-.Navbar > div:first-of-type{
+.Navbar > div:first-of-type {
   margin-top: 0.5rem;
 }
-.Navbar  div{
+.Navbar div {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
   color: white;
-  
-  
 }
-.dropdown{
+.dropdown {
   width: 100%;
   /* border-radius: 12px; */
-  transition:all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
 }
-.Navbar div .dropdown:hover{
+.Navbar div .dropdown:hover {
   background-color: #008080;
 }
-.dropdown .dropdown-title{
+.dropdown .dropdown-title {
   color: white;
   padding: 0.5rem 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.dropdown .dropdown-title span{
+.dropdown .dropdown-title span {
   width: 90%;
   margin: 0 auto;
   position: relative;
-  
 }
-.dropdown .dropdown-title span .arrow{
+.dropdown .dropdown-title span .arrow {
   position: absolute;
   right: 0;
 }
-.dropdown .dropdown-title .icon{
+.dropdown .dropdown-title .icon {
   vertical-align: bottom;
   font-size: 1.2rem;
 }
 .dropdown-title span .icon {
   margin-right: 0.5rem;
 }
-.dropdown .dropdown-menu{
+.dropdown .dropdown-menu {
   width: 100%;
   visibility: visible;
   transition: all ease-in-out 1.2s;
-  animation: slide .5s ease-in-out forwards;
+  animation: slide 0.5s ease-in-out forwards;
   opacity: 0;
 }
 
-.dropdown .dropdown-menu > a:hover{
-  background-color:rgba(255, 255, 255, 0.1) ;
+.dropdown .dropdown-menu > a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   width: 100%;
   /* border-radius: 8px ; */
 }
 @keyframes slide {
-  0%{
+  0% {
     opacity: 0;
     transform: translateY(-10px);
-  }  
-  100%{
+  }
+  100% {
     opacity: 1;
     transform: translateY(0);
-  }  
+  }
 }
-.Navbar div button{
-  padding:.5rem 1rem;
+.Navbar div button {
+  padding: 0.5rem 1rem;
   margin: 0 auto;
   width: min-content;
   color: white;
-  background:crimson;
+  background: crimson;
   border: 2px solid red;
   font-weight: bold;
   font-size: 1.2rem;
   border-radius: 8px;
   margin-top: auto;
   margin-bottom: 2rem;
-  transition: all ease-in-out .2s;
+  transition: all ease-in-out 0.2s;
 }
-.Navbar div button:hover{
+.Navbar div button:hover {
   /* background-color: rgb(187, 7, 43); */
   border: 2px solid rgb(187, 7, 43);
   transform: scale(1.1);
   letter-spacing: 0.1rem;
 }
-.Navbar > div  a{
+.Navbar > div a {
   text-decoration: none;
-  color:white;
+  color: white;
   font-size: 1rem;
   padding: 0.5rem 0;
   transition: all 0.2s ease-in;
   display: inline-flex;
   align-items: center;
-  gap: .2rem;
+  gap: 0.2rem;
   width: 100%;
-  padding-left: .71rem;
-  
+  padding-left: 0.71rem;
 }
-.Navbar > div a:hover{
+.Navbar > div a:hover {
   background-color: #008080;
   /* border-radius: 12px; */
-  
 }
-.Navbar div:not(hover){
+.Navbar div:not(hover) {
   color: rgb(187, 187, 187);
 }
 
-.Navbar div a .icon{
+.Navbar div a .icon {
   vertical-align: middle;
   font-size: 1.2rem;
 }
-.Main{
-  margin-left:var(--navbarWidth);
-  background-image:linear-gradient(rgba(255, 255, 255, 0.5)), url('/main.jpg') ;
+.Main {
+  margin-left: var(--navbarWidth);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5)), url("/main.jpg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100dvh;
 }
-.loader{
+.loader {
   background-color: rgb(255, 255, 255);
   width: 100%;
   min-height: 100dvh;
@@ -155,9 +150,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  
 }
-.spinner{
+.spinner {
   aspect-ratio: 1/1 !important;
   width: 80px;
   border-radius: 8px;
@@ -165,54 +159,55 @@
 }
 
 @keyframes spin {
-  0%{
+  0% {
     border-color: #008080;
-    border: 20px solid  #008080;
+    border: 20px solid #008080;
   }
-  20%{
+  20% {
     border: 2px solid;
-    border-right: 20px solid  #008080;
-    border-top: 20px solid  #008080;
+    border-right: 20px solid #008080;
+    border-top: 20px solid #008080;
   }
-  40%{
+  40% {
     border: 2px solid;
-    border-top: 20px solid  #008080;
-    border-left: 20px solid  #008080;
+    border-top: 20px solid #008080;
+    border-left: 20px solid #008080;
   }
-  60%{
+  60% {
     border: 2px solid;
-    border-left: 20px solid  #008080;
-    border-bottom: 20px solid  #008080;
+    border-left: 20px solid #008080;
+    border-bottom: 20px solid #008080;
   }
-  80%{
+  80% {
     border: 2px solid;
-    border-bottom: 20px solid  #008080;
-    border-right: 20px solid  #008080;
+    border-bottom: 20px solid #008080;
+    border-right: 20px solid #008080;
   }
-  100%{
+  100% {
     transform: rotate(1turn);
     border-color: #008080;
-    border: 20px solid  #008080;
-    border-right: 20px solid  #008080;
-    border-top: 20px solid  #008080;
+    border: 20px solid #008080;
+    border-right: 20px solid #008080;
+    border-top: 20px solid #008080;
   }
 }
 
-.pie-chart{
-  margin: 0 auto;
-  margin-top: 1rem;
-  height:70dvh;
+.pie-chart {
+  margin-bottom: 2rem;
+  height: 70dvh;
   display: block;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.hover{
+.hover {
   transition: all ease-in-out 0.2s;
 }
-.hover:hover{
+.hover:hover {
   transform: scale(1.1);
   transition: all ease-in-out 0.2s;
 }
-input[type=date]{
+input[type="date"] {
   text-transform: uppercase;
 }
 input[type="number"]::-webkit-outer-spin-button,
@@ -226,16 +221,16 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
-table{
+table {
   border-collapse: collapse;
 }
-table thead tr th{
+table thead tr th {
   text-transform: uppercase !important;
 }
 
-input:focus{
+input:focus {
   border-color: royalblue !important;
 }
-input::placeholder{
+input::placeholder {
   text-transform: capitalize;
 }

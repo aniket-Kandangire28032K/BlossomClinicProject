@@ -142,7 +142,7 @@ const Reminders = () => {
               <th>OPD No.</th>
               <th>Treatments</th>
               <th>Remaining Amount</th>
-              <th>Appointment Date</th>
+              <th>Next Appointment Date</th>
             </tr>
           </thead>
           <tbody>

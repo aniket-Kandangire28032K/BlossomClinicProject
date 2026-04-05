@@ -332,11 +332,11 @@ const MrForm = () => {
           <select id="paymentMethod" required onChange={handleChange} value={formData.paymentMethod}>
             <option>Payment Method*</option>
             <option value="cash">Cash</option>
-            <option value="upi">UPI</option>
-            <option value="debit card">Debit Card</option>
-            <option value="credit card">Credit Card</option>
-            <option value="net Banking">Net Banking</option>
-            <option value="cheque">Cheque</option>
+            <option value="UPI">UPI</option>
+            <option value="Debit card">Debit Card</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Net Banking">Net Banking</option>
+            <option value="Cheque">Cheque</option>
           </select>
         </div>  
         {formData.paymentMethod === "cheque" && 

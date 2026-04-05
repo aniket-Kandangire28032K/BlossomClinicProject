@@ -8,7 +8,6 @@ import { IoMdCall } from "react-icons/io";
 import { GiWireframeGlobe } from "react-icons/gi";
 import { FaLocationDot } from "react-icons/fa6";
 import NameChecker from "../components/NameChecker";
-
 const Dashboard = () => {
   const today = new Date().toISOString().split("T")[0];
   const URL = import.meta.env.VITE_Backend_URL;
@@ -21,7 +20,8 @@ const Dashboard = () => {
     date: "",
     nextAppointmentDate: "",
     remark: "",
-    nextpaymentdate:""
+    nextpaymentdate:"",
+    paymentMethod:""
   });
   const [cost, setCost] = useState({
     productCost: 0,
@@ -308,7 +308,7 @@ const Dashboard = () => {
           </button>
         </div>
         {productList.length > 0 && (
-          <table className="product-table">
+          <table className="product-table" border={1}>
             <thead>
               <tr className="table-head">
                 <td>Product</td>
@@ -368,7 +368,7 @@ const Dashboard = () => {
           </button>
         </div>
         {treatmentList.length > 0 && (
-          <table className="treatment-table">
+          <table className="treatment-table" border={1}>
             <thead>
               <tr className="table-head">
                 <th>Treatment</th>
@@ -428,6 +428,15 @@ const Dashboard = () => {
             onChange={handleChange}
             min={today}
           />
+        </div>
+        <div>
+        <label >Payment Method: </label>
+        <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} style={{width:"30%",padding:"0.4rem"}}>
+          <option value="">Payment Method</option>
+          <option value="cash">Cash</option>
+          <option value="UPI">UPI</option>
+          <option value="swipe machine">Swipe Machine</option>
+        </select>
         </div>
         <input
           type="text"

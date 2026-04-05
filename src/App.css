@@ -430,31 +430,35 @@ form .inputfield input:not(:placeholder-shown) + label {
 .dashboard form .product-table,
 .dashboard form .treatment-table {
   visibility: visible;
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
-  border-collapse: collapse;
-  border: 1px solid #ccc;
+  border: 1px solid #000;
   
 }
 .table-head {
   background-color: royalblue;
   color: white;
   font-weight: bold;
-  
 }
-.dashboard tr td:last-of-type {
-  width: 20%;
+
+@scope (.dashboard > form){
+
+ tr td:first-of-type, tr th:first-of-type{
+    width: 35% !important;
+    padding: 0.3rem;
+  }
 }
 table{
   white-space: nowrap;
 }
-/* .dashboard form .product-table tr td:first-of-type{} */
+
 .product-table tr td,
 .treatment-table tr td {
   padding: 0.3rem 0.5rem;
-  /* text-align: center; */
   text-wrap: nowrap;
+  position: relative;
 }
+
 .dashboard form .treatment-table tr td:nth-of-type(1){
   width: 50%;
 }
@@ -474,9 +478,12 @@ table{
   box-shadow: 4px 4px 6px rgb(0 0 0 / 0.04);
 }
 .treatment-Form > input:nth-of-type(1) {
-  width: 50%;
+  width: 35%;
 }
-.treatment-Form > input:nth-of-type(2),.treatment-Form > input:nth-of-type(3) {
+.treatment-Form > input:nth-of-type(2) {
+  width: 20%;
+}
+.treatment-Form > input:nth-of-type(3){
   width: 15%;
 }
 .treatment-Form > input:last-of-type {
@@ -495,7 +502,9 @@ table{
   color: crimson;
   vertical-align: middle;
   visibility: hidden;
-  margin-left: 2rem;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.2rem;
   filter: drop-shadow(0 0 10px crimson);
 }
 tr td:hover .del-btn {

@@ -147,6 +147,7 @@ table{
 }
 .checker{
     text-align: start;
+    z-index: 9999;
 }
 .checker h1{
     text-align: center;
@@ -197,6 +198,7 @@ table{
     transform: translate(-50%,-0%);
     position: fixed;
     animation: pop-up linear 0.1s;
+    z-index: 99999;
 }
 .patient-details  input{
     padding: 0.5rem;

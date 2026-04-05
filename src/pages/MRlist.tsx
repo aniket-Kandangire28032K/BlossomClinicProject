@@ -72,6 +72,7 @@ const MRlist = () => {
             <th>Total</th>
             <th>Paid</th>
             <th>Due</th>
+            <th>Payment</th>
           </tr>
         </thead>
         <tbody>
@@ -95,6 +96,7 @@ const MRlist = () => {
                 <td>{e.totalamount}</td>
                 <td>{e.paidamount}</td>
                 <td>{e.dueamount}</td>
+                <td style={{textTransform:"capitalize"}}>{e.paymentMethod}</td>
               </tr>
             ))}
           
