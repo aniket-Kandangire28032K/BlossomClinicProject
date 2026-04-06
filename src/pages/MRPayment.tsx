@@ -97,6 +97,7 @@ const MRPayment = () => {
       setAmount(0);
       fetchMRList();
       setDisplay("")
+      getMRList();
     }
   };
   const getMRList = async () => {
@@ -111,8 +112,9 @@ const MRPayment = () => {
   useEffect(() => {
     getMRList();
   }, []);
+  
   const payMr = async (item: any) => {
-    console.log(item)
+    // console.log(item)
     setDetails({ ...item });
     setDisplay("update");
   };
@@ -120,6 +122,7 @@ const MRPayment = () => {
     setDisplay("")
     setAmount(0)
     setNextpaydate("")
+    
   }
   return (
     <div className="mr-payment">
