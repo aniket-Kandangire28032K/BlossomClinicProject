@@ -98,7 +98,7 @@ const Dashboard = () => {
       name: treatmentName,
       price: Number(treatmentPrice),
       sessions:treatmentSessions,
-      persession:Number(treatmentPrice),
+      // persession:Number(treatmentPrice),
       completesessions:Number(completeSessions),
       pendingsessions:Number(pendingSessions)
     };
@@ -375,8 +375,10 @@ const Dashboard = () => {
             <thead>
               <tr className="table-head">
                 <th>Treatment</th>
+                <th>current sessions</th>
                 <th>sessions</th>
-                <th>Per Session</th>
+                <th>Pending sessions</th>
+                
                 <th>Price</th>
               </tr>
             </thead>
@@ -384,10 +386,11 @@ const Dashboard = () => {
               {treatmentList.map((e: any, i: number) => (
                 <tr key={i}>
                   <td>{e.name}</td>
+                  <td>{e.completesessions}</td>
                   <td>{e.sessions}</td>
-                  <td>{e.persession}</td>
+                  <td>{e.pendingsessions}</td>
                   <td>
-                    Rs.{e.price}{" "}
+                    Rs.{e.price}
                     <button
                       type="button"
                       className="del-btn"
@@ -434,7 +437,7 @@ const Dashboard = () => {
         </div>
         <div>
         <label >Payment Method: </label>
-        <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} style={{width:"30%",padding:"0.4rem"}}>
+        <select name="paymentMethod" value={formData.paymentMethod} required onChange={handleChange} style={{width:"30%",padding:"0.4rem"}}>
           <option value="">Payment Method</option>
           <option value="cash">Cash</option>
           <option value="UPI">UPI</option>
@@ -460,6 +463,8 @@ const Dashboard = () => {
           <label>Display Total</label>
         </div>
       </form>
+
+      
       {/* ! ---------------------------------------------------------(Print Areas)-------------------------------------------------------- */}
       {/* Print Area */}
       <div className="print-area">
@@ -509,12 +514,11 @@ const Dashboard = () => {
           )}
         </div>
         <div className="sub-footer">
-
           {formData.nextAppointmentDate && (
-            <h3 style={{backgroundColor:"transparent"}}>
+            <p style={{backgroundColor:"transparent"}}>
               Follow up Date:{" "}
               {formData.nextAppointmentDate.split("-").reverse().join("/")}{" "}
-            </h3>
+            </p>
           )}
           {display && <p style={{backgroundColor:"transparent",color:"#000"}}>Total: ₹{cost.totalCost}</p>}
           {formData.remark && <p>{formData.remark}</p>}

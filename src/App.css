@@ -212,6 +212,7 @@ form .inputfield input:not(:placeholder-shown) + label {
 }
 .print-area .main-section{
   min-height:45dvh ;
+  /* background: url(../public/Blossom-2.jpg) cneter/center; */
   position: relative;
   max-width: 100dvh;
   text-transform: capitalize;
@@ -225,11 +226,12 @@ form .inputfield input:not(:placeholder-shown) + label {
   content: "";
   position: absolute;
   inset: 0;
+  left: 10%;
   background-image: url(/Blossom-2.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   filter: opacity(0.1);
-  background-size:  cover;
+  background-size:  contain;
   
   /* transform: translateX(-50%); */
   z-index: 0;
@@ -253,10 +255,11 @@ form .inputfield input:not(:placeholder-shown) + label {
 }
 
 .print-area .sub-footer{
-  width: 70%;
-  line-height: 300%;
+  width: 80%;
+  
   margin: 0 auto;
-  background-color: transparent;
+  background-color: transparent !important;
+  
 }
 
 .print-area .footer{
@@ -354,7 +357,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   text-align: end;
 }
 .dashboard form {
-  width: 60%;
+  width: 65%;
   margin: 0 auto;
   display: flex;
   gap: 0.6rem;
@@ -428,8 +431,8 @@ form .inputfield input:not(:placeholder-shown) + label {
   background-color: rgb(0 126 0);
   color: #fff;
 }
-.dashboard form .product-table,
-.dashboard form .treatment-table {
+.dashboard form .product-table
+ {
   visibility: visible;
   width: 90%;
   margin: 0 auto;
@@ -459,14 +462,10 @@ table{
   text-wrap: nowrap;
   position: relative;
 }
+.treatment-table{
+  width: 100% !important;
+}
 
-.dashboard form .treatment-table tr td:nth-of-type(1){
-  width: 50%;
-}
-.dashboard form .treatment-table tr td:nth-of-type(2){
-  width: 15%;
-  /* border: 2px solid red; */
-}
 .treatment-Form {
   width: 100%;
   display: flex;

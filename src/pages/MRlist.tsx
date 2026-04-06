@@ -11,6 +11,7 @@ const MRlist = () => {
   const getMR = async () => {
     try {
       const res = await axios.get(`${URL}/mrlist`);
+      console.log(res.data)
       setListMr(res.data);
     } catch (error) {
       console.log(error);
@@ -89,7 +90,7 @@ const MRlist = () => {
                 <td>
                   <ul>
                   {Array.isArray(e.productlist) &&  e.productlist.map((item:any,num:any)=>(
-                  <li key={num}>{item.medicinename} * {item.stock} = per unit Rs.{item.unitprice}</li>
+                  <li key={num}>{item.medicinename} * {item.qty} = per unit Rs.{item.unitprice}</li>
                 ))}
                   </ul>
                 </td>
