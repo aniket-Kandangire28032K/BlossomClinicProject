@@ -68,7 +68,7 @@ const MRPayment = () => {
       setMrList(filterList);
       setAmount(0);
     } catch (error) {
-      toast.error("MR not Found");
+      // toast.error("MR not Found");
       console.log(error);
     }
   };
@@ -96,6 +96,7 @@ const MRPayment = () => {
       setNextpaydate("");
       setAmount(0);
       fetchMRList();
+      setDisplay("")
     }
   };
   const getMRList = async () => {
