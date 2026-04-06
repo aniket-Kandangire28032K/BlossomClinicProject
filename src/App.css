@@ -211,7 +211,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   filter: brightness(0) invert(1);
 }
 .print-area .main-section{
-  min-height:49dvh ;
+  min-height:45dvh ;
   position: relative;
   max-width: 100dvh;
   text-transform: capitalize;
@@ -256,6 +256,7 @@ form .inputfield input:not(:placeholder-shown) + label {
   width: 70%;
   line-height: 300%;
   margin: 0 auto;
+  background-color: transparent;
 }
 
 .print-area .footer{

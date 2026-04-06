@@ -8,18 +8,17 @@ const StockUpdate = () => {
   const [stock, setStock] = useState(0);
   const [rate, setRate] = useState(null);
   const [companyname, setCompanyName] = useState("");
+  const [companyList,setCompanyList] = useState<any>([])
   const [meds, setMeds] = useState([]);
   const [products, setProducts] = useState([]);
 
   const getMeds = async () => {
     try {
       const res = await axios.get(`${URL}/medicine`);
-      let list: any = [
-        ...new Map(
-          res.data.map((user: any) => [user.companyname, user]),
-        ).values(),
-      ];
-      setMeds(list);
+      let company = [...new Set(res.data.map((item:any) => item.companyname))];
+
+      setCompanyList(company)
+      setMeds(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -27,14 +26,13 @@ const StockUpdate = () => {
   useEffect(() => {
     getMeds();
   }, []);
-
-  
   useEffect(() => {
     if (companyname) {
-      setProducts(() =>
-        meds.filter((item: any) => item.companyname === companyname),
-      );
+      const medList =meds.filter((item: any) => item.companyname === companyname)
+      console.log(medList)
+      setProducts(medList);
     }
+    console.log(products)
   }, [companyname]);
 
   const handleSubmit = async (e: any) => {
@@ -82,9 +80,9 @@ const StockUpdate = () => {
             onChange={(e) => setCompanyName(e.target.value)}
           >
             <option value="">Company Name</option>
-            {meds.map((item: any) => (
-              <option key={item._id} value={item.companyname}>
-                {item.companyname}
+            {companyList.map((item: any,num:number) => (
+              <option key={num} value={item}>
+                {item}
               </option>
             ))}
           </select>

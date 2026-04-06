@@ -107,6 +107,7 @@ const Dashboard = () => {
     setTreatmentPrice(0)
     setTreatmentSessions(0)
     setCompletedSessions(0)
+    setPendingSessions(0)
     
   };
 
@@ -146,10 +147,10 @@ const Dashboard = () => {
       ...cost,
       productCost: productTotal,
       treatmentCost: treatmentTotal,
-      totalCost: treatmentTotal + cost.consultFee + productTotal,
+      totalCost: treatmentTotal + Number(cost.consultFee || 0) + productTotal,
       balanceamount: balance,
     });
-  }, [productList, treatmentList, cost.consultFee, cost.paidamount,cost.totalCost]);
+  }, [productList, treatmentList, cost.consultFee, cost.paidamount,cost.totalCost,]);
 
   const handleChange = (e: any) => {
     // handles change function
@@ -254,7 +255,7 @@ const Dashboard = () => {
         <input
           type="number"
           placeholder="Consultation Fee"
-          required value={cost.consultFee}
+           value={cost.consultFee}
           onChange={(e) =>
             setCost({ ...cost, consultFee: parseInt(e.target.value) })
           }
