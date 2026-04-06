@@ -181,6 +181,7 @@ const MRPayment = () => {
                 <p>Last Payment :₹{item.lastpayment || "NA"} </p>
                 <p className="green">Total Amount ₹:{item.totalamount}</p>
                 <p className="red">Due Amount ₹:{item.dueamount}</p>
+{/*                 
                 {display=== "" && <button type="button" className="history" onClick={()=> setDisplay(String(index))}>History</button>}
                 { display === String(index) && <div>
                   <button type="button" className="close-btn" onClick={()=>setDisplay("")}>X</button>
@@ -190,7 +191,7 @@ const MRPayment = () => {
                   </div>
                   ) : <p>No History of Payment</p> }
                 </div>
-                }
+                } */}
                 
                 <button type="button" onClick={()=>payMr(item)}>Pay</button>
                 
