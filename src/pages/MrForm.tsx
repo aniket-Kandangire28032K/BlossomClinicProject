@@ -339,7 +339,7 @@ const MrForm = () => {
             <option value="Cheque">Cheque</option>
           </select>
         </div>  
-        {formData.paymentMethod === "cheque" && 
+        {formData.paymentMethod == "Cheque" && 
         <div className="inputfield">
         <input type="number" value={formData.chequeNumber === 0 ? "" : formData.chequeNumber}  onChange={(e)=>setFormData((prev:any)=>({...prev,chequeNumber:e.target.value}))}/>
           <label>Cheque Number</label>
